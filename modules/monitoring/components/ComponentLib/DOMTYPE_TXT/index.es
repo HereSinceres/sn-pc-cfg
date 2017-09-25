@@ -1,8 +1,12 @@
 // DOMTYPE_TXT 类型  只读 或者  可读写
 var Base = require('../../../Base.es');
- 
+
 var interact = require('../../../../lib/interact/interact.js');
-console.log(interact);
+// template
+
+var dataAttr = {
+
+};
 class DomTxt {
     constructor() {
         this.type = Base.CONST_DOM_TYPE.DOMTYPE_TXT;
@@ -31,24 +35,21 @@ class DomTxt {
         Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.ADD_NEWUNIT);
     }
     // 静态方法－添加拖动操作
-    static addDragCtr($dom) { 
+    static addDragCtr($dom) {
         interact($dom[0])
             .draggable({
-                onmove:function (event) {
-                    var target = event.target,
-                        // keep the dragged position in the data-x/data-y attributes
-                        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-                        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-                
+                onmove: function (event) {
+                    var target = event.target;
+                    var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+                    var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
                     // translate the element
-                    target.style.webkitTransform =
-                    target.style.transform =
-                      'translate(' + x + 'px, ' + y + 'px)';
-                
+                    target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+
                     // update the posiion attributes
                     target.setAttribute('data-x', x);
                     target.setAttribute('data-y', y);
-                  }
+                }
             })
             .resizable({
                 preserveAspectRatio: true,

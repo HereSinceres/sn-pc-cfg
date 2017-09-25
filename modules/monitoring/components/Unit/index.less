@@ -1,14 +1,13 @@
 
 .unit {
-    height: 100%;
     background: url("./bg.png");
-    background-size: cover;
+    // background-size: cover;
     box-shadow: 2px 2px 2px rgba(0,0,0,.1);
 }
 .u-drag {
+    position: absolute;
     border: 1px dashed #808080;
     font-size: 22px;
-    position: absolute;
     &:hover {
         border-color: #3b8bba;
         font-size: 22px;
@@ -18,52 +17,47 @@
 .J-unit {
     position: relative;
 }
-
-
-
-
-
 .rotateHandler:after {
     content: "";
     position: absolute;
-    width: 2px;
-    height: 18px;
-    background: #5BB6F3;
     top: 10px;
     left: 50%;
+    width: 2px;
+    height: 18px;
     margin-left: -1px;
+    background: #5bb6f3;
 }
 
-.rotateHandler { 
+.rotateHandler {
     position: absolute;
     top: -30px;
     left: 50%;
     width: 8px;
     height: 8px;
     margin-left: -6px;
-    cursor: pointer; 
-    border-radius: 100%;
-    background: #5BB6F3;
     border: 2px solid #fff;
+    border-radius: 100%;
+    background: #5bb6f3;
     box-shadow: 0 1px 1px rgba(0,0,0,.3);
+    cursor: pointer;
 }
 
 .degreePrinter,
 .widthPrinter,
-.heightPrinter { 
-    text-align: center;
+.heightPrinter {
+    position: absolute;
     display: block;
     width: 40px;
-    position: absolute;
+    height: 15px;
+    margin-top: -9.5px;
     margin-left: -20px;
     border: none;
-    border-radius: 2px;
     font-size: 12px;
-    color: #000;
-    background-color: rgba(255,255,255,.7);
-    height: 15px;
     line-height: 15px;
-    margin-top: -9.5px;
+    text-align: center;
+    color: #000;
+    border-radius: 2px;
+    background-color: rgba(255,255,255,.7);
 }
 
 // editable css
@@ -72,32 +66,64 @@
     left: 50%;
 }
 
-.widthPrinter { 
+.widthPrinter {
     bottom: -30px;
     left: 50%;
 }
 
-.heightPrinter { 
-    right: -55px;
+.heightPrinter {
     top: 50%;
-} 
+    right: -55px;
+}
 
 .resizeHandler {
     position: absolute;
     width: 6px;
     height: 6px;
-    background: #5BB6F3;
     border: 2px solid #fff;
+    background: #5bb6f3;
     box-shadow: 0 1px 1px rgba(0,0,0,.3);
 }
 
-.resizeHandler.bottomLeftHandler    { bottom: -10px; left: -10px; }
-.resizeHandler.bottomCenterHandler  { bottom: -10px; margin: 0 auto; left: 0; right: 0; }
-.resizeHandler.bottomRightHandler   { bottom: -10px; right: -10px; }
+.resizeHandler.bottomLeftHandler {
+    bottom: -10px;
+    left: -10px;
+}
+.resizeHandler.bottomCenterHandler {
+    right: 0; 
+    bottom: -10px;
+    left: 0;
+    margin: 0 auto;
+}
+.resizeHandler.bottomRightHandler {
+    right: -10px; 
+    bottom: -10px;
+}
 
-.resizeHandler.centerLeftHandler    { left: -10px; margin: auto 0; bottom: 0; top: 0; }
-.resizeHandler.centerRightHandler   { right: -10px; margin: auto 0; bottom: 0; top: 0; }
+.resizeHandler.centerLeftHandler {
+    top: 0; 
+    bottom: 0;
+    left: -10px;
+    margin: auto 0;
+}
+.resizeHandler.centerRightHandler {
+    top: 0; 
+    right: -10px;
+    bottom: 0;
+    margin: auto 0;
+}
 
-.resizeHandler.topLeftHandler       { top: -10px; left: -10px; }
-.resizeHandler.topCenterHandler     { top: -10px; margin: 0 auto; left: 0; right: 0; }
-.resizeHandler.topRightHandler      { top: -10px; right: -10px; }
+.resizeHandler.topLeftHandler {
+    top: -10px;
+    left: -10px;
+}
+.resizeHandler.topCenterHandler {
+    top: -10px;
+    right: 0; 
+    left: 0;
+    margin: 0 auto;
+}
+.resizeHandler.topRightHandler {
+    top: -10px;
+    right: -10px;
+}
