@@ -1,8 +1,7 @@
 var comlib = require('modules/monitoring/components/ComponentLib/index.es');
 var interact = require('modules/lib/interact/interact.js');
 var Base = require('modules/monitoring/Base.es');
-var proStorage = require('modules/monitoring/dataService/proset.es');
-
+var cfgSet = require('modules/monitoring/dataService/cfgSet.es');
 module.exports = {
     components: {},
     data: function () {
@@ -39,10 +38,9 @@ module.exports = {
 
     },
     methods: {
-
         init: function () {
             var self = this;
-            $(self.$el).find('.J-wrapper').append(proStorage.getItem());
+            $(self.$el).find('.J-wrapper').append(cfgSet.getItem());
             $(self.$el).find('[data-cfg-uuid]').each(function () {
                 var eleDom = this;
                 var data = $(eleDom).data();
@@ -58,7 +56,7 @@ module.exports = {
             });
         },
         save: function () {
-            proStorage.setItem($(this.$el).find('.J-wrapper').html());
+            cfgSet.setItem($(this.$el).find('.J-wrapper').html());
             $.notify({
                 message: '保存成功'
             });
@@ -79,8 +77,7 @@ module.exports = {
             if (this.rightClickDom) {
                 if ($(this.rightClickDom).hasClass('u-drag')) {
                     $(this.rightClickDom).remove();
-                }
-                else {
+                } else {
                     $(this.rightClickDom).closest('.u-drag').remove();
                 }
             }
