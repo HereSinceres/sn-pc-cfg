@@ -1,16 +1,33 @@
 
 
 module.exports = {
-  // 文本框（只读，可读写）
-  'DOMTYPE_TXT': 'DOMTYPE_TXT',
-  // 图片（）
-  'DOMTYPE_IMG': 'DOMTYPE_IMG',
-  // 按钮（跳转连接，不同按钮）
-  'DOMTYPE_BUTTON': 'DOMTYPE_BUTTON',
-  // 指示灯
-  'DOMTYPE_SIGNLIGHT': 'DOMTYPE_SIGNLIGHT'
-}
+    // 文本框（只读，可读写）
+    DOMTYPE_TXT: 'DOMTYPE_TXT',
 
+     
+    // // 按钮（跳转连接，不同按钮）
+    // DOMTYPE_BUTTON: 'DOMTYPE_BUTTON',
+    // // 指示灯
+    // DOMTYPE_SIGNLIGHT: 'DOMTYPE_SIGNLIGHT',
+
+
+    // 直线
+    DOMTYPE_LINE: 'DOMTYPE_LINE',
+    // 矩形
+    DOMTYPE_RECT: 'DOMTYPE_RECT',
+    // 圆形
+    DOMTYPE_CIRCLE: 'DOMTYPE_CIRCLE',
+    // 椭圆形
+    DOMTYPE_ELLIPSE: 'DOMTYPE_ELLIPSE',
+    // 自定SVG
+    DOMTYPE_SVG: 'DOMTYPE_SVG',
+    // 图标文本
+    DOMTYPE_ICON: 'DOMTYPE_ICON',
+    // 图片（）
+    DOMTYPE_IMAGE:'DOMTYPE_IMAGE'
+
+
+};
 
 // TODO 基本组件
 // TODO 添加到编辑框
@@ -21,4 +38,3 @@ module.exports = {
 // 预览 变量设置
 // 设置计算变量
 // 设置面板
-

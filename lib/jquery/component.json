@@ -1,0 +1,11 @@
+{
+    "name": "jquery",
+    "description": "jQuery: The Write Less, Do More, JavaScript Library (packaged for Node.JS)",
+    "repos": "https://github.com/jquery/jquery",
+    "main": "jquery.js",
+    "tag": "",
+    "reposType": "npm",
+    "dependencies": {},
+    "version": "1.9.1",
+    "umd2commonjs": true
+}
