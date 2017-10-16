@@ -1,4 +1,4 @@
-var store = require('modules/monitoring/dataService/store.es'); 
+var store = require('modules/monitoring/dataService/store.es');
 
 
 // 在拦截发送请求之前可以使用：
@@ -13,7 +13,7 @@ $(document).ajaxSuccess(function (event, request, settings) {
 });
 $(document).ajaxError(function (event, request, settings) {
     // console.log(request.status);
-    alert('网络错误，请稍后重试');
+    console.log('网络错误，请稍后重试');
 });
 // 执行success之前
 function beforeDealSuccess(data) {
@@ -49,9 +49,9 @@ module.exports = {
         });
     },
     getCFGListByProId: function (proId) {
-        var url = '/useradmin/project/GetCfgManagementByProjectId';
+        var url = '/UserAdmin/project/GetCfgManagementByProjectId';
         return $.get(url, {
-            proId:proId
+            proId: proId
         });
     },
     getVarValueByProId: function (proId) {
@@ -65,7 +65,7 @@ module.exports = {
         var url = '/useradmin/EquipmentVariable/ChangeVariableValue';
         return $.post(url, {
             eVariableId: p.eVariableId,
-            newValue:p.newValue
+            newValue: p.newValue
         });
     }
 };

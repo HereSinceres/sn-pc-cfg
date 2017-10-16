@@ -130,9 +130,11 @@ module.exports = {
         savePaintSet: function () {
             this.isShowCanvasSetDialog = 0;
             var canvasDom = $(this.$el).find('.J-wrapper')[0];
-            canvasDom.style.width = this.canvas.w + 'px';
-            canvasDom.style.height = this.canvas.h + 'px';
-            canvasDom.style.backgroundColor = this.canvas.bg;
+            if (canvasDom) {
+                canvasDom.style.width = this.canvas.w + 'px';
+                canvasDom.style.height = this.canvas.h + 'px';
+                canvasDom.style.backgroundColor = this.canvas.bg;
+            }
         }
     }
 };
