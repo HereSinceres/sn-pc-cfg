@@ -42,7 +42,9 @@ module.exports = {
         this.icon = this.$dom.find('span').attr('class');
         this.fontSize = target.style.fontSize;
         this.color = target.style.color;
-        this.cfg_var_binded_ouput_deal = JSON.parse(this.$dom.attr('data-cfg_var_binded_ouput_deal') || []);
+        try {
+            this.cfg_var_binded_ouput_deal = JSON.parse(this.$dom.attr('data-cfg_var_binded_ouput_deal') || []);
+        } catch (error) {}
     },
     methods: {
         ok: function () {
@@ -65,12 +67,12 @@ module.exports = {
                 initValue: 1,
                 operator: '<=',
                 callback: [{
-                        name: '字体大小',
+                        name: '字体大小[eg:12px]',
                         attr: 'fontSize',
                         value: ''
                     },
                     {
-                        name: '颜色',
+                        name: '颜色[eg:red]',
                         attr: 'color',
                         value: ''
                     }
@@ -78,7 +80,7 @@ module.exports = {
             });
         },
         removeOperate: function (item) {
-            let index = this.cfg_var_binded_ouput_deal.indexOf(item)
+            let index = this.cfg_var_binded_ouput_deal.indexOf(item);
             this.cfg_var_binded_ouput_deal.splice(index, 1);
         }
     }

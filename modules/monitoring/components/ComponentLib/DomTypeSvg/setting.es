@@ -2,15 +2,14 @@ var Base = require('modules/monitoring/Base.es');
 var interact = require('modules/lib/interact/interact.js');
 var domUtil = require('modules/util/dom/domUtil.es');
 var commonAttrSet = require('modules/monitoring/components/ComponentLib/components/CommonAttr/commonAttrSet.es');
-
-var variable = require('modules/monitoring/dataService/variable.es');
+ 
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 module.exports = {
     id: 1,
     type: Base.CONST_DOM_TYPE.DOMTYPE_SVG,
     name: '自定义SVG',
     desc: '自定义SVG',
-    renderToPaintDom: function () {
+    renderToCanvas: function () {
         var dom = `<svg 
                         class='u-drag'
                         data-cfg_type="${this.type}"
@@ -40,6 +39,6 @@ module.exports = {
         baseSetting.monitorCallBack(dom);
         // 获取dom上的data 属性 根据 data 属性修改数据
         console.log(data.cfg_var_binded_ouput);
-        $(dom).html(variable.getItem()[data.cfg_var_binded_ouput]);
+        $(dom).html(variable.getValueByVar(data.cfg_var_binded_ouput));
     }
 };

@@ -10,13 +10,13 @@ module.exports = {
     type: Base.CONST_DOM_TYPE.DOMTYPE_ELLIPSE,
     name: '椭圆形',
     desc: '椭圆形',
-    renderToPaintDom: function () {
+    renderToCanvas: function () {
         var dom = `<svg 
                         class='u-drag'
                         data-cfg_type="${this.type}"
                         data-cfg-uuid="J_uuid_${Base.uuid()}"
-                        xmlns="http://www.w3.org/2000/svg">  
-                        <ellipse cx="50%" cy="50%" rx="50%" ry="50%" style="stroke: black;fill:transparent;"  /> 
+                        xmlns="http://www.w3.org/2000/svg" style="stroke: black;stroke-width: 2px;"> 
+                        <ellipse cx="50%" cy="50%" rx="50%" ry="50%"  style="fill:transparent;"  />
                    </svg>`;
         return dom;
     },
@@ -33,10 +33,31 @@ module.exports = {
         });
     },
     monitorCallBack: function (dom) {
-        var data = $(dom).data();
         baseSetting.monitorCallBack(dom);
-        // 获取dom上的data 属性 根据 data 属性修改数据
-        console.log(data.cfg_var_binded_ouput);
-        $(dom).html(variable.getItem()[data.cfg_var_binded_ouput]);
+
+        function setCallback(dom, callback) {
+            var object = {};
+            // 行转列
+            callback.forEach(function (element) {
+                object[element.attr] = element.value;
+            }, this);
+            for (var key in object) {
+                if (object.hasOwnProperty(key)) {
+                    var element = object[key];
+                    // 可过滤数据
+                    // if (key == 'fontSize') {
+                    //     dom.style[key] = element + 'px';
+                    // } else {  
+                    dom.style[key] = element;
+                    // }
+                }
+
+            }
+            // 获取dom上的data 属性 根据 data 属性修改数据
+            var data = $(dom).data();
+        }
+        Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR, function () {
+            baseSetting.switchOperator(dom, setCallback);
+        });
     }
 };

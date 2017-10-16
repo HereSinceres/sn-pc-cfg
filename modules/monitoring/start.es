@@ -1,9 +1,9 @@
-
 var Vue = require('modules/lib/vue/vue.js');
 var VueRouter = require('modules/lib/vue/vue-router.js');
 Vue.use(VueRouter);
 var routerConfig = require('./routerConfig.es');
-var api = require('modules/monitoring/dataService/api.es'); 
+var api = require('modules/monitoring/dataService/api.es');
+var store = require('modules/monitoring/dataService/store.es');
 
 const router = new VueRouter({
     routes: routerConfig
@@ -14,6 +14,7 @@ router.afterEach(function (router) {
         $(window).resize();
     }, 0);
 });
+
 function run() {
     new Vue({
         router: router,
@@ -31,7 +32,6 @@ function run() {
         mounted: function () {},
         destroyed: function () {}
     }).$mount('#app');
-} 
-api.getProList(function () { 
-    run();
-});
+}
+
+run();

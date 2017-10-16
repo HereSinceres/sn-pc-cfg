@@ -1,9 +1,17 @@
 <div class="nav-tabs-custom form-horizontal">
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#tab_1" data-toggle="tab">样式[公用]</a></li>
-    <li class=""><a href="#tab_2" data-toggle="tab">输入属性[公用]</a></li>
-    <li class=""><a href="#tab_3" data-toggle="tab">绑定变量</a></li>
-    <li class=""><a href="#tab_4" data-toggle="tab">私有属性</a></li>
+    <li class="active">
+      <a href="#tab_1" data-toggle="tab">样式[公用]</a>
+    </li>
+    <li class="">
+      <a href="#tab_2" data-toggle="tab">输入属性[公用]</a>
+    </li>
+    <li class="">
+      <a href="#tab_3" data-toggle="tab">绑定变量</a>
+    </li>
+    <li class="">
+      <a href="#tab_4" data-toggle="tab">私有属性</a>
+    </li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab_1">
@@ -17,9 +25,9 @@
         <label class="col-sm-2 control-label">绑定变量</label>
         <div class="col-sm-10">
           <select class="form-control" v-model="cfg_var_binded_ouput">
-                        <option v-for="(value, key) in variable" v-bind:value="key">
-                            {{ key }}: {{ value }}
-                        </option>
+            <option v-for="item in variable" v-bind:value="item.vid">
+              {{ item.vName }}: {{ item.vValue }}
+            </option>
           </select>
         </div>
       </div>
@@ -36,9 +44,9 @@
             </div>
             <div class="col-xs-3">
               <select class="form-control" v-model="item.operator">
-                    <option v-for="(value, key) in operatorList" v-bind:value="value">
-                        {{ key }}: {{ value }}
-                    </option>
+                <option v-for="(value, key) in operatorList" v-bind:value="value">
+                  {{ key }}: {{ value }}
+                </option>
               </select>
             </div>
             <div class="col-xs-2">
@@ -62,13 +70,13 @@
       <div class="form-group">
         <label class="col-sm-3 control-label">字体大小</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" v-model='fontSize'>
+          <input type="text" class="form-control" v-model='fontSize' placeholder="eg:12px">
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-3 control-label">颜色</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" v-model='color'>
+          <input  type="color" class="form-control" v-model='color' placeholder="red">
         </div>
       </div>
       <div class="clearfix">

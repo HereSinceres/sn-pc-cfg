@@ -2,15 +2,14 @@ var Base = require('modules/monitoring/Base.es');
 var interact = require('modules/lib/interact/interact.js');
 var domUtil = require('modules/util/dom/domUtil.es');
 var commonAttrSet = require('modules/monitoring/components/ComponentLib/components/CommonAttr/commonAttrSet.es');
-
-var variable = require('modules/monitoring/dataService/variable.es');
+ 
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 module.exports = {
     id: 1,
     type: Base.CONST_DOM_TYPE.DOMTYPE_TXT,
     name: '文本类型',
     desc: '文本类型',
-    renderToPaintDom: function () {
+    renderToCanvas: function () {
         var dom = `<div 
             class='u-drag'
             data-cfg_type="${this.type}"
@@ -28,6 +27,17 @@ module.exports = {
             // SHOW_UNIT_CONFIG 
             Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [$dom, data]);
         });
+    },
+    setDefaultStyle: function (container, dom) {
+        var x = $(container).width() / 2;
+        var y = $(container).height() / 2;
+        var target = dom;
+        // translate the element
+        target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+        // update the posiion attributes
+        target.setAttribute('data-x', x);
+        target.setAttribute('data-y', y);
+
     },
     monitorCallBack: function (dom) {
         baseSetting.monitorCallBack(dom);
@@ -54,7 +64,7 @@ module.exports = {
 
             // 获取dom上的data 属性 根据 data 属性修改数据
             var data = $(dom).data();
-            $(dom).html(variable.getItem()[data.cfg_var_binded_ouput]);
+            $(dom).html(variable.getValueByVar(data.cfg_var_binded_ouput));
         }
         Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR, function () {
             baseSetting.switchOperator(dom, setCallback);

@@ -2,7 +2,7 @@
 fis.set('project.name', 'fis3-base');
 fis.set('project.static', '/static');
 fis.set('project.files', ['*.html', 'map.json', '/test/*']);
-
+ 
 // 引入模块化开发插件，设置规范为 commonJs 规范。
 
 fis.hook('commonjs', {
@@ -79,7 +79,7 @@ fis.match(/^\/modules\/(.*\.(scss|less|css))$/i, {
     release: '${project.static}/$1',
     postprocessor: fis.plugin('autoprefixer', {
         browsers: ['IE >= 8', 'Chrome >= 30', 'last 2 versions'] // pc
-            // browsers: ['Android >= 4', 'ChromeAndroid > 1%', 'iOS >= 6'] // wap
+        // browsers: ['Android >= 4', 'ChromeAndroid > 1%', 'iOS >= 6'] // wap
     })
 });
 fis.match(/^\/modules\/(.*\.(?:png|jpg|gif))$/i, {
@@ -154,7 +154,7 @@ var map = {
 };
 
 // 通用 1.替换url前缀 2.添加mr5码 3.打包 4.合图 5.重新定义资源路径
-Object.keys(map).forEach(function(v) {
+Object.keys(map).forEach(function (v) {
     var o = map[v];
     var domain = o.host + o.path;
 
@@ -210,19 +210,19 @@ Object.keys(map).forEach(function(v) {
         .match('/modules/app/**.{es,js}', {
             packTo: '/pkg/aio.js'
         })
-        // 为了上线方便，将静态文件发布到同一个目录
-        // .match('**/(*.{css,less,scss,es,js,jpg,png,gif})', {
-        //     release: '/prod/$1'
-        // })
+    // 为了上线方便，将静态文件发布到同一个目录
+    // .match('**/(*.{css,less,scss,es,js,jpg,png,gif})', {
+    //     release: '/prod/$1'
+    // })
 });
 
 
 // 压缩css js html
 Object.keys(map)
-    .filter(function(v) {
+    .filter(function (v) {
         return v.indexOf('debug') < 0
     })
-    .forEach(function(v) {
+    .forEach(function (v) {
         fis.media(v)
             // .match('**.html', {
             //     optimizer: fis.plugin('html-compress')
@@ -255,7 +255,7 @@ fis.media('prod')
 
 
 // 发布到指定的机器
-['rd', 'rd-debug'].forEach(function(v) {
+['rd', 'rd-debug'].forEach(function (v) {
     fis.media(v)
         .match('*', {
             deploy: [

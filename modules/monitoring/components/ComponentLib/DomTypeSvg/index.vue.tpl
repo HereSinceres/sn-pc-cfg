@@ -17,9 +17,9 @@
         <label class="col-sm-2 control-label">绑定变量</label>
         <div class="col-sm-10">
           <select class="form-control" v-model="cfg_var_binded_ouput">
-                        <option v-for="(value, key) in variable" v-bind:value="key">
-                            {{ key }}: {{ value }}
-                        </option>
+            <option v-for="item in variable" v-bind:value="item.vid">
+              {{ item.vName }}: {{ item.vValue }}
+            </option>
           </select>
         </div>
       </div>

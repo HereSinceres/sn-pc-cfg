@@ -2,19 +2,19 @@ var comlib = require('modules/monitoring/components/ComponentLib/index.es');
 var interact = require('modules/lib/interact/interact.js');
 var Base = require('modules/monitoring/Base.es');
 var variable = require('modules/monitoring/dataService/variable.es');
- 
+
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
- 
+
 module.exports = {
     props: ['$dom', 'data'],
-    components: { 
-        CommonStyle: require('modules/monitoring/components/ComponentLib/components/CommonStyle/index.es') ,
-        CommonAttr: require('modules/monitoring/components/ComponentLib/components/CommonAttr/index.es') ,
+    components: {
+        CommonStyle: require('modules/monitoring/components/ComponentLib/components/CommonStyle/index.es'),
+        CommonAttr: require('modules/monitoring/components/ComponentLib/components/CommonAttr/index.es'),
     },
     data: function () {
-        return { 
+        return {
             // 绑定的变量
-            variable: variable.getItem(), 
+            variable: variable.getItem(),
             cfg_var_binded_ouput: null,
             fontSize: null,
             color: null,
@@ -31,12 +31,16 @@ module.exports = {
         this.cfg_var_binded_ouput = this.$dom.attr('data-cfg_var_binded_ouput');
         this.fontSize = target.style.fontSize;
         this.color = target.style.color;
-        this.cfg_var_binded_ouput_deal = JSON.parse(this.$dom.attr('data-cfg_var_binded_ouput_deal') || []);
+        try {
+            this.cfg_var_binded_ouput_deal = JSON.parse(this.$dom.attr('data-cfg_var_binded_ouput_deal') || []);
+        } catch (error) {
+
+        }
     },
     methods: {
-        ok:function(){
+        ok: function () {
             var target = this.$dom[0];
-            this.$dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput); 
+            this.$dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
             target.style.fontSize = this.fontSize;
             target.style.color = this.color;
             // 结果处理
@@ -50,12 +54,12 @@ module.exports = {
                 initValue: 1,
                 operator: '<=',
                 callback: [{
-                        name: '字体大小',
+                        name: '字体大小[eg:12px]',
                         attr: 'fontSize',
                         value: ''
                     },
                     {
-                        name: '颜色',
+                        name: '颜色[eg:red]',
                         attr: 'color',
                         value: ''
                     }

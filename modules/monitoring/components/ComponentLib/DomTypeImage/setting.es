@@ -2,8 +2,7 @@ var Base = require('modules/monitoring/Base.es');
 var interact = require('modules/lib/interact/interact.js');
 var domUtil = require('modules/util/dom/domUtil.es');
 var commonAttrSet = require('modules/monitoring/components/ComponentLib/components/CommonAttr/commonAttrSet.es');
-
-var variable = require('modules/monitoring/dataService/variable.es');
+ 
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 
 module.exports = {
@@ -11,7 +10,7 @@ module.exports = {
     type: Base.CONST_DOM_TYPE.DOMTYPE_IMAGE,
     name: '图片类型',
     desc: '图片类型',
-    renderToPaintDom: function () { 
+    renderToCanvas: function () { 
         var img = __uri('modules/monitoring/picLib/test_gif.gif');
         var dom = `<div 
             class='u-drag'

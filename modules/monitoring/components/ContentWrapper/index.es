@@ -7,7 +7,13 @@ module.exports = {
     data: function () {
         return {
             comlib: comlib,
-            rightClickDom: null
+            rightClickDom: null,
+            isShowCanvasSetDialog: false,
+            canvas: {
+                w: null,
+                h: null,
+                bg: null
+            }
         };
     },
     watch: {
@@ -19,28 +25,36 @@ module.exports = {
 
         function callBack(item) {
             console.log(item);
-            var html = item.renderToPaintDom();
+            var html = item.renderToCanvas();
             var $html = $.parseHTML(html);
-            // 添加dom to paint 
-
+            // 添加dom to paint  
             $(self.$el).find('.J-wrapper').append($html);
             // 绑定拖拽事件
-            item.bindDragEvent($html[0]);
+            if (item.bindDragEvent) {
+                item.bindDragEvent($html[0]);
+            }
             // 添加弹窗事件
-            item.bindOpenSetEvent($html[0]);
+            if (item.bindOpenSetEvent) {
+                item.bindOpenSetEvent($html[0]);
+            }
+            // 设置默认样式
+            if (item.setDefaultStyle) {
+                item.setDefaultStyle(self.$el, $html[0])
+            }
             self.bindRightClickEvent();
         }
         Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.ADD_NEWUNIT, callBack);
 
         // 初始化项目
         self.init();
-        self.bindRightClickEvent();
 
     },
     methods: {
         init: function () {
             var self = this;
-            $(self.$el).find('.J-wrapper').append(cfgSet.getItem());
+            if (cfgSet.getItem()) {
+                $(self.$el).find('.J-wrapper').replaceWith(cfgSet.getItem());
+            }
             $(self.$el).find('[data-cfg-uuid]').each(function () {
                 var eleDom = this;
                 var data = $(eleDom).data();
@@ -51,12 +65,18 @@ module.exports = {
                         // 添加弹窗事件
                         element.bindOpenSetEvent(eleDom);
                     }
-
                 }, this);
             });
+            self.bindRightClickEvent();
+
+            var canvasDom = $(self.$el).find('.J-wrapper')[0];
+            this.canvas.w = (parseFloat(canvasDom.style.width) || canvasDom.clientWidth || 0);
+            this.canvas.h = (parseFloat(canvasDom.style.height) || canvasDom.clientHeight || 0);
+            this.canvas.bg = canvasDom.style.backgroundColor;
+
         },
-        save: function () {
-            cfgSet.setItem($(this.$el).find('.J-wrapper').html());
+        saveDraft: function () {
+            cfgSet.setItem($(this.$el).find('.J-wrapper')[0].outerHTML);
             $.notify({
                 message: '保存成功'
             });
@@ -86,6 +106,33 @@ module.exports = {
         set: function () {
             // 模拟点击双击，当前功能可不用
             $(this.rightClickDom).dblclick();
+        },
+        copy: function () {
+            // 有bug TODO 
+            if (this.rightClickDom) {
+                var newDom = null;
+                if ($(this.rightClickDom).hasClass('u-drag')) {
+                    newDom = $(this.rightClickDom);
+                } else {
+                    newDom = $(this.rightClickDom).closest('.u-drag');
+                }
+                console.log(newDom);
+                debugger
+                if (newDom) {
+                    $(this.$el).find('.J-wrapper').append(newDom);
+                    this.init();
+                }
+            }
+        },
+        toggleCanvasSet: function (isShow) {
+            this.isShowCanvasSetDialog = isShow;
+        },
+        savePaintSet: function () {
+            this.isShowCanvasSetDialog = 0;
+            var canvasDom = $(this.$el).find('.J-wrapper')[0];
+            canvasDom.style.width = this.canvas.w + 'px';
+            canvasDom.style.height = this.canvas.h + 'px';
+            canvasDom.style.backgroundColor = this.canvas.bg;
         }
     }
 };

@@ -11,7 +11,7 @@ module.exports = {
     type: Base.CONST_DOM_TYPE.DOMTYPE_ICON,
     name: '图标类型',
     desc: '图标类型',
-    renderToPaintDom: function () {
+    renderToCanvas: function () {
         var dom = `<div 
             class='u-drag'
             data-cfg_type="${this.type}"

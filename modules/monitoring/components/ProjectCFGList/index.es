@@ -5,6 +5,7 @@ var variable = require('modules/monitoring/dataService/variable.es');
 
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 var api = require('modules/monitoring/dataService/api.es');
+var store = require('modules/monitoring/dataService/store.es');
 module.exports = {
     props: [],
     components: {
@@ -12,7 +13,11 @@ module.exports = {
     },
     data: function () {
         return {
-
+            isShowPro: false,
+            isShowCfg: false,
+            proList: null,
+            cfgList: null,
+            choosePro: null
         };
     },
     watch: {
@@ -20,9 +25,33 @@ module.exports = {
     },
     template: __inline('./index.vue.tpl'),
     mounted: function () {
-        console.log(this.$route.params.proId, this.$route.params.cfgId);
+        this.cfgList = store.cfgList;
+        this.proList = store.proList; 
+        console.log(this.$route.params.cfgId);
     },
     methods: {
-
+        toggleIsShowPro: function () {
+            this.isShowPro = !this.isShowPro;
+            if (!this.isShowPro) {
+                this.isShowCfg = this.isShowPro;
+            }
+            if (this.isShowCfg) {
+                this.isShowCfg = !this.isShowCfg;
+            }
+        },
+        jumpPro: function (item) {
+            this.choosePro = item;
+            this.isShowPro = false;
+            this.isShowCfg = true;
+        },
+        jump: function (item) {
+            console.log(item);
+            this.isShowCfg = false;
+        },
+        addCfg: function (item) {
+            bootbox.prompt('输入组态名称', function (result) {
+                console.log(result);
+            });
+        }
     }
 };

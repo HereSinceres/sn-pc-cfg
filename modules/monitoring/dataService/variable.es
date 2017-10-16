@@ -4,5 +4,15 @@ module.exports = {
     },
     getItem: function () {
         return JSON.parse(localStorage.getItem('variable'));
+    },
+    getValueByVar: function (variable) {
+        var result = null;
+        debugger
+        this.getItem().forEach(function (element) {
+            if (element.vid == variable) {
+                result = element.vValue;
+            }
+        }, this);
+        return result;
     }
 };

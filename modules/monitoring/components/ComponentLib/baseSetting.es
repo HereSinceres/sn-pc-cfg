@@ -127,54 +127,58 @@ module.exports = {
             });
     },
     operatorList: operatorList,
-    switchOperator: function (dom,setCallback) {
+    switchOperator: function (dom, setCallback) {
         var data = $(dom).data();
-        var output = variable.getItem()[data.cfg_var_binded_ouput];
-        var cfg_var_binded_ouput_deal = data.cfg_var_binded_ouput_deal; 
-        cfg_var_binded_ouput_deal.forEach(function (element) { 
-            var initValue = element.initValue;
-            switch (element.operator) {
-                case operatorList.equal:
-                    if (output == initValue) {
-                        setCallback(dom, element.callback);
-                    }
+        var output = variable.getValueByVar(data.cfg_var_binded_ouput);
+        var cfg_var_binded_ouput_deal = data.cfg_var_binded_ouput_deal;
+        console.log(cfg_var_binded_ouput_deal);
+        if (cfg_var_binded_ouput_deal) {
+            cfg_var_binded_ouput_deal.forEach(function (element) {
+                var initValue = element.initValue;
+                switch (element.operator) {
+                    case operatorList.equal:
+                    debugger
+                        if (output == initValue) {
+                            setCallback(dom, element.callback);
+                        }
 
-                    break;
-                case operatorList.notEqual:
-                    if (output != initValue) {
-                        setCallback(dom, element.callback);
-                    }
+                        break;
+                    case operatorList.notEqual:
+                        if (output != initValue) {
+                            setCallback(dom, element.callback);
+                        }
 
-                    break;
-                case operatorList.greaterThan:
+                        break;
+                    case operatorList.greaterThan:
 
-                    if (output > initValue) {
-                        setCallback(dom, element.callback);
-                    }
+                        if (output > initValue) {
+                            setCallback(dom, element.callback);
+                        }
 
-                    break;
-                case operatorList.greaterThanOrEqual:
-                    if (output >= initValue) {
-                        setCallback(dom, element.callback);
-                    }
+                        break;
+                    case operatorList.greaterThanOrEqual:
+                        if (output >= initValue) {
+                            setCallback(dom, element.callback);
+                        }
 
-                    break;
-                case operatorList.lessThan:
-                    if (output < initValue) {
-                        setCallback(dom, element.callback);
-                    }
+                        break;
+                    case operatorList.lessThan:
+                        if (output < initValue) {
+                            setCallback(dom, element.callback);
+                        }
 
-                    break;
-                case operatorList.lessThanOrEqual:
-                    if (output <= initValue) {
-                        setCallback(dom, element.callback);
-                    }
+                        break;
+                    case operatorList.lessThanOrEqual:
+                        if (output <= initValue) {
+                            setCallback(dom, element.callback);
+                        }
 
-                    break;
+                        break;
 
-                default:
-                    break;
-            }
-        }, this);
+                    default:
+                        break;
+                }
+            }, this);
+        }
     }
 };

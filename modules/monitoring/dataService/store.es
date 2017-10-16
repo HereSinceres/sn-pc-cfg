@@ -1,4 +1,7 @@
 module.exports = {
-  proList:[],
-  cfgList:[]
+  proList: [],
+  cfgList: [],
+  getUserInfo: function () {
+    return JSON.parse(localStorage.getItem('Au_USERINFO'));
+  }
 };
