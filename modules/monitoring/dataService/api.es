@@ -49,10 +49,14 @@ module.exports = {
         });
     },
     getCFGListByProId: function (proId) {
-        var url = '/UserAdmin/project/GetCfgManagementByProjectId';
-        return $.get(url, {
+        var url = '/Useradmin/project/GetCfgManagementByProjectId';
+        return $.post(url, {
             proId: proId
         });
+    },
+    AddCfgManagement: function (data) {
+        var url = '/Useradmin/project/AddCfgManagement';
+        return $.post(url, data);
     },
     getVarValueByProId: function (proId) {
         var url = '/useradmin/Project/GetVariableValueByProjectId';

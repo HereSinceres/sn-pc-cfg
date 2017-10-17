@@ -7,7 +7,6 @@ module.exports = {
     },
     getValueByVar: function (variable) {
         var result = null;
-        debugger
         this.getItem().forEach(function (element) {
             if (element.vid == variable) {
                 result = element.vValue;

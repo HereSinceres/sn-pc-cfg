@@ -137,7 +137,6 @@ module.exports = {
                 var initValue = element.initValue;
                 switch (element.operator) {
                     case operatorList.equal:
-                    debugger
                         if (output == initValue) {
                             setCallback(dom, element.callback);
                         }

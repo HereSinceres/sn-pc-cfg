@@ -117,7 +117,6 @@ module.exports = {
                     newDom = $(this.rightClickDom).closest('.u-drag');
                 }
                 console.log(newDom);
-                debugger
                 if (newDom) {
                     $(this.$el).find('.J-wrapper').append(newDom);
                     this.init();

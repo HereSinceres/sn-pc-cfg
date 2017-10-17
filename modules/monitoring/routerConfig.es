@@ -6,20 +6,34 @@ var api = require('modules/monitoring/dataService/api.es');
 var store = require('modules/monitoring/dataService/store.es');
 var variable = require('modules/monitoring/dataService/variable.es');
 
+function getCFGListByProId(proId, callback) {
+  api.getCFGListByProId(proId).then(function (res) {
+    store.cfgList = res.Data;
+    if (store.cfgList.length > 0) {
+      callback();
+    } else {
+      var data = {
+        id: '',
+        proId: proId,
+        cfgName: '默认配置',
+        html: '',
+        tag: 0
+      };
+      // 创建一个默认组态界面
+      api.AddCfgManagement(data).then(function () {
+        getCFGListByProId(proId);
+      })
+    }
+  }, function (error) {});
+}
 var routes = [{
     path: '/',
     beforeEnter: (to, from, next) => {
       api.getProList().then(function (res) {
         store.proList = res.rows;
-        console.log(store.proList);
         var proId = res.rows[4].ProjectId;
-        api.getCFGListByProId(proId).then(function (res) {
-          store.cfgList = res.rows;
-          next('/cfg/' + proId + '/');
-        }, function (error) {
-          console.log(error);
-          // TODO 删除
-          next('/cfg/' + proId + '/1');
+        getCFGListByProId(proId, function () {
+          next('/cfg/' + proId + '/' + store.cfgList[0].id);
         });
       });
     }
@@ -30,24 +44,10 @@ var routes = [{
     beforeEnter: (to, from, next) => {
       api.getProList().then(function (res) {
         store.proList = res.rows;
-
-        api.getVarValueByProId(to.params.proId).then(function (res) {
-          if (res.success) {
-            variable.setItem(res.Data);
-            api.getCFGListByProId().then(function (res) {
-              store.cfgList = res.rows;
-              next();
-            }, function (error) {
-              console.log(error);
-              // TODO 删除
-              next();
-            });
-          } 
-        }, function (error) {
-          console.log(error); 
+        getCFGListByProId(to.params.proId, function () {
+          next();
         });
-
-      });
+      }); 
     }
   },
   {

@@ -1,6 +1,6 @@
 <div class="content-wrapper ">
   <section class="tools-sider">
-    <i class="fa fa-save" v-on:click='saveDraft'>保存草稿</i>
+    <i class="fa fa-save" v-on:click='saveDraft'>预览</i>
     <i class="fa fa-pen" v-on:click="toggleCanvasSet(1)">画布设置</i>
   </section>
   <div class="modal fade in" style="display:block;" v-if="isShowCanvasSetDialog">

@@ -17,7 +17,8 @@ module.exports = {
             isShowCfg: false,
             proList: null,
             cfgList: null,
-            choosePro: null
+            choosePro: null,
+            activeProId: null
         };
     },
     watch: {
@@ -26,8 +27,8 @@ module.exports = {
     template: __inline('./index.vue.tpl'),
     mounted: function () {
         this.cfgList = store.cfgList;
-        this.proList = store.proList; 
-        console.log(this.$route.params.cfgId);
+        this.proList = store.proList;
+        this.activeProId = this.$route.params.proId;
     },
     methods: {
         toggleIsShowPro: function () {

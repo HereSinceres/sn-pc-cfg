@@ -1,0 +1,39 @@
+.selected {
+    border: 1px dashed transparent;
+    border-color: blue;
+    border-radius: 3px;
+}
+
+.multipleSelection {
+    position: relative;
+}
+
+.p1,
+.p2,
+.p3 {
+    position: absolute;
+}
+
+.p1 {
+    left: 100px;
+    top: 100px;
+}
+
+.p2 {
+    left: 200px;
+    top: 200px;
+}
+
+.p3 {
+    left: 300px;
+    top: 300px;
+}
+
+.select-helper {
+    pointer-events: none;
+    -webkit-transition: opacity 0.4s;
+    transition: opacity 0.4s;
+    position: absolute;
+    background-color: rgba(204, 204, 204, 0.2);
+    border: 1px solid #ccc;
+}
