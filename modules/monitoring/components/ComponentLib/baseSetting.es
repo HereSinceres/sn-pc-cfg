@@ -12,7 +12,24 @@ var operatorList = {
     lessThan: '<',
     lessThanOrEqual: '<='
 };
+
+function moveTarget(target, dx, dy) {
+    var x = (parseFloat(target.getAttribute('data-x')) || 0) + dx;
+    var y = (parseFloat(target.getAttribute('data-y')) || 0) + dy;
+
+    var rotate = domUtil.getRotationDegrees($(target));
+    // translate the element
+    target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+    target.style.webkitTransform = target.style.transform += 'rotate(' + rotate + 'deg)';
+
+    // update the posiion attributes
+    target.setAttribute('data-x', x);
+    target.setAttribute('data-y', y);
+};
 module.exports = {
+    getDomUuid: function () {
+        return "J_uuid_${Base.uuid()}";
+    },
     monitorCallBack: function (dom) {
         var data = $(dom).data();
         switch (data.cfg_attr_input) {
@@ -80,22 +97,23 @@ module.exports = {
 
         // 获取dom上的data 属性 根据 data 属性修改数据
     },
+    moveTarget: moveTarget,
     bindDragEvent: function (dom) {
         interact(dom)
             .draggable({
                 onmove: function (event) {
-                    var target = event.target;
-                    var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-                    var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+                    var dx = event.dx;
+                    var dy = event.dy;
 
-                    var rotate = domUtil.getRotationDegrees($(target));
-                    // translate the element
-                    target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
-                    target.style.webkitTransform = target.style.transform += 'rotate(' + rotate + 'deg)';
-
-                    // update the posiion attributes
-                    target.setAttribute('data-x', x);
-                    target.setAttribute('data-y', y);
+                    if (window.__select_ele__.length) {
+                        window.__select_ele__.forEach(function (target) {
+                            target = target[0];
+                            moveTarget(target, dx, dy)
+                        }, this);
+                    } else {
+                        var target = event.target;
+                        moveTarget(target, dx, dy)
+                    }
                 }
             })
             .resizable({

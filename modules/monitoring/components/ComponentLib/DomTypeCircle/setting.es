@@ -2,12 +2,13 @@ var Base = require('modules/monitoring/Base.es');
 var interact = require('modules/lib/interact/interact.js');
 var domUtil = require('modules/util/dom/domUtil.es');
 var commonAttrSet = require('modules/monitoring/components/ComponentLib/components/CommonAttr/commonAttrSet.es');
- 
+
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 module.exports = {
     id: 1,
     type: Base.CONST_DOM_TYPE.DOMTYPE_CIRCLE,
     name: '圆形',
+    icon: 'fa fa-circle-thin',
     desc: '圆形',
     renderToCanvas: function () {
         var dom = `<svg 

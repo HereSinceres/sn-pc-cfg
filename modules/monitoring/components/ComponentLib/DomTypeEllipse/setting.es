@@ -8,7 +8,7 @@ var baseSetting = require('modules/monitoring/components/ComponentLib/baseSettin
 module.exports = {
     id: 1,
     type: Base.CONST_DOM_TYPE.DOMTYPE_ELLIPSE,
-    name: '椭圆形',
+    name: '椭圆',
     desc: '椭圆形',
     renderToCanvas: function () {
         var dom = `<svg 

@@ -1,38 +1,21 @@
 .u-drag {
     position: absolute;
     border: 1px dashed #808080;
+    &.J-selected,
     &:hover {
-        border-color: #3b8bba;
+        border: 1px dashed transparent;
+        border-color: blue;
     }
 }
-
-.tools-sider {
-    position: fixed;
-    z-index: 1;
-    right: 0;
-    bottom: 10px;
-    left: 0;
-    height: 40px;
-    border-top: 1px solid #3c8dbc;
-    background: #fff;
-    i {
-        width: 80px;
-        height: 40px;
-        border-right: 1px solid #3c8dbc;
-        line-height: 40px;
-        text-align: center;
-        cursor: pointer;
-        &:hover {
-            background: rgba(0, 0, 0, .1);
-        }
-    }
-} 
-  
- 
-.control-sidebar {
-    .nav-stacked > li > a {
-        color: #fff;
-        cursor: pointer;
-    }
-  }
-  
+.J-wrapper{
+    margin: 0px auto;
+    height: 800px;
+}
+.select-helper {
+    pointer-events: none;
+    -webkit-transition: opacity 0.4s;
+    transition: opacity 0.4s;
+    position: absolute;
+    background-color: rgba(204, 204, 204, 0.2);
+    border: 1px solid #ccc;
+}

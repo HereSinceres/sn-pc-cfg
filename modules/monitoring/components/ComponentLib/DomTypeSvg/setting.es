@@ -7,7 +7,7 @@ var baseSetting = require('modules/monitoring/components/ComponentLib/baseSettin
 module.exports = {
     id: 1,
     type: Base.CONST_DOM_TYPE.DOMTYPE_SVG,
-    name: '自定义SVG',
+    name: 'SVG',
     desc: '自定义SVG',
     renderToCanvas: function () {
         var dom = `<svg 

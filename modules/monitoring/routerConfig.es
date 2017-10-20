@@ -1,7 +1,7 @@
 var ConfigPage = require('./view/ConfigPage/index.es');
-var Preview = require('./view/Preview/index.es');
+var ProjectCFGList = require('./view/ProjectCFGList/index.es');
 var Mock = require('./view/Mock/index.es');
-var Cfg = require('./view/Cfg/index.es');
+var CfgOnline = require('./view/CfgOnline/index.es');
 var api = require('modules/monitoring/dataService/api.es');
 var store = require('modules/monitoring/dataService/store.es');
 var variable = require('modules/monitoring/dataService/variable.es');
@@ -21,7 +21,7 @@ function getCFGListByProId(proId, callback) {
       };
       // 创建一个默认组态界面
       api.AddCfgManagement(data).then(function () {
-        getCFGListByProId(proId);
+        getCFGListByProId(proId, callback);
       })
     }
   }, function (error) {});
@@ -29,34 +29,31 @@ function getCFGListByProId(proId, callback) {
 var routes = [{
     path: '/',
     beforeEnter: (to, from, next) => {
+      next('/ProjectCFGList');
+    }
+  },
+  {
+    path: '/ProjectCFGList',
+    component: ProjectCFGList,
+    beforeEnter: (to, from, next) => {
       api.getProList().then(function (res) {
         store.proList = res.rows;
-        var proId = res.rows[4].ProjectId;
-        getCFGListByProId(proId, function () {
-          next('/cfg/' + proId + '/' + store.cfgList[0].id);
-        });
+        next();
       });
     }
   },
   {
-    path: '/cfg/:proId/:cfgId',
+    path: '/cfg/:cfgId',
     component: ConfigPage,
+    name: 'cfg',
     beforeEnter: (to, from, next) => {
-      api.getProList().then(function (res) {
-        store.proList = res.rows;
-        getCFGListByProId(to.params.proId, function () {
-          next();
-        });
-      }); 
+      next();
     }
   },
   {
-    path: '/Preview',
-    component: Preview
-  },
-  {
+    name:'CfgOnline',
     path: '/cfgOnline/:cfgId',
-    component: Cfg
+    component: CfgOnline
   },
   {
     path: '/Mock',

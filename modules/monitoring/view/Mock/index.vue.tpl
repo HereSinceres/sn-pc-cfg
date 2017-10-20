@@ -1,5 +1,4 @@
-<div>
-  <link rel="import" href="modules/monitoring/components/Header/index.html?__inline">
+<div> 
   <div class="content-wrapper ">
     <div class="content">
       <textarea class="col-sm-6" style="min-height:520px;" v-model="variable"></textarea>

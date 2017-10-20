@@ -1,19 +1,15 @@
 var comlib = require('modules/monitoring/components/ComponentLib/index.es');
 var interact = require('modules/lib/interact/interact.js');
 var Base = require('modules/monitoring/Base.es');
-var cfgSet = require('modules/monitoring/dataService/cfgSet.es');
+var store = require('modules/monitoring/dataService/store.es');
+var mulSel = require('modules/monitoring/components/ContentWrapper/mulSel.es');
+var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 module.exports = {
     components: {},
     data: function () {
         return {
             comlib: comlib,
-            rightClickDom: null,
-            isShowCanvasSetDialog: false,
-            canvas: {
-                w: null,
-                h: null,
-                bg: null
-            }
+            rightClickDom: null
         };
     },
     watch: {
@@ -24,7 +20,6 @@ module.exports = {
         var self = this;
 
         function callBack(item) {
-            console.log(item);
             var html = item.renderToCanvas();
             var $html = $.parseHTML(html);
             // 添加dom to paint  
@@ -50,10 +45,24 @@ module.exports = {
 
     },
     methods: {
-        init: function () {
+        getCurrentCfgHtml: function () {
+            var data;
             var self = this;
-            if (cfgSet.getItem()) {
-                $(self.$el).find('.J-wrapper').replaceWith(cfgSet.getItem());
+            store.cfgList.forEach(function (element) {
+                if (element.id == self.$route.params.cfgId) {
+                    data = element;
+                }
+            }, this);
+            try {
+                return decodeURI(data.html?data.html:'');
+            } catch (error) {
+                return '';
+            }
+        },
+        init: function () {
+            var self = this; 
+            if (this.getCurrentCfgHtml()) {
+                $(self.$el).find('.J-wrapper').replaceWith(self.getCurrentCfgHtml());
             }
             $(self.$el).find('[data-cfg-uuid]').each(function () {
                 var eleDom = this;
@@ -69,17 +78,6 @@ module.exports = {
             });
             self.bindRightClickEvent();
 
-            var canvasDom = $(self.$el).find('.J-wrapper')[0];
-            this.canvas.w = (parseFloat(canvasDom.style.width) || canvasDom.clientWidth || 0);
-            this.canvas.h = (parseFloat(canvasDom.style.height) || canvasDom.clientHeight || 0);
-            this.canvas.bg = canvasDom.style.backgroundColor;
-
-        },
-        saveDraft: function () {
-            cfgSet.setItem($(this.$el).find('.J-wrapper')[0].outerHTML);
-            $.notify({
-                message: '保存成功'
-            });
         },
         bindRightClickEvent: function () {
             var self = this;
@@ -114,25 +112,14 @@ module.exports = {
                 if ($(this.rightClickDom).hasClass('u-drag')) {
                     newDom = $(this.rightClickDom);
                 } else {
-                    newDom = $(this.rightClickDom).closest('.u-drag');
+                    // newDom = $(this.rightClickDom).closest('.u-drag');
                 }
-                console.log(newDom);
+                var $clone = $(newDom).clone(true);
+                $clone.data('cfgUuid', baseSetting.getDomUuid())
                 if (newDom) {
-                    $(this.$el).find('.J-wrapper').append(newDom);
+                    $clone.appendTo('.J-wrapper');
                     this.init();
                 }
-            }
-        },
-        toggleCanvasSet: function (isShow) {
-            this.isShowCanvasSetDialog = isShow;
-        },
-        savePaintSet: function () {
-            this.isShowCanvasSetDialog = 0;
-            var canvasDom = $(this.$el).find('.J-wrapper')[0];
-            if (canvasDom) {
-                canvasDom.style.width = this.canvas.w + 'px';
-                canvasDom.style.height = this.canvas.h + 'px';
-                canvasDom.style.backgroundColor = this.canvas.bg;
             }
         }
     }

@@ -55,7 +55,8 @@
             <div class="col-xs-5">
               <div class="form-group" v-for="cal in item.callback">
                 <div class="col-sm-12">
-                  <input type="text" class="form-control" v-model="cal.value" :placeholder="cal.name">
+                  <ms-input-font-size v-if="cal.attr =='strokeWidth'" v-model="cal.value"></ms-input-font-size>
+                  <ms-input-color-pick v-if="cal.attr =='stroke'" v-model="cal.value"></ms-input-color-pick>
                 </div>
               </div>
             </div>
@@ -70,13 +71,13 @@
       <div class="form-group">
         <label class="col-sm-3 control-label">线条宽度</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" v-model='strokeWidth' placeholder="eg:12px">
+          <ms-input-font-size v-model='strokeWidth'></ms-input-font-size>
         </div>
       </div>
       <div class="form-group">
         <label class="col-sm-3 control-label">颜色</label>
         <div class="col-sm-9">
-          <input  type="color" class="form-control" v-model='stroke' placeholder="red">
+          <input type="color" class="form-control" v-model='stroke' placeholder="red">
         </div>
       </div>
       <div class="clearfix">

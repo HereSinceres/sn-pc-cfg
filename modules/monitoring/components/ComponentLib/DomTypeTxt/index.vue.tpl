@@ -76,7 +76,7 @@
       <div class="form-group">
         <label class="col-sm-3 control-label">颜色</label>
         <div class="col-sm-9">
-          <input  type="color" class="form-control" v-model='color' placeholder="red">
+          <ms-input-color-pick v-model='color'></ms-input-color-pick>
         </div>
       </div>
       <div class="clearfix">

@@ -1,5 +1,7 @@
 var Vue = require('modules/lib/vue/vue.js');
 var VueRouter = require('modules/lib/vue/vue-router.js');
+// 基础组件
+require('modules/monitoring/baseComponents/index.js');
 Vue.use(VueRouter);
 var routerConfig = require('./routerConfig.es');
 var api = require('modules/monitoring/dataService/api.es');

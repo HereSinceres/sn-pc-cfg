@@ -1,0 +1,69 @@
+.ProjectCFGList {
+    height: 100%;
+    margin: 20px auto auto 20px;
+    .brand {
+        display: inline-block;
+        color: #464068;
+        cursor: pointer;
+        font-size: 18px;
+        &:hover {
+            color: paleturquoise;
+        }
+        .brand-icon {
+            margin-right: 4px;
+        }
+    }
+    .cfg-grid-group__component {
+        margin-top: 20px;
+        .cfg-grid-group__item {
+            float: left;
+            position: relative;
+            margin: 14px;
+            -webkit-transition: -webkit-transform .218s ease;
+            transition: -webkit-transform .218s ease;
+            transition: transform .218s ease;
+            transition: transform .218s ease, -webkit-transform .218s ease;
+            -webkit-transform: translateY(0);
+            transform: translateY(0);
+            cursor: pointer;
+            list-style: none;
+            &.active,
+            &:hover {
+                -webkit-transform: translateY(-5px);
+                transform: translateY(-5px); 
+            }
+            .card {
+                border-radius: 6px;
+                background: url('https://mailimg.teambition.com/logos/cover-demo.jpg');
+                background-size: cover;
+                -webkit-box-shadow: 0 7px 21px rgba(56, 56, 56, 0.15);
+                box-shadow: 0 7px 21px rgba(56, 56, 56, 0.15);
+                -webkit-transition: -webkit-box-shadow 0.218s ease;
+                transition: -webkit-box-shadow 0.218s ease;
+                transition: box-shadow 0.218s ease;
+                transition: box-shadow 0.218s ease, -webkit-box-shadow 0.218s ease;
+                height: 128px;
+                width: 254px;
+                .card__name {
+                    margin: 4px 0 0 8px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    display: inline-block;
+                    max-width: 100%;
+                    font-size: 18px;
+                    line-height: 30px;
+                    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+                }
+                .card__add {
+                    display: block;
+                    width: 100%;
+                    height: 128px;
+                    line-height: 128px;
+                    font-size: 28px;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}

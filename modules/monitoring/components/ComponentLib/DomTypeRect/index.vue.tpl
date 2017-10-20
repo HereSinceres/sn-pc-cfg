@@ -70,7 +70,7 @@
       <div class="form-group">
         <label class="col-sm-3 control-label">线条宽度</label>
         <div class="col-sm-9">
-          <input type="text" class="form-control" v-model='strokeWidth' placeholder="eg:12px">
+          <ms-input-font-size  v-model='strokeWidth'></ms-input-font-size>
         </div>
       </div>
       <div class="form-group">

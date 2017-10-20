@@ -1,13 +1,15 @@
 <div>
-  <link rel="import" href="modules/monitoring/components/Header/index.html?__inline">
-  <ContentWrapper></ContentWrapper>
-  
-  <!-- 
-    <link rel="import" href="modules/monitoring/components/Footer/index.html?__inline">
-  -->
-  <Setting></Setting>
-  <ControlSidebar></ControlSidebar>
-  <!--如果有弹出侧边栏一定有当前遮罩-->
-  <div class="control-sidebar-bg"></div>
-  <ProjectCFGList></ProjectCFGList>
+  <NavBar></NavBar>
+  <ToolBar></ToolBar>
+  <div class="g-bd1 clearfix">
+    <div class="g-sd1">
+      <AllComponents></AllComponents>
+    </div>
+    <div class="g-mn1">
+      <div class="g-mn1c">
+        <ContentWrapper></ContentWrapper>
+        <Setting></Setting>
+      </div>
+    </div>
+  </div>
 </div>

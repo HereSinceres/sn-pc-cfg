@@ -19,7 +19,7 @@ $(document).ajaxError(function (event, request, settings) {
 function beforeDealSuccess(data) {
     var isSuccess = data.success;
     if (!isSuccess) {
-        alert(data.msg);
+        console.log(data.msg);
     }
 }
 // ajax 过滤器
@@ -57,6 +57,16 @@ module.exports = {
     AddCfgManagement: function (data) {
         var url = '/Useradmin/project/AddCfgManagement';
         return $.post(url, data);
+    },
+    UpdateCfgManagement: function (data) {
+        var url = '/useradmin/Project/UpdateCfgManagement';
+        return $.post(url, data);
+    },
+    DeleteCfgManagement: function (cfgId) {
+        var url = '/useradmin/Project/DeleteCfgManagement';
+        return $.post(url, {
+            cfgId: cfgId
+        });
     },
     getVarValueByProId: function (proId) {
         var url = '/useradmin/Project/GetVariableValueByProjectId';

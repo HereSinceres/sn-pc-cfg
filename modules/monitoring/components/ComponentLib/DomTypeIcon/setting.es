@@ -5,15 +5,13 @@ var commonAttrSet = require('modules/monitoring/components/ComponentLib/componen
 
 var variable = require('modules/monitoring/dataService/variable.es');
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
-var baseSettingClass = require('modules/monitoring/components/ComponentLib/baseSettingClass.es');
-class className extends baseSettingClass {
-    constructor() {
-        super();
-        type: Base.CONST_DOM_TYPE.DOMTYPE_ICON
-        this.name = '图标类型'
-        this.desc = '图标类型'
-    }
-    renderToCanvas() {
+
+module.exports = {
+    id: 1,
+    type: Base.CONST_DOM_TYPE.DOMTYPE_ICON,
+    name: '图标',
+    desc: '图标类型',
+    renderToCanvas: function () {
         var dom = `<div 
             class='u-drag'
             data-cfg_type="${this.type}"
@@ -21,8 +19,20 @@ class className extends baseSettingClass {
                 <span class='fa fa-lightbulb-o'></span>
             </div>`;
         return dom;
-    }
-    monitorCallBack(dom) {
+    },
+    bindDragEvent: function (dom) {
+        baseSetting.bindDragEvent(dom);
+    },
+    bindOpenSetEvent: function (dom) {
+        var $dom = $(dom);
+        $dom.dblclick(function () {
+            var data = $(this).data();
+            // 广播事件打开设置弹窗  传递过去数据
+            // SHOW_UNIT_CONFIG 
+            Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [$dom, data]);
+        });
+    },
+    monitorCallBack: function (dom) {
         baseSetting.monitorCallBack(dom);
 
         function setCallback(dom, callback) {
@@ -50,4 +60,3 @@ class className extends baseSettingClass {
 
     }
 };
-module.exports = className;
