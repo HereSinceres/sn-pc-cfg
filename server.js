@@ -36,7 +36,13 @@ app.use('/UserAdmin', proxy({
     '^/UserAdmin': '/UserAdmin'
   },
 }));
-
+app.use('/api', proxy({
+  target: apiAddress,
+  changeOrigin: true,
+  pathRewrite: {
+    '^/api': '/api'
+  },
+}));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}));
 

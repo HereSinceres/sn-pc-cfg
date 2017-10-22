@@ -87,5 +87,14 @@ module.exports = {
             eVariableId: p.eVariableId,
             newValue: p.newValue
         });
+    },
+    // 获取历史数据接口
+    GetAcquisitionVariableHistory: function (p) {
+        var url = '/api/AcquisitionGroup/GetAcquisitionVariableHistory';
+        return $.post(url, {
+            startTime: p.startTime,
+            endTime: p.endTime,
+            vEquipmentVariableId: p.vEquipmentVariableId
+        });
     }
 };

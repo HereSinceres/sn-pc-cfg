@@ -11,7 +11,8 @@ module.exports = {
         DomTypeEllipse: require('modules/monitoring/components/ComponentLib/DomTypeEllipse/index.es'),
         DomTypeIcon: require('modules/monitoring/components/ComponentLib/DomTypeIcon/index.es'),
         DomTypeImage: require('modules/monitoring/components/ComponentLib/DomTypeImage/index.es'),
-        DomTypeEChartsGauge: require('modules/monitoring/components/ComponentLib/DomTypeEChartsGauge/index.es')
+        DomTypeEChartsGauge: require('modules/monitoring/components/ComponentLib/DomTypeEChartsGauge/index.es'),
+        DomTypeEChartsLine: require('modules/monitoring/components/ComponentLib/DomTypeEChartsLine/index.es')
     },
     data: function () {
         return {

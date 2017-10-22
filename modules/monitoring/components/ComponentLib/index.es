@@ -8,7 +8,7 @@ var DomTypeEllipse = require('modules/monitoring/components/ComponentLib/DomType
 var DomTypeIcon = require('modules/monitoring/components/ComponentLib/DomTypeIcon/setting.es');
 var DomTypeImage = require('modules/monitoring/components/ComponentLib/DomTypeImage/setting.es');
 var DomTypeEChartsGauge = require('modules/monitoring/components/ComponentLib/DomTypeEChartsGauge/setting.es');
-
+var DomTypeEChartsLine = require('modules/monitoring/components/ComponentLib/DomTypeEChartsLine/setting.es');
 module.exports = [
     DomTypeLine,
     DomTypeRect,
@@ -18,5 +18,6 @@ module.exports = [
     DomTypeTxt,
     DomTypeIcon,
     DomTypeImage,
-    DomTypeEChartsGauge
+    DomTypeEChartsGauge,
+    DomTypeEChartsLine
 ];

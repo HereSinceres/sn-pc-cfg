@@ -43,6 +43,11 @@
           :$dom="$dom"
           :data="data"
         ></DomTypeEChartsGauge>
+        <DomTypeEChartsLine 
+          v-if='data.cfg_type=="DOMTYPE_ECHARTSLINE"' 
+          :$dom="$dom"
+          :data="data"
+        ></DomTypeEChartsLine>
         
         <DomTypeImage 
           v-if='data.cfg_type=="DOMTYPE_IMAGE"' 
