@@ -2,6 +2,7 @@ var Base = require('modules/monitoring/Base.es');
 var interact = require('modules/lib/interact/interact.js');
 var domUtil = require('modules/util/dom/domUtil.es');
 var commonAttrSet = require('modules/monitoring/components/ComponentLib/components/CommonAttr/commonAttrSet.es');
+var api = require('modules/monitoring/dataService/api.es');
 
 var store = require('modules/monitoring/dataService/store.es');
 
@@ -41,6 +42,12 @@ module.exports = {
                 $(dom).click(function () {
                     bootbox.prompt(data.cfg_var_binded_input_tip + '[' + data.cfg_var_binded_input + ']', function (result) {
                         // console.log(result);
+                        api.setValByValId({
+                            eVariableId: data.cfg_var_binded_input,
+                            newValue: result
+                        }).then(function (res) {
+                            alert(JSON.stringify(res));
+                        })
                     });
                 });
                 break;
@@ -48,35 +55,51 @@ module.exports = {
                 // console.log('直接设置变量');
                 var setVarFun = function () { };
                 switch (data.cfg_var_binded_input_ctr) {
+                    // 置0
                     case 1:
                         setVarFun = function () {
-                            var newVar = store.variable;
-                            // console.log(newVar);
-                            newVar[data.cfg_var_binded_input] = 0;
-                            variable.setItem(newVar);
+                            api.setValByValId({
+                                eVariableId: data.cfg_var_binded_input,
+                                newValue: 0
+                            }).then(function (res) {
+                                alert(JSON.stringify(res));
+                            })
                         };
                         break;
+                    // 置1
                     case 2:
                         setVarFun = function () {
-                            var newVar = store.variable;
-                            // console.log(newVar);
-                            newVar[data.cfg_var_binded_input] = 1;
-                            variable.setItem(newVar);
+                            api.setValByValId({
+                                eVariableId: data.cfg_var_binded_input,
+                                newValue: 1
+                            }).then(function (res) {
+                                alert(JSON.stringify(res));
+                            })
                         };
                         break;
+                    // 去反
                     case 3:
                         setVarFun = function () {
                             var newVar = store.variable;
-                            // console.log(newVar);
-                            newVar[data.cfg_var_binded_input] = ((!!newVar[data.cfg_var_binded_input]) ? 0 : 1);
-                            variable.setItem(newVar);
+                            var result = ((!!newVar[data.cfg_var_binded_input]) ? 0 : 1);
+                            api.setValByValId({
+                                eVariableId: data.cfg_var_binded_input,
+                                newValue: result
+                            }).then(function (res) {
+                                alert(JSON.stringify(res));
+                            })
                         };
                         break;
                     case 4:
                         setVarFun = function () {
                             var newVar = store.variable;
-                            newVar[data.cfg_var_binded_input] = data.cfg_var_binded_input_value;
-                            variable.setItem(newVar);
+                            var result = data.cfg_var_binded_input_value;
+                            api.setValByValId({
+                                eVariableId: data.cfg_var_binded_input,
+                                newValue: result
+                            }).then(function (res) {
+                                alert(JSON.stringify(res));
+                            }) 
                         };
                         break;
                     default:
@@ -84,7 +107,6 @@ module.exports = {
                 }
                 $(dom).click(function () {
                     setVarFun();
-                    // console.log(variable.getItem());
                 });
                 break;
             case 4:
@@ -150,7 +172,6 @@ module.exports = {
         var data = $(dom).data();
         var output = store.getValueByVar(data.cfg_var_binded_ouput);
         var cfg_var_binded_ouput_deal = data.cfg_var_binded_ouput_deal;
-        console.log(cfg_var_binded_ouput_deal);
         if (cfg_var_binded_ouput_deal) {
             cfg_var_binded_ouput_deal.forEach(function (element) {
                 var initValue = element.initValue;

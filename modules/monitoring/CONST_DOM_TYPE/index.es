@@ -24,8 +24,9 @@ module.exports = {
     // 图标文本
     DOMTYPE_ICON: 'DOMTYPE_ICON',
     // 图片（）
-    DOMTYPE_IMAGE:'DOMTYPE_IMAGE'
-
+    DOMTYPE_IMAGE:'DOMTYPE_IMAGE',
+    // 仪表盘
+    DOMTYPE_ECHARTSGAUGE:'DOMTYPE_ECHARTSGAUGE'
 
 };
 

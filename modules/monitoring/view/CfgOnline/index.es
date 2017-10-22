@@ -38,6 +38,19 @@ module.exports = {
                 }, this);
             });
             Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR);
+            this.startRequest();
+        },
+        startRequest: function () {
+            var self = this;
+            api.getVarValueByProId(
+                store.currentCfg.proId
+            ).then(function (res) {
+                store.variable = res.Data;
+                Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR);
+                setTimeout(function () {
+                    self.startRequest();
+                }, 10000);
+            })
         }
     }
 };

@@ -10,7 +10,8 @@ module.exports = {
         DomTypeSvg: require('modules/monitoring/components/ComponentLib/DomTypeSvg/index.es'),
         DomTypeEllipse: require('modules/monitoring/components/ComponentLib/DomTypeEllipse/index.es'),
         DomTypeIcon: require('modules/monitoring/components/ComponentLib/DomTypeIcon/index.es'),
-        DomTypeImage: require('modules/monitoring/components/ComponentLib/DomTypeImage/index.es')
+        DomTypeImage: require('modules/monitoring/components/ComponentLib/DomTypeImage/index.es'),
+        DomTypeEChartsGauge: require('modules/monitoring/components/ComponentLib/DomTypeEChartsGauge/index.es')
     },
     data: function () {
         return {

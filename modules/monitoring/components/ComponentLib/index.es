@@ -7,6 +7,7 @@ var DomTypeSvg= require('modules/monitoring/components/ComponentLib/DomTypeSvg/s
 var DomTypeEllipse = require('modules/monitoring/components/ComponentLib/DomTypeEllipse/setting.es');
 var DomTypeIcon = require('modules/monitoring/components/ComponentLib/DomTypeIcon/setting.es');
 var DomTypeImage = require('modules/monitoring/components/ComponentLib/DomTypeImage/setting.es');
+var DomTypeEChartsGauge = require('modules/monitoring/components/ComponentLib/DomTypeEChartsGauge/setting.es');
 
 module.exports = [
     DomTypeLine,
@@ -16,5 +17,6 @@ module.exports = [
     DomTypeSvg,
     DomTypeTxt,
     DomTypeIcon,
-    DomTypeImage
+    DomTypeImage,
+    DomTypeEChartsGauge
 ];

@@ -32,6 +32,10 @@ module.exports = {
             if (item.bindOpenSetEvent) {
                 item.bindOpenSetEvent($html[0]);
             }
+            // 添加事件
+            if (item.bindEvent) {
+                item.bindEvent($html[0]);
+            }
             // 设置默认样式
             if (item.setDefaultStyle) {
                 item.setDefaultStyle(self.$el, $html[0])
@@ -54,7 +58,7 @@ module.exports = {
         },
         init: function () {
             var self = this;
-            this.setHtml(); 
+            this.setHtml();
             $(self.$el).find('[data-cfg-uuid]').each(function () {
                 var eleDom = this;
                 var data = $(eleDom).data();
@@ -64,6 +68,10 @@ module.exports = {
                         element.bindDragEvent(eleDom);
                         // 添加弹窗事件
                         element.bindOpenSetEvent(eleDom);
+                        // 初始化charts
+                        if (element.runChart) {
+                            element.runChart(eleDom);
+                        }
                     }
                 }, this);
             });

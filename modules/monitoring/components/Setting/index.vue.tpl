@@ -38,6 +38,12 @@
           :$dom="$dom"
           :data="data"
         ></DomTypeIcon>
+        <DomTypeEChartsGauge 
+          v-if='data.cfg_type=="DOMTYPE_ECHARTSGAUGE"' 
+          :$dom="$dom"
+          :data="data"
+        ></DomTypeEChartsGauge>
+        
         <DomTypeImage 
           v-if='data.cfg_type=="DOMTYPE_IMAGE"' 
           :$dom="$dom"
