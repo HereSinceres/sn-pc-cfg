@@ -3,7 +3,8 @@ var interact = require('modules/lib/interact/interact.js');
 var domUtil = require('modules/util/dom/domUtil.es');
 var commonAttrSet = require('modules/monitoring/components/ComponentLib/components/CommonAttr/commonAttrSet.es');
 
-var variable = require('modules/monitoring/dataService/variable.es');
+var store = require('modules/monitoring/dataService/store.es');
+
 var operatorList = {
     equal: '==',
     notEqual: '!=',
@@ -45,11 +46,11 @@ module.exports = {
                 break;
             case 3:
                 // console.log('直接设置变量');
-                var setVarFun = function () {};
+                var setVarFun = function () { };
                 switch (data.cfg_var_binded_input_ctr) {
                     case 1:
                         setVarFun = function () {
-                            var newVar = variable.getItem();
+                            var newVar = store.variable;
                             // console.log(newVar);
                             newVar[data.cfg_var_binded_input] = 0;
                             variable.setItem(newVar);
@@ -57,7 +58,7 @@ module.exports = {
                         break;
                     case 2:
                         setVarFun = function () {
-                            var newVar = variable.getItem();
+                            var newVar = store.variable;
                             // console.log(newVar);
                             newVar[data.cfg_var_binded_input] = 1;
                             variable.setItem(newVar);
@@ -65,7 +66,7 @@ module.exports = {
                         break;
                     case 3:
                         setVarFun = function () {
-                            var newVar = variable.getItem();
+                            var newVar = store.variable;
                             // console.log(newVar);
                             newVar[data.cfg_var_binded_input] = ((!!newVar[data.cfg_var_binded_input]) ? 0 : 1);
                             variable.setItem(newVar);
@@ -73,13 +74,13 @@ module.exports = {
                         break;
                     case 4:
                         setVarFun = function () {
-                            var newVar = variable.getItem();
+                            var newVar = store.variable;
                             newVar[data.cfg_var_binded_input] = data.cfg_var_binded_input_value;
                             variable.setItem(newVar);
                         };
                         break;
                     default:
-                        // console.log('Sorry, we are out of ' + expr + '.');
+                    // console.log('Sorry, we are out of ' + expr + '.');
                 }
                 $(dom).click(function () {
                     setVarFun();
@@ -92,7 +93,7 @@ module.exports = {
                 });
                 break;
             default:
-                // console.log('Sorry, we are out of ' + expr + '.');
+            // console.log('Sorry, we are out of ' + expr + '.');
         }
 
         // 获取dom上的data 属性 根据 data 属性修改数据
@@ -147,7 +148,7 @@ module.exports = {
     operatorList: operatorList,
     switchOperator: function (dom, setCallback) {
         var data = $(dom).data();
-        var output = variable.getValueByVar(data.cfg_var_binded_ouput);
+        var output = store.getValueByVar(data.cfg_var_binded_ouput);
         var cfg_var_binded_ouput_deal = data.cfg_var_binded_ouput_deal;
         console.log(cfg_var_binded_ouput_deal);
         if (cfg_var_binded_ouput_deal) {

@@ -1,10 +1,11 @@
 var comlib = require('modules/monitoring/components/ComponentLib/index.es');
 var interact = require('modules/lib/interact/interact.js');
 var Base = require('modules/monitoring/Base.es');
-var variable = require('modules/monitoring/dataService/variable.es');
+
 
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 
+var store = require('modules/monitoring/dataService/store.es');
 module.exports = {
     props: ['$dom', 'data'],
     components: {
@@ -14,7 +15,7 @@ module.exports = {
     data: function () {
         return {
             // 绑定的变量
-            variable: variable.getItem(),
+            variable:store.variable,
             cfg_var_binded_ouput: null,
             fontSize: null,
             color: null,

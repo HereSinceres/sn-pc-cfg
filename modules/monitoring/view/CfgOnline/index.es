@@ -3,7 +3,6 @@ var interact = require('modules/lib/interact/interact.js');
 var Base = require('modules/monitoring/Base.es');
 var store = require('modules/monitoring/dataService/store.es');
 var api = require('modules/monitoring/dataService/api.es');
-var variable = require('modules/monitoring/dataService/variable.es');
 
 module.exports = {
     components: {},
@@ -15,42 +14,21 @@ module.exports = {
     },
     template: __inline('./index.vue.tpl'),
     mounted: function () {
-        var self = this; 
-        var proId = this.getCurrentCfg('proId'); 
-        // 初始化项目
-        api.getVarValueByProId(
-            proId
-        ).then(function (res) {
-            variable.setItem(JSON.parse(res.Data));
-            self.init();
-            Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR);
-        })
+        var self = this;
+        self.init();
     },
     methods: {
-        getCurrentCfg: function (type) {
-            var data;
+        setHtml: function () {
             var self = this;
-            store.cfgList.forEach(function (element) {
-                if (element.id == self.$route.params.cfgId) {
-                    data = element;
-                    console.log(data);
-                }
-            }, this);
-            if (type == 'html') {
-                try {
-                    return decodeURI(data.html?data.html:'');
-                } catch (error) {
-                    return null;
-                }
-            }
-            if (type == 'proId') {
-                return data.proId;
+            if (store.currentCfg.html) {
+                var html = decodeURI(store.currentCfg.html);
+                $(self.$el).replaceWith(html);
             }
         },
         init: function () {
             var self = this;
-            $(self.$el).replaceWith(this.getCurrentCfg('html'));
-            $(self.$el).find('[data-cfg-uuid]').each(function () {
+            this.setHtml();
+            $(document).find('[data-cfg-uuid]').each(function () {
                 var eleDom = this;
                 var data = $(eleDom).data();
                 comlib.forEach(function (element) {
@@ -58,7 +36,8 @@ module.exports = {
                         element.monitorCallBack(eleDom);
                     }
                 }, this);
-            }); 
+            });
+            Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR);
         }
     }
 };

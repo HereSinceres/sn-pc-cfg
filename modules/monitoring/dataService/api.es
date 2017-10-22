@@ -54,6 +54,12 @@ module.exports = {
             proId: proId
         });
     },
+    getCfgManagementById: function (cfgId) {
+        var url = '/Useradmin/project/getCfgManagementById';
+        return $.post(url, {
+            cfgId: cfgId
+        });
+    },
     AddCfgManagement: function (data) {
         var url = '/Useradmin/project/AddCfgManagement';
         return $.post(url, data);

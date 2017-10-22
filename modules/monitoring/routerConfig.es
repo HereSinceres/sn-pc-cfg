@@ -4,7 +4,6 @@ var Mock = require('./view/Mock/index.es');
 var CfgOnline = require('./view/CfgOnline/index.es');
 var api = require('modules/monitoring/dataService/api.es');
 var store = require('modules/monitoring/dataService/store.es');
-var variable = require('modules/monitoring/dataService/variable.es');
 
 function getCFGListByProId(proId, callback) {
   api.getCFGListByProId(proId).then(function (res) {
@@ -24,41 +23,60 @@ function getCFGListByProId(proId, callback) {
         getCFGListByProId(proId, callback);
       })
     }
-  }, function (error) {});
+  }, function (error) { });
 }
 var routes = [{
-    path: '/',
-    beforeEnter: (to, from, next) => {
-      next('/ProjectCFGList');
-    }
-  },
-  {
-    path: '/ProjectCFGList',
-    component: ProjectCFGList,
-    beforeEnter: (to, from, next) => {
-      api.getProList().then(function (res) {
-        store.proList = res.rows;
-        next();
-      });
-    }
-  },
-  {
-    path: '/cfg/:cfgId',
-    component: ConfigPage,
-    name: 'cfg',
-    beforeEnter: (to, from, next) => {
-      next();
-    }
-  },
-  {
-    name:'CfgOnline',
-    path: '/cfgOnline/:cfgId',
-    component: CfgOnline
-  },
-  {
-    path: '/Mock',
-    component: Mock
+  path: '/',
+  beforeEnter: (to, from, next) => {
+    next('/ProjectCFGList');
   }
+},
+{
+  path: '/ProjectCFGList',
+  component: ProjectCFGList,
+  beforeEnter: (to, from, next) => {
+    api.getProList().then(function (res) {
+      store.proList = res.rows;
+      next();
+    });
+  }
+},
+{
+  name: 'cfg',
+  path: '/cfg/:cfgId',
+  component: ConfigPage,
+  beforeEnter: (to, from, next) => {
+    api.getCfgManagementById(to.params.cfgId).then(function (res) {
+      store.currentCfg = res.Data;
+      api.getVarValueByProId(
+        store.currentCfg.proId
+      ).then(function (res) {
+        store.variable = res.Data;
+        next();
+      })
+    })
+  }
+},
+{
+  name: 'CfgOnline',
+  path: '/cfgOnline/:cfgId',
+  component: CfgOnline,
+  beforeEnter: (to, from, next) => {
+    api.getCfgManagementById(to.params.cfgId).then(function (res) {
+      store.currentCfg = res.Data;
+      api.getVarValueByProId(
+        store.currentCfg.proId
+      ).then(function (res) {
+        store.variable = res.Data;
+        next();
+      })
+    })
+  }
+},
+{
+  path: '/Mock',
+  component: Mock
+}
 ];
 
 module.exports = routes;

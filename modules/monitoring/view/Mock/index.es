@@ -1,4 +1,4 @@
-var variable = require('modules/monitoring/dataService/variable.es');
+
 
 function syntaxHighlight(json) {
     json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -24,7 +24,7 @@ module.exports = {
     components: {},
     data: function () {
         return {
-            variable: JSON.stringify(variable.getItem())
+            variable: [JSON.stringify(variable.getItem())]
         };
     },
     watch: {

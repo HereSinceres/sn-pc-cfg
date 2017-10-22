@@ -45,25 +45,16 @@ module.exports = {
 
     },
     methods: {
-        getCurrentCfgHtml: function () {
-            var data;
+        setHtml: function () {
             var self = this;
-            store.cfgList.forEach(function (element) {
-                if (element.id == self.$route.params.cfgId) {
-                    data = element;
-                }
-            }, this);
-            try {
-                return decodeURI(data.html?data.html:'');
-            } catch (error) {
-                return '';
+            if (store.currentCfg.html) {
+                var html = decodeURI(store.currentCfg.html);
+                $(self.$el).find('.J-wrapper').replaceWith(html);
             }
         },
         init: function () {
-            var self = this; 
-            if (this.getCurrentCfgHtml()) {
-                $(self.$el).find('.J-wrapper').replaceWith(self.getCurrentCfgHtml());
-            }
+            var self = this;
+            this.setHtml(); 
             $(self.$el).find('[data-cfg-uuid]').each(function () {
                 var eleDom = this;
                 var data = $(eleDom).data();
@@ -91,7 +82,7 @@ module.exports = {
                 }
             });
         },
-        del: function () {
+        tool_del: function () {
             if (this.rightClickDom) {
                 if ($(this.rightClickDom).hasClass('u-drag')) {
                     $(this.rightClickDom).remove();
@@ -101,11 +92,11 @@ module.exports = {
             }
 
         },
-        set: function () {
+        tool_set: function () {
             // 模拟点击双击，当前功能可不用
             $(this.rightClickDom).dblclick();
         },
-        copy: function () {
+        tool_copy: function () {
             // 有bug TODO 
             if (this.rightClickDom) {
                 var newDom = null;

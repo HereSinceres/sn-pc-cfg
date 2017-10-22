@@ -42,14 +42,10 @@ module.exports = {
             this.isShowCanvasSetDialog = isShow;
         },
         save: function () {
-            var self = this;
+            var self = this; 
             var data;
-            store.cfgList.forEach(function (element) {
-                if (element.id == self.$route.params.cfgId) {
-                    data = element;
-                }
-            }, this);
-            data.html =encodeURI( this.getHtml());
+            data = store.currentCfg;
+            data.html = encodeURI(this.getHtml());
             api.UpdateCfgManagement(data).then(function () {
                 alert('上传成功');
             })

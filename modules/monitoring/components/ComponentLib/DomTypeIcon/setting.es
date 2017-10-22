@@ -3,7 +3,7 @@ var interact = require('modules/lib/interact/interact.js');
 var domUtil = require('modules/util/dom/domUtil.es');
 var commonAttrSet = require('modules/monitoring/components/ComponentLib/components/CommonAttr/commonAttrSet.es');
 
-var variable = require('modules/monitoring/dataService/variable.es');
+
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 
 module.exports = {
@@ -35,7 +35,9 @@ module.exports = {
     monitorCallBack: function (dom) {
         baseSetting.monitorCallBack(dom);
 
+        debugger
         function setCallback(dom, callback) {
+            debugger
             var object = {};
             // 行转列
             callback.forEach(function (element) {

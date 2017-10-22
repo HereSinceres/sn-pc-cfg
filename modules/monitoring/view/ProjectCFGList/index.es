@@ -1,7 +1,6 @@
 var comlib = require('modules/monitoring/components/ComponentLib/index.es');
 var interact = require('modules/lib/interact/interact.js');
-var Base = require('modules/monitoring/Base.es');
-var variable = require('modules/monitoring/dataService/variable.es');
+var Base = require('modules/monitoring/Base.es'); 
 
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 var api = require('modules/monitoring/dataService/api.es');
