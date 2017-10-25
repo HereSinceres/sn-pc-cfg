@@ -32,13 +32,6 @@ module.exports = {
         getHtml: function() {
             return $('.J-wrapper')[0].outerHTML;
         },
-        saveDraft: function() {
-            // TODO 没有做
-
-            $.notify({
-                message: '保存成功'
-            });
-        },
         toggleCanvasSet: function(isShow) {
             this.isShowCanvasSetDialog = isShow;
         },

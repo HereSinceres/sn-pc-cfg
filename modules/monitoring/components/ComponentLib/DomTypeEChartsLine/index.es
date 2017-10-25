@@ -37,23 +37,25 @@ module.exports = {
     },
     template: __inline('./index.vue.tpl'),
     mounted: function() {
-        var target = this.$dom[0];
+        var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
         this.cfg_var_binded_ouput = this.$dom.attr('data-cfg_var_binded_ouput');
     },
     methods: {
         ok: function() {
-            var target = this.$dom[0];
+            var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
+            var self = this;
             this.$dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
             var dataAttr = $(target).data();
             target = $("[data-cfg-uuid='" + dataAttr.cfgUuid + "']")[0];
             comlib.forEach(function(element) {
                 if (dataAttr.cfg_type === element.type) {
-                    element.runChart(target);
+                    element.runChart(self.uuid);
                 }
             }, this);
             $.notify({
                 message: '保存成功'
             });
+            this.toggleOutPut(0);
         },
         toggleOutPut: function(isShow) {
             this.isShowOutPutDialog = isShow;

@@ -2,14 +2,14 @@ var Base = require('modules/monitoring/Base.es');
 var interact = require('modules/lib/interact/interact.js');
 var domUtil = require('modules/util/dom/domUtil.es');
 var commonAttrSet = require('modules/monitoring/components/ComponentLib/components/CommonAttr/commonAttrSet.es');
- 
+
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 module.exports = {
     id: 1,
     type: Base.CONST_DOM_TYPE.DOMTYPE_SVG,
     name: 'SVG',
     desc: '自定义SVG',
-    renderToCanvas: function () {
+    renderToCanvas: function() {
         var dom = `<svg 
                         class='u-drag'
                         data-cfg_type="${this.type}"
@@ -22,19 +22,21 @@ module.exports = {
                    </svg>`;
         return dom;
     },
-    bindDragEvent: function (dom) {
-        baseSetting.bindDragEvent(dom);
+    bindDragEvent: function(uuid) {
+        var dom = $('[data-cfg-uuid=' + uuid + ']')[0];
+        baseSetting.bindDragEvent(uuid);
     },
-    bindOpenSetEvent: function (dom) {
+    bindOpenSetEvent: function(uuid) {
+        var dom = $('[data-cfg-uuid=' + uuid + ']')[0];
         var $dom = $(dom);
-        $dom.dblclick(function () {
+        $dom.click(function() {
             var data = $(this).data();
             // 广播事件打开设置弹窗  传递过去数据
             // SHOW_UNIT_CONFIG
             Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [$dom, data]);
         });
     },
-    monitorCallBack: function (dom) {
+    monitorCallBack: function(dom) {
         var data = $(dom).data();
         baseSetting.monitorCallBack(dom);
         // 获取dom上的data 属性 根据 data 属性修改数据

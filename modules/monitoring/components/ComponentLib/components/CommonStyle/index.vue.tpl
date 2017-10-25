@@ -10,6 +10,11 @@
     <!-- /.box-header -->
     <div class="box-body form-horizontal">
         <div class="form-group">
+            <div class="col-sm-12 form-control">
+                {{uuid}}
+            </div>
+        </div>
+        <div class="form-group">
             <label class="col-sm-2 control-label">x</label>
             <div class="col-sm-10">
                 <input type="number" class="form-control" v-model='x'>

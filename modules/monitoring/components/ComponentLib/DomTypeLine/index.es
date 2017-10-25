@@ -28,7 +28,7 @@ module.exports = {
     },
     template: __inline('./index.vue.tpl'),
     mounted: function() {
-        var target = this.$dom[0];
+        var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
         this.cfg_var_binded_ouput = this.$dom.attr('data-cfg_var_binded_ouput');
         this.strokeWidth = target.style.strokeWidth;
         this.stroke = target.style.stroke;
@@ -40,7 +40,7 @@ module.exports = {
     },
     methods: {
         ok: function() {
-            var target = this.$dom[0];
+            var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
             this.$dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
             target.style.strokeWidth = this.strokeWidth;
             target.style.stroke = this.stroke;
@@ -49,6 +49,7 @@ module.exports = {
             $.notify({
                 message: '保存成功'
             });
+            this.toggleOutPut(0);
         },
         addOperate: function() {
             this.cfg_var_binded_ouput_deal.push({

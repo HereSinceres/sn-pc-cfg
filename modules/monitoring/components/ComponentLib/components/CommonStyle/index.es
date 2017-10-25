@@ -6,7 +6,7 @@ var domUtil = require('modules/util/dom/domUtil.es');
 module.exports = {
     props: ['$dom', 'data', 'uuid'],
     components: {},
-    data: function () {
+    data: function() {
         return {
             x: 0,
             y: 0,
@@ -20,9 +20,9 @@ module.exports = {
 
     },
     template: __inline('./index.vue.tpl'),
-    mounted: function () {
+    mounted: function() {
         // 获取当前dom 的 x,y,w,h
-        var target = this.$dom[0];
+        var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
         this.x = (parseFloat(target.getAttribute('data-x')) || 0);
         this.y = (parseFloat(target.getAttribute('data-y')) || 0);
         this.w = (parseFloat(target.style.width) || target.clientWidth || 0);
@@ -31,8 +31,8 @@ module.exports = {
         this.zIndex = target.style.zIndex;
     },
     methods: {
-        ok: function () {
-            var target = this.$dom[0];
+        ok: function() {
+            var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
             // translate the element
             target.style.webkitTransform = target.style.transform = 'translate(' + this.x + 'px, ' + this.y + 'px)';
             // update the posiion attributes

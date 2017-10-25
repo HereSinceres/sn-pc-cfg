@@ -10,26 +10,31 @@ module.exports = {
         CommonStyle: require('modules/monitoring/components/ComponentLib/components/CommonStyle/index.es'),
         CommonAttr: require('modules/monitoring/components/ComponentLib/components/CommonAttr/index.es')
     },
-    data: function () {
+    data: function() {
         return {
             // 绑定的变量
-            variable:store.variable,
+            variable: store.variable,
             cfg_var_binded_ouput: null,
-            svgPath: null
+            svgPath: null,
+            isShowOutPutDialog: false
         };
     },
     watch: {
 
     },
     template: __inline('./index.vue.tpl'),
-    mounted: function () {
+    mounted: function() {
         this.cfg_var_binded_ouput = this.$dom.attr('data-cfg_var_binded_ouput');
         this.svgPath = this.$dom.html();
     },
     methods: {
-        ok: function () {
+        ok: function() {
             this.$dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
             this.$dom.html(this.svgPath);
+            this.toggleOutPut(0);
+        },
+        toggleOutPut: function(isShow) {
+            this.isShowOutPutDialog = isShow;
         }
     }
 };

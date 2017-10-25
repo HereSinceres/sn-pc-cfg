@@ -11,8 +11,12 @@ module.exports = {
     type: Base.CONST_DOM_TYPE.DOMTYPE_ICON,
     name: '图标',
     desc: '图标类型',
-    renderToCanvas: function () {
+    renderToCanvas: function() {
         var dom = `<div 
+            style=' min-width: 20px;
+            min-height: 20px;
+            text-align: center;
+            '
             class='u-drag'
             data-cfg_type="${this.type}"
             data-cfg-uuid="J_uuid_${Base.uuid()}">
@@ -20,24 +24,27 @@ module.exports = {
             </div>`;
         return dom;
     },
-    bindDragEvent: function (dom) {
-        baseSetting.bindDragEvent(dom);
+    bindDragEvent: function(uuid) {
+        var dom = $('[data-cfg-uuid=' + uuid + ']')[0];
+        baseSetting.bindDragEvent(uuid);
     },
-    bindOpenSetEvent: function (dom) {
+    bindOpenSetEvent: function(uuid) {
+        var dom = $('[data-cfg-uuid=' + uuid + ']')[0];
         var $dom = $(dom);
-        $dom.dblclick(function () {
+        $dom.dblclick(function() {
             var data = $(this).data();
             // 广播事件打开设置弹窗  传递过去数据
             // SHOW_UNIT_CONFIG 
             Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [$dom, data]);
         });
     },
-    monitorCallBack: function (dom) {
+    monitorCallBack: function(dom) {
         baseSetting.monitorCallBack(dom);
+
         function setCallback(dom, callback) {
             var object = {};
             // 行转列
-            callback.forEach(function (element) {
+            callback.forEach(function(element) {
                 object[element.attr] = element.value;
             }, this);
             for (var key in object) {
@@ -53,7 +60,7 @@ module.exports = {
 
             }
         }
-        Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR, function () {
+        Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR, function() {
             baseSetting.switchOperator(dom, setCallback);
         });
 

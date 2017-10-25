@@ -1,42 +1,57 @@
-<div class="nav-tabs-custom form-horizontal">
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab_1" data-toggle="tab">样式[公用]</a></li>
-        <li class=""><a href="#tab_2" data-toggle="tab">输入属性[公用]</a></li>
-        <li class=""><a href="#tab_3" data-toggle="tab">变量</a></li>
-        <li class=""><a href="#tab_4" data-toggle="tab">自定义SVG</a></li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane active" id="tab_1">
-            <CommonStyle :$dom="$dom" :data="data" :uuid="uuid"></CommonStyle>
-        </div>
-        <div class="tab-pane" id="tab_2">
-            <CommonAttr :$dom="$dom" :data="data" :uuid="uuid"></CommonAttr>
-        </div>
-        <div class="tab-pane" id="tab_3">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">变量</label>
-                <div class="col-sm-10">
-                    <select class="form-control" v-model="cfg_var_binded_ouput">
-            <option v-for="item in variable" v-bind:value="item.vid">
-              {{ item.vName }}: {{ item.vValue }}
-            </option>
-          </select>
-                </div>
-            </div>
-            <div class="clearfix">
-                <button class="btn btn-info pull-right" v-on:click='ok'>确认</button>
+<div>
+    <CommonStyle :$dom="$dom" :data="data" :uuid="uuid"></CommonStyle>
+    <CommonAttr :$dom="$dom" :data="data" :uuid="uuid"></CommonAttr>
+    <div class="box box-cfgset  flat">
+        <div class="box-header with-border">
+            <h3 class="box-title">自定义SVG</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" v-on:click='ok'><i class="fa fa-check-circle-o"></i>
+                            </button>
             </div>
         </div>
-        <div class="tab-pane" id="tab_4">
+        <div class="box-body form-horizontal">
             <div class="form-group">
                 <div class="col-sm-12">
                     <textarea class="form-control" v-model="svgPath" style="resize: none;height: 220px;"> 
-          </textarea>
+                      </textarea>
                 </div>
-            </div>
-            <div class="clearfix">
-                <button class="btn btn-info pull-right" v-on:click='ok'>确认</button>
             </div>
         </div>
     </div>
+    <div class="box box-cfgset  flat">
+        <div class="box-header with-border">
+            <h3 class="box-title">输出属性</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" v-on:click='toggleOutPut(1)'><i class="fa fa-cog"></i>
+                    </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal flat fade in" style="display:block;" v-if="isShowOutPutDialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" v-on:click="toggleOutPut(0)">
+                              <span>×</span>
+                        </button>
+                    <h4 class="modal-title">输出属性</h4>
+                </div>
+                <div class="modal-body form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">变量</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" v-model="cfg_var_binded_ouput">
+                                <option v-for="item in variable" v-bind:value="item.vid">
+                                  {{ item.vName }}: {{ item.vValue }} </option> </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info " v-on:click="ok()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

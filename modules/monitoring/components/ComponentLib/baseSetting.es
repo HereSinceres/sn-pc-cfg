@@ -29,23 +29,23 @@ function moveTarget(target, dx, dy) {
     target.setAttribute('data-y', y);
 };
 module.exports = {
-    getDomUuid: function () {
-        return "J_uuid_${Base.uuid()}";
+    getDomUuid: function() {
+        return "J_uuid_" + Base.uuid() + "";
     },
-    monitorCallBack: function (dom) {
+    monitorCallBack: function(dom) {
         var data = $(dom).data();
         switch (data.cfg_attr_input) {
             case 1:
                 // console.log('什么都不做');
                 break;
             case 2:
-                $(dom).click(function () {
-                    bootbox.prompt(data.cfg_var_binded_input_tip + '[' + data.cfg_var_binded_input + ']', function (result) {
+                $(dom).click(function() {
+                    bootbox.prompt(data.cfg_var_binded_input_tip + '[' + data.cfg_var_binded_input + ']', function(result) {
                         // console.log(result);
                         api.setValByValId({
                             eVariableId: data.cfg_var_binded_input,
                             newValue: result
-                        }).then(function (res) {
+                        }).then(function(res) {
                             alert(JSON.stringify(res));
                         })
                     });
@@ -53,83 +53,84 @@ module.exports = {
                 break;
             case 3:
                 // console.log('直接设置变量');
-                var setVarFun = function () { };
+                var setVarFun = function() {};
                 switch (data.cfg_var_binded_input_ctr) {
                     // 置0
                     case 1:
-                        setVarFun = function () {
+                        setVarFun = function() {
                             api.setValByValId({
                                 eVariableId: data.cfg_var_binded_input,
                                 newValue: 0
-                            }).then(function (res) {
+                            }).then(function(res) {
                                 alert(JSON.stringify(res));
                             })
                         };
                         break;
-                    // 置1
+                        // 置1
                     case 2:
-                        setVarFun = function () {
+                        setVarFun = function() {
                             api.setValByValId({
                                 eVariableId: data.cfg_var_binded_input,
                                 newValue: 1
-                            }).then(function (res) {
+                            }).then(function(res) {
                                 alert(JSON.stringify(res));
                             })
                         };
                         break;
-                    // 去反
+                        // 去反
                     case 3:
-                        setVarFun = function () {
+                        setVarFun = function() {
                             var newVar = store.variable;
                             var result = ((!!newVar[data.cfg_var_binded_input]) ? 0 : 1);
                             api.setValByValId({
                                 eVariableId: data.cfg_var_binded_input,
                                 newValue: result
-                            }).then(function (res) {
+                            }).then(function(res) {
                                 alert(JSON.stringify(res));
                             })
                         };
                         break;
                     case 4:
-                        setVarFun = function () {
+                        setVarFun = function() {
                             var newVar = store.variable;
                             var result = data.cfg_var_binded_input_value;
                             api.setValByValId({
                                 eVariableId: data.cfg_var_binded_input,
                                 newValue: result
-                            }).then(function (res) {
+                            }).then(function(res) {
                                 alert(JSON.stringify(res));
-                            }) 
+                            })
                         };
                         break;
                     default:
-                    // console.log('Sorry, we are out of ' + expr + '.');
+                        // console.log('Sorry, we are out of ' + expr + '.');
                 }
-                $(dom).click(function () {
+                $(dom).click(function() {
                     setVarFun();
                 });
                 break;
             case 4:
-                $(dom).click(function () {
+                $(dom).click(function() {
                     window.location.href = data.cfg_jump_url;
                 });
                 break;
             default:
-            // console.log('Sorry, we are out of ' + expr + '.');
+                // console.log('Sorry, we are out of ' + expr + '.');
         }
 
         // 获取dom上的data 属性 根据 data 属性修改数据
     },
     moveTarget: moveTarget,
-    bindDragEvent: function (dom) {
+    bindDragEvent: function(uuid) {
+        var dom = $('[data-cfg-uuid=' + uuid + ']')[0];
         interact(dom)
             .draggable({
-                onmove: function (event) {
+                onmove: function(event) {
                     var dx = event.dx;
                     var dy = event.dy;
 
                     if (window.__select_ele__.length) {
-                        window.__select_ele__.forEach(function (target) {
+                        window.__select_ele__.forEach(function(target) {
                             target = target[0];
                             moveTarget(target, dx, dy)
                         }, this);
@@ -148,7 +149,7 @@ module.exports = {
                     top: true
                 }
             })
-            .on('resizemove', function (event) {
+            .on('resizemove', function(event) {
                 var target = event.target;
                 var x = (parseFloat(target.getAttribute('data-x')) || 0);
                 var y = (parseFloat(target.getAttribute('data-y')) || 0);
@@ -168,12 +169,12 @@ module.exports = {
             });
     },
     operatorList: operatorList,
-    switchOperator: function (dom, setCallback) {
+    switchOperator: function(dom, setCallback) {
         var data = $(dom).data();
         var output = store.getValueByVar(data.cfg_var_binded_ouput);
         var cfg_var_binded_ouput_deal = data.cfg_var_binded_ouput_deal;
         if (cfg_var_binded_ouput_deal) {
-            cfg_var_binded_ouput_deal.forEach(function (element) {
+            cfg_var_binded_ouput_deal.forEach(function(element) {
                 var initValue = element.initValue;
                 switch (element.operator) {
                     case operatorList.equal:

@@ -21,25 +21,26 @@ module.exports = {
         CommonStyle: require('modules/monitoring/components/ComponentLib/components/CommonStyle/index.es'),
         CommonAttr: require('modules/monitoring/components/ComponentLib/components/CommonAttr/index.es')
     },
-    data: function () {
+    data: function() {
         return {
             // 绑定的变量
-            variable:store.variable,
+            variable: store.variable,
             cfg_var_binded_ouput: null,
             iconList: iconList,
             icon: null,
             fontSize: null,
             color: null,
             operatorList: baseSetting.operatorList,
-            cfg_var_binded_ouput_deal: []
+            cfg_var_binded_ouput_deal: [],
+            isShowOutPutDialog: false
         };
     },
     watch: {
 
     },
     template: __inline('./index.vue.tpl'),
-    mounted: function () {
-        var target = this.$dom[0];
+    mounted: function() {
+        var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
         this.cfg_var_binded_ouput = this.$dom.attr('data-cfg_var_binded_ouput');
         this.icon = this.$dom.find('span').attr('class');
         this.fontSize = target.style.fontSize;
@@ -49,8 +50,8 @@ module.exports = {
         } catch (error) {}
     },
     methods: {
-        ok: function () {
-            var target = this.$dom[0];
+        ok: function() {
+            var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
             this.$dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
             this.$dom.find('span').attr('class', this.icon);
             target.style.fontSize = this.fontSize;
@@ -60,11 +61,12 @@ module.exports = {
             $.notify({
                 message: '保存成功'
             });
+            this.toggleOutPut(0);
         },
-        setIcon: function (item) {
+        setIcon: function(item) {
             this.icon = item.iconName;
         },
-        addOperate: function () {
+        addOperate: function() {
             this.cfg_var_binded_ouput_deal.push({
                 initValue: 1,
                 operator: '<=',
@@ -81,9 +83,12 @@ module.exports = {
                 ]
             });
         },
-        removeOperate: function (item) {
+        removeOperate: function(item) {
             let index = this.cfg_var_binded_ouput_deal.indexOf(item);
             this.cfg_var_binded_ouput_deal.splice(index, 1);
+        },
+        toggleOutPut: function(isShow) {
+            this.isShowOutPutDialog = isShow;
         }
     }
 };
