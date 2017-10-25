@@ -44,6 +44,13 @@ module.exports = {
                 canvasDom.style.backgroundColor = this.canvas.bg;
             }
         },
+        saveMockVariable: function() {
+            store.variable = this.variable;
+            this.toggleVariableSet(0);
+            $.notify({
+                message: '保存成功'
+            });
+        },
         save: function() {
             var self = this;
             var data;

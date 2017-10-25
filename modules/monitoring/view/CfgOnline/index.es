@@ -20,6 +20,19 @@ module.exports = {
         // 初始化项目
         self.setHtml();
         self.bindEvent();
+        $(window).resize(function() {
+            console.log("不建议调整窗口大小!");
+            var width = $container().width();
+            var wwidth = $(window).width();
+            if (wwidth < width) {
+                var captchaScale = wwidth / width;
+                $container().css({
+                    'transform': 'scale(' + captchaScale + ')',
+                    'transform-origin': 'left top',
+                    '-webkit-transform-origin': 'left top'
+                });
+            }
+        });
     },
     methods: {
         setHtml: function() {

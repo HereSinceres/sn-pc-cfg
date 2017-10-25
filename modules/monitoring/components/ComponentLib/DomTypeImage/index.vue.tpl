@@ -13,17 +13,23 @@
         <div class="box-body form-horizontal">
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">选择图片:</label>
+                <label class="col-sm-3 control-label">图片</label>
                 <div class="col-sm-9">
                     <select class="form-control" v-model="backgroundImage">
-                <option v-for="item in imgLibList" v-bind:value="item.value">
-                  {{item.name}}
-                </option>
-              </select>
+                        <option v-for="item in imgLibList" v-bind:value="item.value">
+                        {{item.name}}
+                        </option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">backgroundSize:</label>
+                <label class="col-sm-3 control-label">上传</label>
+                <div class="col-sm-9">
+                    <ms-input-font-size v-model='backgroundImage'></ms-input-font-size>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">类型</label>
                 <div class="col-sm-9">
                     <select class="form-control" v-model="backgroundSize">
                 <option v-for="item in backgroundSizeList" v-bind:value="item.value">

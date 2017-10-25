@@ -1,21 +1,26 @@
 .component-list {
     .component-list__item {
         cursor: pointer;
-
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
         float: left;
         width: 33.3%;
         -webkit-box-sizing: border-box;
-                box-sizing: border-box;
+        box-sizing: border-box;
         height: 60px;
         line-height: 60px;
         text-align: center;
         overflow: hidden;
         color: #333;
         border: 1px solid #eee;
-        &:hover{
+        &:hover {
             opacity: 0.8;
         }
         .component-list__item__icon {}
         .component-list__item__name {}
+    }
+    .active {
+        background: linear-gradient(rgba(103, 10, 224, 0.2) 0%,
+         rgba(103, 10, 224, 0) 35%, rgba(103, 10, 224, 0) 65%, rgba(103, 10, 224, 0.2) 100%);
+         border-color:rgb(103, 10, 224);
     }
 }

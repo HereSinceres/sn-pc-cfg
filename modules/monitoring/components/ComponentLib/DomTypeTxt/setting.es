@@ -75,7 +75,6 @@ module.exports = {
             }
         }
         Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR, function() {
-            debugger
             justBindVar(dom);
             baseSetting.switchOperator(dom, setCallback);
         });

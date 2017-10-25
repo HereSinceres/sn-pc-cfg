@@ -1,9 +1,9 @@
 <div class='tool-bar clearfix'>
     <!-- <i title="保存" class="tool-btn fa fa-floppy-o"></i> -->
     <span title="提交" class="tool-btn pull-right fa fa-upload" v-on:click='save'></span>
-    <span title="画布设置" class="tool-btn  pull-right" v-on:click="run()">run</span>
-    <span title="画布设置" class="tool-btn  pull-right" v-on:click="toggleCanvasSet(1)">画布</span>
-    <i title="数据模拟" class="tool-btn   pull-right" v-on:click="toggleVariableSet(1)">Mock</i>
+    <span title="画布设置" class="tool-btn  pull-right fa fa-play" v-on:click="run()"> </span>
+    <span title="画布设置" class="tool-btn  pull-right fa fa-cog" v-on:click="toggleCanvasSet(1)"></span>
+    <span title="数据模拟" class="tool-btn   pull-right fa fa-database" v-on:click="toggleVariableSet(1)"></span>
 
 
 
@@ -55,6 +55,10 @@
                 </div>
                 <div class="modal-body">
                     <ms-json-editor id="mock" style="min-height:520px; font-family: monospace;" class="form-control" v-model="variable"></ms-json-editor>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info " v-on:click="saveMockVariable()">保存</button>
                 </div>
             </div>
         </div>

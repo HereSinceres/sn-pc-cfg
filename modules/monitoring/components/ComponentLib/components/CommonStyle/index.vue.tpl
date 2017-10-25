@@ -1,6 +1,6 @@
 <div class="box box-cfgset  flat">
     <div class="box-header with-border">
-        <h3 class="box-title">样式【公用】</h3>
+        <h3 class="box-title">样式[公用]</h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" v-on:click='ok'><i class="fa fa-check-circle-o"></i>
             </button>
@@ -9,11 +9,12 @@
     </div>
     <!-- /.box-header -->
     <div class="box-body form-horizontal">
-        <div class="form-group">
+        <!--    <div class="form-group">
             <div class="col-sm-12 form-control">
                 {{uuid}}
             </div>
         </div>
+         -->
         <div class="form-group">
             <label class="col-sm-2 control-label">x</label>
             <div class="col-sm-10">
