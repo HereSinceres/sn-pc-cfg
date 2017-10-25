@@ -3,7 +3,9 @@ var interact = require('modules/lib/interact/interact.js');
 var Base = require('modules/monitoring/Base.es');
 var store = require('modules/monitoring/dataService/store.es');
 var api = require('modules/monitoring/dataService/api.es');
-
+var $container = function() {
+    return $('.J-wrapper');
+};
 module.exports = {
     components: {},
     data: function() {
@@ -15,24 +17,22 @@ module.exports = {
     template: __inline('./index.vue.tpl'),
     mounted: function() {
         var self = this;
-        self.init();
+        // 初始化项目
+        self.setHtml();
+        self.bindEvent();
     },
     methods: {
         setHtml: function() {
             var self = this;
             if (store.currentCfg.html) {
                 var html = decodeURI(store.currentCfg.html);
-                $(self.$el).replaceWith(html);
-                setTimeout(function() {
-                    debugger
-
-                    $(self.$el).addClass('online');
-                }, 1000);
+                $container().replaceWith(html);
             }
+            $container().addClass('online');
         },
-        init: function() {
+
+        bindEvent: function() {
             var self = this;
-            this.setHtml();
             $(document).find('[data-cfg-uuid]').each(function() {
                 var eleDom = this;
                 var data = $(eleDom).data();

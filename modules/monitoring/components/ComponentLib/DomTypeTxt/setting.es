@@ -2,7 +2,7 @@ var Base = require('modules/monitoring/Base.es');
 var interact = require('modules/lib/interact/interact.js');
 var domUtil = require('modules/util/dom/domUtil.es');
 var commonAttrSet = require('modules/monitoring/components/ComponentLib/components/CommonAttr/commonAttrSet.es');
-
+var store = require('modules/monitoring/dataService/store.es');
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 module.exports = {
     id: 1,
@@ -49,6 +49,12 @@ module.exports = {
     monitorCallBack: function(dom) {
         baseSetting.monitorCallBack(dom);
 
+        function justBindVar(dom) {
+            // 获取dom上的data 属性 根据 data 属性修改数据
+            var data = $(dom).data();
+            $(dom).html(store.getValueByVar(data.cfg_var_binded_ouput));
+        }
+
         function setCallback(dom, callback) {
             var object = {};
             // 行转列
@@ -67,13 +73,10 @@ module.exports = {
                 }
 
             }
-
-
-            // 获取dom上的data 属性 根据 data 属性修改数据
-            var data = $(dom).data();
-            $(dom).html(variable.getValueByVar(data.cfg_var_binded_ouput));
         }
         Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR, function() {
+            debugger
+            justBindVar(dom);
             baseSetting.switchOperator(dom, setCallback);
         });
     }

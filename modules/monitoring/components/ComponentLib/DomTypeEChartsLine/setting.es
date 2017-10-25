@@ -75,25 +75,27 @@ module.exports = {
         var outputvar = dataAttr.cfg_var_binded_ouput;
         outputvar = '707d15bd-585a-4ea9-b60d-f8df593a63b1';
         (function(startTime, endTime, outputvar, uuid, defaultOption, dom) {
+            // 指定图表的配置项和数据
+            var option = $.extend({}, defaultOption);
+            if (!window[uuid]) {
+                $(dom).html('');
+                window[uuid] = echarts.init(dom);
+                window[uuid].setOption(option);
+            }
+            window[uuid].showLoading();
             api.GetAcquisitionVariableHistory({
                 startTime: startTime,
                 endTime: endTime,
                 vEquipmentVariableId: outputvar
             }).then(function(res) {
-                // 指定图表的配置项和数据
-                var option = $.extend({}, defaultOption);
-                if (!window[uuid]) {
-                    $(dom).html('');
-                    window[uuid] = echarts.init(dom);
-                    window[uuid].setOption(option);
-                }
-                window[uuid].showLoading();
                 window[uuid].setOption({
                     xAxis: [{
                         data: res.Data.vTimes || []
                     }],
                     series: [{
-                        data: [40, 10, 20, 50, 20, 50, 20, 50, 20, 50] //res.Data.vValues || []
+                        data: [40, 10, 20, 50, 20, 50, 20, 50, 20, 50].map(function(x) {
+                                return x * Math.random();
+                            }) //res.Data.vValues || []
                     }]
                 });
                 // 使用刚指定的配置项和数据显示图表。

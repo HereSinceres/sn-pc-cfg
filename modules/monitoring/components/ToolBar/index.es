@@ -57,6 +57,10 @@ module.exports = {
         },
         toggleVariableSet: function(isShow) {
             this.isShowVariableSetDialog = isShow;
+        },
+        run: function() {
+            Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR);
+
         }
     }
 };

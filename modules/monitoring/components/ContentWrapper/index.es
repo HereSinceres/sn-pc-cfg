@@ -93,11 +93,14 @@ module.exports = {
                         if (element.runChart) {
                             element.runChart(uuid);
                         }
+                        // 初始化monitorCallBack
+                        if (element.monitorCallBack) {
+                            element.monitorCallBack(eleDom);
+                        }
                     }
                 }, this);
             }
             self.bindRightClickEvent();
-
         },
         bindRightClickEvent: function() {
             var self = this;

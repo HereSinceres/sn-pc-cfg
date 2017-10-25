@@ -1,7 +1,8 @@
 <div class='tool-bar clearfix'>
     <!-- <i title="保存" class="tool-btn fa fa-floppy-o"></i> -->
-    <i title="提交" class="tool-btn pull-right fa fa-upload" v-on:click='save'></i>
-    <i title="画布设置" class="tool-btn  pull-right" v-on:click="toggleCanvasSet(1)">画布</i>
+    <span title="提交" class="tool-btn pull-right fa fa-upload" v-on:click='save'></span>
+    <span title="画布设置" class="tool-btn  pull-right" v-on:click="run()">run</span>
+    <span title="画布设置" class="tool-btn  pull-right" v-on:click="toggleCanvasSet(1)">画布</span>
     <i title="数据模拟" class="tool-btn   pull-right" v-on:click="toggleVariableSet(1)">Mock</i>
 
 
@@ -16,7 +17,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" v-on:click="toggleCanvasSet(0)">
               <span>×</span>
-            </button>
+    </button>
                     <h4 class="modal-title">画布设置</h4>
                 </div>
                 <div class="modal-body form-horizontal">
