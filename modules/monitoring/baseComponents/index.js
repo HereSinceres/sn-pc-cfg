@@ -77,3 +77,37 @@ Vue.component('ms-input-color-pick', {
     }
   }
 });
+
+Vue.component('ms-json-editor', {
+  props: {
+    value: {
+      default: null
+    },
+  },
+  template: `
+  <textarea  
+  :value="localValue"
+  @input="onInput($event.target.value, $event)"
+  @change="onChange($event.target.value, $event)"></textarea>
+   `,
+  data: function () {
+    try {
+      var localValue = JSON.stringify(this.value, null, 4);
+    } catch (error) {
+      var localValue = JSON.stringify({}, null, 4);
+    }
+    return {
+      localValue: localValue
+    }
+  },
+  methods: {
+    onInput: function (value, e) {
+      this.localValue = value;
+      this.$emit('input', JSON.parse(value));
+    },
+    onChange: function (value, e) {
+      this.localValue = value;
+      this.$emit('change', JSON.parse(value));
+    }
+  }
+});

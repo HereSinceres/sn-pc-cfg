@@ -1,1 +1,53 @@
- 
+.g-sd52c {
+    .box-cfgset {
+        border-top: none;
+        .box-title {
+            font-size: 12px !important;
+        }
+        .box-header {
+            border-bottom: 1px solid #f4f4f4;
+            padding: 2px 0px 2px 8px;
+        }
+        .btn-box-tool {
+            padding: 0;
+            position: relative;
+            top: -3px;
+        }
+        .box-body {
+            padding: 0;
+        }
+        .form-group {
+            margin-bottom: 0;
+            font-size: 10px !important;
+        }
+        .form-control {
+            font-size: 10px !important;
+            height: 28px;
+        }
+        .control-label {
+            display: -webkit-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            &::after {
+                content: ':';
+            }
+        }
+        .form-horizontal .form-group {
+            margin-right: 0;
+            margin-left: 0;
+            border-bottom: 1px solid #f4f4f4;
+        }
+        .form-horizontal .control-label {
+            padding-top: 5px;
+        }
+        .col-sm-2,
+        .col-sm-12 {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+}

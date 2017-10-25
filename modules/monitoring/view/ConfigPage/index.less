@@ -1,24 +1,48 @@
  /* 两列右侧自适应布局 */
 
- .g-bd1 {
-     margin: 0 0 10px;
-     border-top: 1px solid  #e8e8e8;
+ .g-bd5 {
+     margin: 72px 0 0 0;
  }
 
- .g-sd1 {
+ .g-sd51,
+ .g-sd52 {
      position: relative;
      float: left;
      width: 190px;
-     margin-right: -190px;
-     min-height: 1000px;
+     margin: 0 -190px 0 0;
+ }
+
+ .g-sd51c {
+     position: fixed;
+     top: 72px;
+     bottom: 0;
+     left: 0;
+     width: 190px;
+     overflow-y: auto;
      border-right: 1px solid #e8e8e8;
  }
 
- .g-mn1 {
+ .g-sd52 {
      float: right;
+     width: 190px;
+     margin: 0 0 0 -190px;
+ }
+
+ .g-sd52c {
+     position: fixed;
+     top: 72px;
+     bottom: 0;
+     right: 0;
+     width: 190px;
+     overflow-y: auto;
+     border-left: 1px solid #e8e8e8;
+ }
+
+ .g-mn5 {
+     float: left;
      width: 100%;
  }
 
- .g-mn1c {
-     margin-left: 200px;
+ .g-mn5c {
+     margin: 0 200px 0 200px;
  }

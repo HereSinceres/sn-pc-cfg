@@ -5,53 +5,44 @@ var api = require('modules/monitoring/dataService/api.es');
 var store = require('modules/monitoring/dataService/store.es');
 module.exports = {
     components: {},
-    data: function () {
+    data: function() {
         return {
             isShowCanvasSetDialog: false,
+            isShowVariableSetDialog: false,
             canvas: {
                 w: null,
                 h: null,
                 bg: null
-            }
+            },
+            variable: store.variable
+
         };
     },
     watch: {
 
     },
     template: __inline('./index.vue.tpl'),
-    mounted: function () {
-
-
+    mounted: function() {
         var canvasDom = $('.J-wrapper')[0];
         this.canvas.w = (parseFloat(canvasDom.style.width) || canvasDom.clientWidth || 0);
         this.canvas.h = (parseFloat(canvasDom.style.height) || canvasDom.clientHeight || 0);
         this.canvas.bg = canvasDom.style.backgroundColor;
     },
     methods: {
-        getHtml: function () {
+        getHtml: function() {
             return $('.J-wrapper')[0].outerHTML;
         },
-        saveDraft: function () {
+        saveDraft: function() {
             // TODO 没有做
 
             $.notify({
                 message: '保存成功'
             });
         },
-        toggleCanvasSet: function (isShow) {
+        toggleCanvasSet: function(isShow) {
             this.isShowCanvasSetDialog = isShow;
         },
-        save: function () {
-            var self = this; 
-            var data;
-            data = store.currentCfg;
-            data.html = encodeURI(this.getHtml());
-            api.UpdateCfgManagement(data).then(function () {
-                alert('上传成功');
-            })
-        },
-
-        savePaintSet: function () {
+        savePaintSet: function() {
             this.isShowCanvasSetDialog = 0;
             var canvasDom = $('.J-wrapper')[0];
             if (canvasDom) {
@@ -59,6 +50,20 @@ module.exports = {
                 canvasDom.style.height = this.canvas.h + 'px';
                 canvasDom.style.backgroundColor = this.canvas.bg;
             }
+        },
+        save: function() {
+            var self = this;
+            var data;
+            data = store.currentCfg;
+            data.html = encodeURI(this.getHtml());
+            api.UpdateCfgManagement(data).then(function() {
+                $.notify({
+                    message: '保存成功'
+                });
+            })
+        },
+        toggleVariableSet: function(isShow) {
+            this.isShowVariableSetDialog = isShow;
         }
     }
 };

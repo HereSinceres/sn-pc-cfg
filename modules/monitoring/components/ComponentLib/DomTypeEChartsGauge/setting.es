@@ -8,7 +8,8 @@ var store = require('modules/monitoring/dataService/store.es');
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 
 module.exports = {
-    type: Base.CONST_DOM_TYPE.DOMTYPE_ECHARTSGAUGE,
+    type: Base.CONST_DOM_TYPE.DOMTYPE_ECHARTSGAUGE, 
+    icon: 'fa fa-tachometer',
     name: '仪表盘',
     desc: '仪表盘',
     renderToCanvas: function () {

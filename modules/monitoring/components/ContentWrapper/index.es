@@ -6,7 +6,7 @@ var mulSel = require('modules/monitoring/components/ContentWrapper/mulSel.es');
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 module.exports = {
     components: {},
-    data: function () {
+    data: function() {
         return {
             comlib: comlib,
             rightClickDom: null
@@ -16,7 +16,7 @@ module.exports = {
 
     },
     template: __inline('./index.vue.tpl'),
-    mounted: function () {
+    mounted: function() {
         var self = this;
 
         function callBack(item) {
@@ -49,20 +49,21 @@ module.exports = {
 
     },
     methods: {
-        setHtml: function () {
+        setHtml: function() {
             var self = this;
             if (store.currentCfg.html) {
                 var html = decodeURI(store.currentCfg.html);
                 $(self.$el).find('.J-wrapper').replaceWith(html);
             }
         },
-        init: function () {
+        init: function() {
             var self = this;
             this.setHtml();
-            $(self.$el).find('[data-cfg-uuid]').each(function () {
-                var eleDom = this;
+            var array = $(self.$el).find('[data-cfg-uuid]');
+            for (var index = 0; index < array.length; index++) {
+                var eleDom = array[index];
                 var data = $(eleDom).data();
-                comlib.forEach(function (element) {
+                comlib.forEach(function(element) {
                     if (data.cfg_type === element.type) {
                         // 绑定拖拽事件
                         element.bindDragEvent(eleDom);
@@ -74,15 +75,15 @@ module.exports = {
                         }
                     }
                 }, this);
-            });
+            }
             self.bindRightClickEvent();
 
         },
-        bindRightClickEvent: function () {
+        bindRightClickEvent: function() {
             var self = this;
             $('.u-drag').contextmenu({
                 target: '.context-menu',
-                before: function (e) {
+                before: function(e) {
                     self.rightClickDom = e.target;
                     e.preventDefault();
                     e.stopPropagation();
@@ -90,7 +91,7 @@ module.exports = {
                 }
             });
         },
-        tool_del: function () {
+        tool_del: function() {
             if (this.rightClickDom) {
                 if ($(this.rightClickDom).hasClass('u-drag')) {
                     $(this.rightClickDom).remove();
@@ -100,11 +101,11 @@ module.exports = {
             }
 
         },
-        tool_set: function () {
+        tool_set: function() {
             // 模拟点击双击，当前功能可不用
             $(this.rightClickDom).dblclick();
         },
-        tool_copy: function () {
+        tool_copy: function() {
             // 有bug TODO 
             if (this.rightClickDom) {
                 var newDom = null;

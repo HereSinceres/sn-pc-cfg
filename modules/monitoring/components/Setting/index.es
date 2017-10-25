@@ -14,7 +14,7 @@ module.exports = {
         DomTypeEChartsGauge: require('modules/monitoring/components/ComponentLib/DomTypeEChartsGauge/index.es'),
         DomTypeEChartsLine: require('modules/monitoring/components/ComponentLib/DomTypeEChartsLine/index.es')
     },
-    data: function () {
+    data: function() {
         return {
             $dom: null,
             data: null
@@ -24,23 +24,14 @@ module.exports = {
 
     },
     template: __inline('./index.vue.tpl'),
-    mounted: function () {
+    mounted: function() {
         var self = this;
+
         function callBack($dom, data) {
             self.$dom = $dom;
             self.data = data;
-            $(self.$el).modal('show');
-            // 哈哈 用于解决底下组件重新 mounted 问题
-            $(self.$el).on('hidden.bs.modal', function () {
-                self.$dom = null;
-                self.data = null;
-            });
         }
         Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, callBack);
-        function closeCallBack() {
-            $(self.$el).modal('close');
-        }
-        Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.CLOSE_UNIT_CONFIG, closeCallBack);
     },
     methods: {
 
