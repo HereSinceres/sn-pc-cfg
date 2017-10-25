@@ -1,5 +1,5 @@
 <div>
-    <CommonStyle :$dom="$dom" :data="data"></CommonStyle>
+    <CommonStyle :$dom="$dom" :data="data" :uuid="uuid"></CommonStyle>
     <div class="box box-cfgset  flat">
         <div class="box-header with-border">
             <h3 class="box-title">输出属性</h3>

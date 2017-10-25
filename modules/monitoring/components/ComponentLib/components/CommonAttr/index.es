@@ -6,7 +6,7 @@ var commonAttrSet = require('modules/monitoring/components/ComponentLib/componen
 
 var store = require('modules/monitoring/dataService/store.es');
 module.exports = {
-    props: ['$dom', 'data'],
+    props: ['$dom', 'data', 'uuid'],
     components: {},
     data: function () {
         return {

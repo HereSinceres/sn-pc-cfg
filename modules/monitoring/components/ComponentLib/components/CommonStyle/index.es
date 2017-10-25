@@ -4,7 +4,7 @@ var Base = require('modules/monitoring/Base.es');
 var domUtil = require('modules/util/dom/domUtil.es');
 
 module.exports = {
-    props: ['$dom', 'data'],
+    props: ['$dom', 'data', 'uuid'],
     components: {},
     data: function () {
         return {

@@ -11,14 +11,22 @@ var defaultOption = {
     tooltip: {
         trigger: 'axis'
     },
+    grid: {
+        left: 0,
+        right: 0,
+        bottom: 0
+    },
     xAxis: [{
+        show: false,
         type: 'category',
         data: []
     }],
     yAxis: [{
-        type: 'value',
+        show: false,
+        type: 'value'
     }],
     series: [{
+        showSymbol: false,
         type: 'line',
         data: []
     }]
@@ -27,7 +35,7 @@ module.exports = {
     type: Base.CONST_DOM_TYPE.DOMTYPE_ECHARTSLINE,
     name: '折线图',
     desc: '折线图',
-    renderToCanvas: function() {
+    renderToCanvas: function () {
         var dom = `<div 
             class='u-drag'
             data-cfg_type="${this.type}"
@@ -36,21 +44,21 @@ module.exports = {
             </div>`;
         return dom;
     },
-    bindDragEvent: function(dom) {
+    bindDragEvent: function (dom) {
         baseSetting.bindDragEvent(dom);
     },
-    bindOpenSetEvent: function(dom) {
+    bindOpenSetEvent: function (dom) {
         var $dom = $(dom);
-        $dom.dblclick(function() {
+        $dom.dblclick(function () {
             var data = $(this).data();
             console.log(data)
-                // 广播事件打开设置弹窗  传递过去数据
-                // SHOW_UNIT_CONFIG 
+            // 广播事件打开设置弹窗  传递过去数据
+            // SHOW_UNIT_CONFIG 
             Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [$dom, data]);
         });
     },
 
-    runChart: function(dom) {
+    runChart: function (dom) {
         var dataAttr = $(dom).data();
         console.log(dataAttr);
         var endTime = new Date().valueOf();
@@ -63,11 +71,7 @@ module.exports = {
             startTime: startTime,
             endTime: endTime,
             vEquipmentVariableId: outputvar
-        }).then(function(res) {
-            console.log(1111111);
-            console.log(res);
-
-
+        }).then(function (res) { 
             // 指定图表的配置项和数据
             var option2 = $.extend({}, defaultOption);
             if (!window[dataAttr.cfgUuid]) {
@@ -88,7 +92,7 @@ module.exports = {
             window[dataAttr.cfgUuid].resize();
         })
     },
-    monitorCallBack: function(dom) {
+    monitorCallBack: function (dom) {
         var self = this;
         baseSetting.monitorCallBack(dom);
 
@@ -100,7 +104,7 @@ module.exports = {
         function setCallback(dom, callback) {
             var object = {};
             // 行转列
-            callback.forEach(function(element) {
+            callback.forEach(function (element) {
                 object[element.attr] = element.value;
             }, this);
             for (var key in object) {
@@ -116,7 +120,7 @@ module.exports = {
 
             }
         }
-        Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR, function() {
+        Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR, function () {
             justBindVar(dom);
             baseSetting.switchOperator(dom, setCallback);
         });

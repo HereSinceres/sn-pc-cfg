@@ -1,6 +1,6 @@
 <div>
-    <CommonStyle :$dom="$dom" :data="data"></CommonStyle>
-    <CommonAttr :$dom="$dom" :data="data"></CommonAttr>
+    <CommonStyle :$dom="$dom" :data="data" :uuid="uuid"></CommonStyle>
+    <CommonAttr :$dom="$dom" :data="data" :uuid="uuid"></CommonAttr>
 
     <div class="box box-cfgset  flat">
         <div class="box-header with-border">

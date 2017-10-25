@@ -5,7 +5,7 @@ var Base = require('modules/monitoring/Base.es');
 
 var store = require('modules/monitoring/dataService/store.es');
 module.exports = {
-    props: ['$dom', 'data'],
+    props: ['$dom', 'data', 'uuid'],
     components: {
         CommonStyle: require('modules/monitoring/components/ComponentLib/components/CommonStyle/index.es'),
         CommonAttr: require('modules/monitoring/components/ComponentLib/components/CommonAttr/index.es')

@@ -15,10 +15,10 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="tab_1">
-            <CommonStyle :$dom="$dom" :data="data"></CommonStyle>
+            <CommonStyle :$dom="$dom" :data="data" :uuid="uuid"></CommonStyle>
         </div>
         <div class="tab-pane" id="tab_2">
-            <CommonAttr :$dom="$dom" :data="data"></CommonAttr>
+            <CommonAttr :$dom="$dom" :data="data" :uuid="uuid"></CommonAttr>
         </div>
         <div class="tab-pane" id="tab_3">
             <div class="form-group">

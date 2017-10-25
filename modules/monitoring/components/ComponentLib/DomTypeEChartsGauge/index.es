@@ -16,7 +16,7 @@ var iconList = [{
 ];
 
 module.exports = {
-    props: ['$dom', 'data'],
+    props: ['$dom', 'data', 'uuid'],
     components: {
         CommonStyle: require('modules/monitoring/components/ComponentLib/components/CommonStyle/index.es'),
         CommonAttr: require('modules/monitoring/components/ComponentLib/components/CommonAttr/index.es')

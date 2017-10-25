@@ -30,6 +30,7 @@ module.exports = {
         function callBack($dom, data) {
             self.$dom = $dom;
             self.data = data;
+            self.uuid = $dom.data('cfgUuid');
         }
         Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, callBack);
     },
