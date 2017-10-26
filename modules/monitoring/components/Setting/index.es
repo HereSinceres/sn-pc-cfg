@@ -16,8 +16,8 @@ module.exports = {
     },
     data: function() {
         return {
-            $dom: null,
-            data: null
+            data: null,
+            uuid: null
         };
     },
     watch: {
@@ -27,10 +27,14 @@ module.exports = {
     mounted: function() {
         var self = this;
 
-        function callBack($dom, data) {
-            self.$dom = $dom;
-            self.data = data;
-            self.uuid = $dom.data('cfgUuid');
+        function callBack(uuid) {
+            self.data = null;
+            self.uuid = null;
+            setTimeout(function() {
+                var dom = $('[data-cfg-uuid=' + uuid + ']')[0];
+                self.data = $(dom).data();
+                self.uuid = uuid;
+            }, 200);
         }
         Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, callBack);
     },

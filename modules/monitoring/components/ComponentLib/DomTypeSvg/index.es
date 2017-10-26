@@ -5,7 +5,7 @@ var Base = require('modules/monitoring/Base.es');
 
 var store = require('modules/monitoring/dataService/store.es');
 module.exports = {
-    props: ['$dom', 'data', 'uuid'],
+    props: ['uuid'],
     components: {
         CommonStyle: require('modules/monitoring/components/ComponentLib/components/CommonStyle/index.es'),
         CommonAttr: require('modules/monitoring/components/ComponentLib/components/CommonAttr/index.es')
@@ -24,13 +24,15 @@ module.exports = {
     },
     template: __inline('./index.vue.tpl'),
     mounted: function() {
-        this.cfg_var_binded_ouput = this.$dom.attr('data-cfg_var_binded_ouput');
-        this.svgPath = this.$dom.html();
+        var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
+        this.cfg_var_binded_ouput = $dom.attr('data-cfg_var_binded_ouput');
+        this.svgPath = $dom.html();
     },
     methods: {
         ok: function() {
-            this.$dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
-            this.$dom.html(this.svgPath);
+            var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
+            $dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
+            $dom.html(this.svgPath);
             this.toggleOutPut(0);
         },
         toggleOutPut: function(isShow) {

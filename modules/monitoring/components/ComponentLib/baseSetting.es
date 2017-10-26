@@ -27,6 +27,9 @@ function moveTarget(target, dx, dy) {
     // update the posiion attributes
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
+    var data = $(target).data();
+    var uuid = data['cfgUuid'];
+    Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [uuid]);
 };
 module.exports = {
     getDomUuid: function() {
@@ -46,7 +49,7 @@ module.exports = {
                             eVariableId: data.cfg_var_binded_input,
                             newValue: result
                         }).then(function(res) {
-                            alert(JSON.stringify(res));
+                            $.notify({ message: res.msg });
                         })
                     });
                 });
@@ -62,7 +65,7 @@ module.exports = {
                                 eVariableId: data.cfg_var_binded_input,
                                 newValue: 0
                             }).then(function(res) {
-                                alert(JSON.stringify(res));
+                                $.notify({ message: res.msg });
                             })
                         };
                         break;
@@ -73,7 +76,7 @@ module.exports = {
                                 eVariableId: data.cfg_var_binded_input,
                                 newValue: 1
                             }).then(function(res) {
-                                alert(JSON.stringify(res));
+                                $.notify({ message: res.msg });
                             })
                         };
                         break;
@@ -86,7 +89,7 @@ module.exports = {
                                 eVariableId: data.cfg_var_binded_input,
                                 newValue: result
                             }).then(function(res) {
-                                alert(JSON.stringify(res));
+                                $.notify({ message: res.msg });
                             })
                         };
                         break;
@@ -98,7 +101,7 @@ module.exports = {
                                 eVariableId: data.cfg_var_binded_input,
                                 newValue: result
                             }).then(function(res) {
-                                alert(JSON.stringify(res));
+                                $.notify({ message: res.msg });
                             })
                         };
                         break;

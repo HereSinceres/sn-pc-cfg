@@ -16,7 +16,7 @@ var iconList = [{
 ];
 
 module.exports = {
-    props: ['$dom', 'data', 'uuid'],
+    props: ['uuid'],
     components: {
         CommonStyle: require('modules/monitoring/components/ComponentLib/components/CommonStyle/index.es'),
         CommonAttr: require('modules/monitoring/components/ComponentLib/components/CommonAttr/index.es')
@@ -37,14 +37,16 @@ module.exports = {
     },
     template: __inline('./index.vue.tpl'),
     mounted: function() {
+        var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
         var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
-        this.cfg_var_binded_ouput = this.$dom.attr('data-cfg_var_binded_ouput');
+        this.cfg_var_binded_ouput = $dom.attr('data-cfg_var_binded_ouput');
     },
     methods: {
         ok: function() {
+            var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
             var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
             var self = this;
-            this.$dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
+            $dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
             var dataAttr = $(target).data();
             target = $("[data-cfg-uuid='" + dataAttr.cfgUuid + "']")[0];
             comlib.forEach(function(element) {

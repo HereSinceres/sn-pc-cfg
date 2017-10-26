@@ -6,7 +6,7 @@ var baseSetting = require('modules/monitoring/components/ComponentLib/baseSettin
 
 var store = require('modules/monitoring/dataService/store.es');
 module.exports = {
-    props: ['$dom', 'data', 'uuid'],
+    props: ['uuid'],
     components: {
         CommonStyle: require('modules/monitoring/components/ComponentLib/components/CommonStyle/index.es'),
         CommonAttr: require('modules/monitoring/components/ComponentLib/components/CommonAttr/index.es'),
@@ -30,29 +30,31 @@ module.exports = {
     },
     template: __inline('./index.vue.tpl'),
     mounted: function() {
+        var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
         var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
-        this.cfg_var_binded_ouput = this.$dom.attr('data-cfg_var_binded_ouput');
+        this.cfg_var_binded_ouput = $dom.attr('data-cfg_var_binded_ouput');
         this.strokeWidth = target.style.strokeWidth;
         this.stroke = target.style.stroke;
-        this.rx = this.$dom.find('rect')[0].style.rx;
-        this.ry = this.$dom.find('rect')[0].style.ry;
+        this.rx = $dom.find('rect')[0].style.rx;
+        this.ry = $dom.find('rect')[0].style.ry;
 
         try {
-            this.cfg_var_binded_ouput_deal = JSON.parse(this.$dom.attr('data-cfg_var_binded_ouput_deal') || []);
+            this.cfg_var_binded_ouput_deal = JSON.parse($dom.attr('data-cfg_var_binded_ouput_deal') || []);
         } catch (error) {
 
         }
     },
     methods: {
         ok: function() {
+            var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
             var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
-            this.$dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
+            $dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
             target.style.strokeWidth = this.strokeWidth;
             target.style.stroke = this.stroke;
-            this.$dom.find('rect')[0].style.rx = this.rx
-            this.$dom.find('rect')[0].style.ry = this.ry;
+            $dom.find('rect')[0].style.rx = this.rx
+            $dom.find('rect')[0].style.ry = this.ry;
             // 结果处理
-            this.$dom.attr('data-cfg_var_binded_ouput_deal', JSON.stringify(this.cfg_var_binded_ouput_deal));
+            $dom.attr('data-cfg_var_binded_ouput_deal', JSON.stringify(this.cfg_var_binded_ouput_deal));
             $.notify({
                 message: '保存成功'
             });

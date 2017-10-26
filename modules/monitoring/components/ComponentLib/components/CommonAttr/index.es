@@ -6,14 +6,14 @@ var commonAttrSet = require('modules/monitoring/components/ComponentLib/componen
 
 var store = require('modules/monitoring/dataService/store.es');
 module.exports = {
-    props: ['$dom', 'data', 'uuid'],
+    props: ['uuid'],
     components: {},
-    data: function () {
+    data: function() {
         return {
             cfg_attr_input: null,
             inputAttrList: commonAttrSet.inputAttrList,
             // 绑定的变量
-            variable:store.variable,
+            variable: store.variable,
             cfg_var_binded_input: null,
             cfg_var_binded_input_tip: null, // 弹窗提示语
             cfg_var_binded_input_ctr: null, // (输入操作)
@@ -26,22 +26,24 @@ module.exports = {
 
     },
     template: __inline('./index.vue.tpl'),
-    mounted: function () {
-        this.cfg_attr_input = this.$dom.attr('data-cfg_attr_input');
-        this.cfg_var_binded_input = this.$dom.attr('data-cfg_var_binded_input');
-        this.cfg_var_binded_input_tip = this.$dom.attr('data-cfg_var_binded_input_tip');
-        this.cfg_var_binded_input_ctr = this.$dom.attr('data-cfg_var_binded_input_ctr');
-        this.cfg_jump_url = this.$dom.attr('data-cfg_jump_url');
-        this.cfg_var_binded_input_value = this.$dom.attr('data-cfg_var_binded_input_value');
+    mounted: function() {
+        var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
+        this.cfg_attr_input = $dom.attr('data-cfg_attr_input');
+        this.cfg_var_binded_input = $dom.attr('data-cfg_var_binded_input');
+        this.cfg_var_binded_input_tip = $dom.attr('data-cfg_var_binded_input_tip');
+        this.cfg_var_binded_input_ctr = $dom.attr('data-cfg_var_binded_input_ctr');
+        this.cfg_jump_url = $dom.attr('data-cfg_jump_url');
+        this.cfg_var_binded_input_value = $dom.attr('data-cfg_var_binded_input_value');
     },
     methods: {
-        ok: function () {
-            this.$dom.attr('data-cfg_attr_input', this.cfg_attr_input);
-            this.$dom.attr('data-cfg_var_binded_input', this.cfg_var_binded_input);
-            this.$dom.attr('data-cfg_var_binded_input_tip', this.cfg_var_binded_input_tip);
-            this.$dom.attr('data-cfg_var_binded_input_ctr', this.cfg_var_binded_input_ctr);
-            this.$dom.attr('data-cfg_jump_url', this.cfg_jump_url);
-            this.$dom.attr('data-cfg_var_binded_input_value', this.cfg_var_binded_input_value);
+        ok: function() {
+            var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
+            $dom.attr('data-cfg_attr_input', this.cfg_attr_input);
+            $dom.attr('data-cfg_var_binded_input', this.cfg_var_binded_input);
+            $dom.attr('data-cfg_var_binded_input_tip', this.cfg_var_binded_input_tip);
+            $dom.attr('data-cfg_var_binded_input_ctr', this.cfg_var_binded_input_ctr);
+            $dom.attr('data-cfg_jump_url', this.cfg_jump_url);
+            $dom.attr('data-cfg_var_binded_input_value', this.cfg_var_binded_input_value);
             $.notify({
                 message: '保存成功'
             });

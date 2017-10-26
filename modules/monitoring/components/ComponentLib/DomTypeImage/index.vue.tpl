@@ -1,6 +1,6 @@
 <div>
-    <CommonStyle :$dom="$dom" :data="data" :uuid="uuid"></CommonStyle>
-    <CommonAttr :$dom="$dom" :data="data" :uuid="uuid"></CommonAttr>
+    <CommonStyle :uuid="uuid"></CommonStyle>
+    <CommonAttr :uuid="uuid"></CommonAttr>
 
     <div class="box box-cfgset  flat">
         <div class="box-header with-border">
@@ -25,17 +25,18 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">上传</label>
                 <div class="col-sm-9">
-                    <ms-input-font-size v-model='backgroundImage'></ms-input-font-size>
+                    {{backgroundImage}}
+                    <ms-input-file v-model='backgroundImage'></ms-input-file>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">类型</label>
                 <div class="col-sm-9">
                     <select class="form-control" v-model="backgroundSize">
-                <option v-for="item in backgroundSizeList" v-bind:value="item.value">
-                  {{item.name}}
-                </option>
-              </select>
+                        <option v-for="item in backgroundSizeList" v-bind:value="item.value">
+                        {{item.name}}
+                        </option>
+                    </select>
                 </div>
             </div>
 

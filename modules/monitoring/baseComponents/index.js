@@ -120,19 +120,15 @@ Vue.component('ms-input-file', {
     template: `
    <div class="input-group">
    <input class="form-control"
-   type='file'
-   :value="localValue"
+   type='file' 
    @input="onInput($event.target.value, $event)"
    @change="onChange($event.target.value, $event)"
    />
+   {{localValue}}
   </div>
    `,
     data: function() {
-        try {
-            var localValue = this.value.match(/(\d*)px/)[1];
-        } catch (error) {
-            var localValue = 12;
-        }
+        var localValue = this.value;
         return {
             localValue: localValue
         }
@@ -140,13 +136,33 @@ Vue.component('ms-input-file', {
     methods: {
         onInput: function(value, e) {
             this.localValue = value;
-            console.log('input');
             this.$emit('input', this.localValue + 'px');
         },
         onChange: function(value, e) {
-            this.localValue = value;
-            console.log('change');
-            this.$emit('change', this.localValue + 'px');
-        }
+            var file = null;
+            if (typeof e.target === 'undefined') {
+                file = e[0];
+            } else {
+                file = e.target.files[0];
+            }
+            if (file) {
+                let size = Math.floor(file.size / 1024);
+                this.imgPreview(file);
+            }
+        },
+        imgPreview: function(file) {
+            debugger
+            let self = this;
+            if (!file || !window.FileReader) return;
+            // if (/^image/.test(file.type)) {
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = function() {
+                    self.localValue = this.result;
+                    self.$emit('change', self.localValue);
+                    self.$emit('input', self.localValue);
+                }
+                // }
+        },
     }
 });

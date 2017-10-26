@@ -60,7 +60,7 @@ module.exports = {
             console.log(data)
                 // 广播事件打开设置弹窗  传递过去数据
                 // SHOW_UNIT_CONFIG 
-            Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [$dom, data]);
+            Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [uuid]);
         });
     },
 

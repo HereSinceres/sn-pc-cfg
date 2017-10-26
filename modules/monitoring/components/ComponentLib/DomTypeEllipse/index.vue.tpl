@@ -1,6 +1,6 @@
 <div>
-    <CommonStyle :$dom="$dom" :data="data" :uuid="uuid"></CommonStyle>
-    <CommonAttr :$dom="$dom" :data="data" :uuid="uuid"></CommonAttr>
+    <CommonStyle :uuid="uuid"></CommonStyle>
+    <CommonAttr :uuid="uuid"></CommonAttr>
     <div class="box box-cfgset  flat">
         <div class="box-header with-border">
             <h3 class="box-title">私有属性</h3>

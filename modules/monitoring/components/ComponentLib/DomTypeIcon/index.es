@@ -16,7 +16,7 @@ var iconList = [{
 ];
 
 module.exports = {
-    props: ['$dom', 'data', 'uuid'],
+    props: ['uuid'],
     components: {
         CommonStyle: require('modules/monitoring/components/ComponentLib/components/CommonStyle/index.es'),
         CommonAttr: require('modules/monitoring/components/ComponentLib/components/CommonAttr/index.es')
@@ -40,24 +40,26 @@ module.exports = {
     },
     template: __inline('./index.vue.tpl'),
     mounted: function() {
+        var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
         var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
-        this.cfg_var_binded_ouput = this.$dom.attr('data-cfg_var_binded_ouput');
-        this.icon = this.$dom.find('span').attr('class');
+        this.cfg_var_binded_ouput = $dom.attr('data-cfg_var_binded_ouput');
+        this.icon = $dom.find('span').attr('class');
         this.fontSize = target.style.fontSize;
         this.color = target.style.color;
         try {
-            this.cfg_var_binded_ouput_deal = JSON.parse(this.$dom.attr('data-cfg_var_binded_ouput_deal') || []);
+            this.cfg_var_binded_ouput_deal = JSON.parse($dom.attr('data-cfg_var_binded_ouput_deal') || []);
         } catch (error) {}
     },
     methods: {
         ok: function() {
+            var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
             var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
-            this.$dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
-            this.$dom.find('span').attr('class', this.icon);
+            $dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
+            $dom.find('span').attr('class', this.icon);
             target.style.fontSize = this.fontSize;
             target.style.color = this.color;
             // 结果处理
-            this.$dom.attr('data-cfg_var_binded_ouput_deal', JSON.stringify(this.cfg_var_binded_ouput_deal));
+            $dom.attr('data-cfg_var_binded_ouput_deal', JSON.stringify(this.cfg_var_binded_ouput_deal));
             $.notify({
                 message: '保存成功'
             });
