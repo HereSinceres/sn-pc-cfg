@@ -7,35 +7,13 @@ var store = require('modules/monitoring/dataService/store.es');
 
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 var api = require('modules/monitoring/dataService/api.es');
-var defaultOption = {
-    tooltip: {
-        trigger: 'axis'
-    },
-    grid: {
-        left: 0,
-        right: 0,
-        bottom: 0
-    },
-    xAxis: [{
-        show: false,
-        type: 'category',
-        data: []
-    }],
-    yAxis: [{
-        show: false,
-        type: 'value'
-    }],
-    series: [{
-        showSymbol: false,
-        type: 'line',
-        data: []
-    }]
-};
+
+var defaultChartOption =  baseSetting.defaultChartLineOption;
 module.exports = {
     type: Base.CONST_DOM_TYPE.DOMTYPE_ECHARTSLINE,
     name: '折线图',
     desc: '折线图',
-    renderToCanvas: function() {
+    renderToCanvas: function () {
         var dom =
             `<div style=' min-width: 50px;
                     min-height: 50px;
@@ -48,76 +26,80 @@ module.exports = {
             </div>`;
         return dom;
     },
-    bindDragEvent: function(uuid) {
-        var dom = $('[data-cfg-uuid=' + uuid + ']')[0];
+    bindDragEvent: function (uuid) {
+        var dom = domUtil.getDomByuuid(uuid);
         baseSetting.bindDragEvent(uuid);
     },
-    bindOpenSetEvent: function(uuid) {
-        var dom = $('[data-cfg-uuid=' + uuid + ']')[0];
+    bindOpenSetEvent: function (uuid) {
+        var dom = domUtil.getDomByuuid(uuid);
         var $dom = $(dom);
-        $dom.dblclick(function() {
+        $dom.dblclick(function () {
             var data = $(this).data();
             console.log(data)
-                // 广播事件打开设置弹窗  传递过去数据
-                // SHOW_UNIT_CONFIG 
+            // 广播事件打开设置弹窗  传递过去数据
+            // SHOW_UNIT_CONFIG 
             Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [uuid]);
         });
     },
 
-    runChart: function(uuid) {
-        var dom = $('[data-cfg-uuid=' + uuid + ']')[0];
-        var dataAttr = $(dom).data();
-        console.log(dataAttr);
+    runChart: function (uuid) {
+        var dom = domUtil.getDomByuuid(uuid);
+        var attrs = domUtil.getAttributes($(dom));
         var endTime = new Date().valueOf();
         var startTime = endTime - 500 * 60 * 1000; // 5 min
         startTime = 1506816000000;
         endTime = 1506816100000;
-        var outputvar = dataAttr.cfg_var_binded_ouput;
+        var outputvar = attrs['data-cfg_var_binded_ouput'];
+        if (!outputvar) {
+            console.log('没有绑定变量');
+            return;
+        }
         outputvar = '707d15bd-585a-4ea9-b60d-f8df593a63b1';
-        (function(startTime, endTime, outputvar, uuid, defaultOption, dom) {
-            // 指定图表的配置项和数据
-            var option = $.extend({}, defaultOption);
+        (function (startTime, endTime, outputvar, uuid, defaultChartOption, dom) {
+
             if (!window[uuid]) {
                 $(dom).html('');
                 window[uuid] = echarts.init(dom);
-                window[uuid].setOption(option);
             }
             window[uuid].showLoading();
+            // 指定图表的配置项和数据 
+            var option = defaultChartOption;
+            try {
+                if (attrs['data-cfg_chart_option']) {
+                    option = JSON.parse(attrs['data-cfg_chart_option']);
+                }
+            } catch (error) {
+            }
             api.GetAcquisitionVariableHistory({
                 startTime: startTime,
                 endTime: endTime,
                 vEquipmentVariableId: outputvar
-            }).then(function(res) {
-                window[uuid].setOption({
-                    xAxis: [{
-                        data: res.Data.vTimes || []
-                    }],
-                    series: [{
-                        data: [40, 10, 20, 50, 20, 50, 20, 50, 20, 50].map(function(x) {
-                                return x * Math.random();
-                            }) //res.Data.vValues || []
-                    }]
-                });
-                // 使用刚指定的配置项和数据显示图表。
+            }).then(function (res) {
+                option.xAxis[0].data = res.Data.vTimes || [];
+                option.series[0].data = [40, 10, 20, 50, 20, 50, 20, 50, 20, 50].map(function (x) {
+                    return x * Math.random();
+                });//res.Data.vValues || []
+
+                window[uuid].setOption(option); 
                 window[uuid].hideLoading();
                 window[uuid].resize();
             })
-        })(startTime, endTime, outputvar, uuid, defaultOption, dom)
+        })(startTime, endTime, outputvar, uuid, defaultChartOption, dom)
     },
-    monitorCallBack: function(dom) {
+    monitorCallBack: function (uuid) {
+        baseSetting.monitorCallBack(uuid);
+    },
+    bindOutputVar: function (uuid) {
+        var dom = domUtil.getDomByuuid(uuid);
         var self = this;
-        baseSetting.monitorCallBack(dom);
-
-        function justBindVar(dom) {
-            var data = $(dom).data();
-            var uuid = data['cfgUuid'];
+        function justBindVar(uuid) {
             self.runChart(uuid);
         }
 
         function setCallback(dom, callback) {
             var object = {};
             // 行转列
-            callback.forEach(function(element) {
+            callback.forEach(function (element) {
                 object[element.attr] = element.value;
             }, this);
             for (var key in object) {
@@ -133,10 +115,9 @@ module.exports = {
 
             }
         }
-        Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR, function() {
-            justBindVar(dom);
-            baseSetting.switchOperator(dom, setCallback);
+        Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR, function () {
+            justBindVar(uuid);
+            baseSetting.switchOperator(uuid, setCallback);
         });
-
     }
 };

@@ -34,7 +34,7 @@ module.exports = {
         this.strokeWidth = target.style.strokeWidth;
         this.stroke = target.style.stroke;
         try {
-            this.cfg_var_binded_ouput_deal = JSON.parse($dom.attr('data-cfg_var_binded_ouput_deal') || []);
+            this.cfg_var_binded_ouput_deal = JSON.parse($dom.attr('data-cfg_var_binded_ouput_deal') || '[]');
         } catch (error) {
 
         }

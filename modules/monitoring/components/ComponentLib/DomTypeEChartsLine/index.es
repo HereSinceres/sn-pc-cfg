@@ -1,3 +1,5 @@
+
+
 var comlib = require('modules/monitoring/components/ComponentLib/index.es');
 var interact = require('modules/lib/interact/interact.js');
 var Base = require('modules/monitoring/Base.es');
@@ -5,15 +7,8 @@ var Base = require('modules/monitoring/Base.es');
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 
 var store = require('modules/monitoring/dataService/store.es');
-var iconList = [{
-        iconName: 'fa fa-bath',
-        name: 'bath'
-    },
-    {
-        iconName: 'fa fa-lightbulb-o',
-        name: 'lightbulb'
-    }
-];
+
+
 
 module.exports = {
     props: ['uuid'],
@@ -21,35 +16,43 @@ module.exports = {
         CommonStyle: require('modules/monitoring/components/ComponentLib/components/CommonStyle/index.es'),
         CommonAttr: require('modules/monitoring/components/ComponentLib/components/CommonAttr/index.es')
     },
-    data: function() {
+    data: function () {
         return {
             // 绑定的变量
-            variable: store.variable.filter(function(ele) {
+            variable: store.variable.filter(function (ele) {
                 return ele.IsAcVar;
             }),
             cfg_var_binded_ouput: null,
-            operatorList: baseSetting.operatorList,
-            isShowOutPutDialog: false
+            cfg_chart_option: baseSetting.defaultChartLineOption,
+            isShowOutPutDialog: false,
+            isShowOptionCfgDialog: false
         };
     },
     watch: {
 
     },
     template: __inline('./index.vue.tpl'),
-    mounted: function() {
+    mounted: function () {
         var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
         var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
         this.cfg_var_binded_ouput = $dom.attr('data-cfg_var_binded_ouput');
+        try {
+            if ($dom.attr('data-cfg_chart_option')) {
+                this.cfg_chart_option = JSON.parse($dom.attr('data-cfg_chart_option'));
+            }
+        } catch (error) {
+        }
     },
     methods: {
-        ok: function() {
+        ok: function () {
             var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
             var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
             var self = this;
-            $dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
             var dataAttr = $(target).data();
-            target = $("[data-cfg-uuid='" + dataAttr.cfgUuid + "']")[0];
-            comlib.forEach(function(element) {
+            $dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
+            // chart option 配置
+            $dom.attr('data-cfg_chart_option', JSON.stringify(this.cfg_chart_option));
+            comlib.forEach(function (element) {
                 if (dataAttr.cfg_type === element.type) {
                     element.runChart(self.uuid);
                 }
@@ -58,9 +61,13 @@ module.exports = {
                 message: '保存成功'
             });
             this.toggleOutPut(0);
+            this.toggleOptionCfg(0);
         },
-        toggleOutPut: function(isShow) {
+        toggleOutPut: function (isShow) {
             this.isShowOutPutDialog = isShow;
+        },
+        toggleOptionCfg: function (isShow) {
+            this.isShowOptionCfgDialog = isShow;
         }
     }
 };

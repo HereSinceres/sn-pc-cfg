@@ -6,7 +6,6 @@ var commonAttrSet = require('modules/monitoring/components/ComponentLib/componen
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 
 module.exports = {
-    id: 1,
     type: Base.CONST_DOM_TYPE.DOMTYPE_IMAGE,
     name: '图片类型',
     icon: 'fa fa-picture-o',
@@ -25,22 +24,24 @@ module.exports = {
         return dom;
     },
     bindDragEvent: function(uuid) {
-        var dom = $('[data-cfg-uuid=' + uuid + ']')[0];
+        var dom = domUtil.getDomByuuid(uuid);
         baseSetting.bindDragEvent(uuid);
     },
     bindOpenSetEvent: function(uuid) {
-        var dom = $('[data-cfg-uuid=' + uuid + ']')[0];
+        var dom = domUtil.getDomByuuid(uuid);
         var $dom = $(dom);
-        $dom.click(function() {
+        $dom.dblclick(function () {
             var data = $(this).data();
             // 广播事件打开设置弹窗  传递过去数据
             // SHOW_UNIT_CONFIG 
             Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [uuid]);
         });
     },
-    monitorCallBack: function(dom) {
-        baseSetting.monitorCallBack(dom);
-
+    monitorCallBack: function(uuid) {
+        baseSetting.monitorCallBack(uuid);
+    },
+    bindOutputVar: function (uuid) {
+        var dom = domUtil.getDomByuuid(uuid);
         function setCallback(dom, callback) {
             var object = {};
             // 行转列
@@ -60,8 +61,7 @@ module.exports = {
             }
         }
         Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR, function() {
-            baseSetting.switchOperator(dom, setCallback);
+            baseSetting.switchOperator(uuid, setCallback);
         });
-
     }
 };

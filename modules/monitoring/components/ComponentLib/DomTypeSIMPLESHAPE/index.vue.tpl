@@ -13,13 +13,19 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">线条宽度</label>
                 <div class="col-sm-9">
-                    <ms-input-font-size v-model='strokeWidth'></ms-input-font-size>
+                    <ms-input-font-size v-model='borderWidth'></ms-input-font-size>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">颜色</label>
                 <div class="col-sm-9">
-                    <input type="color" class="form-control" v-model='stroke' placeholder="red">
+                    <input type="color" class="form-control" v-model='borderColor' placeholder="red">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">borderRadius</label>
+                <div class="col-sm-9">
+                    <ms-input-font-size v-model='borderRadius'></ms-input-font-size>
                 </div>
             </div>
         </div>
@@ -47,15 +53,15 @@
                         <label class="col-sm-2 control-label">变量</label>
                         <div class="col-sm-10">
                             <select class="form-control" v-model="cfg_var_binded_ouput">
-                                            <option v-for="item in variable" v-bind:value="item.vid">
-                                              {{ item.vName }}: {{ item.vValue }}
-                                            </option>
-                                          </select>
+                                <option v-for="item in variable" v-bind:value="item.vid">
+                                  {{ item.vName }}: {{ item.vValue }}
+                                </option>
+                              </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">结果
-                                          <span class="fa fa-plus" v-on:click='addOperate()'></span>      </label>
+                              <span class="fa fa-plus" v-on:click='addOperate()'></span></label>
                         <div class="col-sm-10">
                             <div class="row form-group" v-for="item in cfg_var_binded_ouput_deal">
                                 <div class="col-xs-2">
@@ -65,10 +71,10 @@
                                 </div>
                                 <div class="col-xs-3">
                                     <select class="form-control" v-model="item.operator">
-                                                <option v-for="(value, key) in operatorList" v-bind:value="value">
-                                                  {{ key }}: {{ value }}
-                                                </option>
-                                              </select>
+                                    <option v-for="(value, key) in operatorList" v-bind:value="value">
+                                      {{ key }}: {{ value }}
+                                    </option>
+                                  </select>
                                 </div>
                                 <div class="col-xs-2">
                                     <input type="text" class="form-control" v-model="item.initValue" placeholder="值">

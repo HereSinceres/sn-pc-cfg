@@ -8,7 +8,7 @@ var store = require('modules/monitoring/dataService/store.es');
 module.exports = {
     props: ['uuid'],
     components: {},
-    data: function() {
+    data: function () {
         return {
             cfg_attr_input: null,
             inputAttrList: commonAttrSet.inputAttrList,
@@ -26,7 +26,7 @@ module.exports = {
 
     },
     template: __inline('./index.vue.tpl'),
-    mounted: function() {
+    mounted: function () {
         var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
         this.cfg_attr_input = $dom.attr('data-cfg_attr_input');
         this.cfg_var_binded_input = $dom.attr('data-cfg_var_binded_input');
@@ -36,7 +36,8 @@ module.exports = {
         this.cfg_var_binded_input_value = $dom.attr('data-cfg_var_binded_input_value');
     },
     methods: {
-        ok: function() {
+        ok: function () {
+            var self = this;
             var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
             $dom.attr('data-cfg_attr_input', this.cfg_attr_input);
             $dom.attr('data-cfg_var_binded_input', this.cfg_var_binded_input);
@@ -47,6 +48,15 @@ module.exports = {
             $.notify({
                 message: '保存成功'
             });
+            var data = $dom.data();
+            comlib.forEach(function (element) {
+                if (data.cfg_type === element.type) {
+                    // 初始化monitorCallBack
+                    if (element.monitorCallBack) {
+                        element.monitorCallBack(self.uuid);
+                    }
+                }
+            }, this);
         }
     }
 };

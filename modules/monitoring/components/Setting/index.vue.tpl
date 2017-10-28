@@ -1,8 +1,6 @@
 <div v-if='data'>
     <DomTypeLine v-if='data.cfg_type=="DOMTYPE_LINE"' :uuid="uuid"></DomTypeLine>
-    <DomTypeRect v-if='data.cfg_type=="DOMTYPE_RECT"' :uuid="uuid"></DomTypeRect>
-    <DomTypeCircle v-if='data.cfg_type=="DOMTYPE_CIRCLE"' :uuid="uuid"></DomTypeCircle>
-    <DomTypeEllipse v-if='data.cfg_type=="DOMTYPE_ELLIPSE"' :uuid="uuid"></DomTypeEllipse>
+    <DomTypeSimpleShape v-if='data.cfg_type=="DOMTYPE_SIMPLESHAPE"' :uuid="uuid"></DomTypeSimpleShape> 
     <DomTypeSvg v-if='data.cfg_type=="DOMTYPE_SVG"' :uuid="uuid"></DomTypeSvg>
     <DomTypeTxt v-if='data.cfg_type=="DOMTYPE_TXT"' :uuid="uuid"></DomTypeTxt>
     <DomTypeIcon v-if='data.cfg_type=="DOMTYPE_ICON"' :uuid="uuid"></DomTypeIcon>

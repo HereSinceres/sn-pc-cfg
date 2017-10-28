@@ -8,11 +8,13 @@ module.exports = {
     },
     getValueByVar: function(tempVar) {
         var result = null;
-        this.variable.forEach(function(element) {
+        var array =this.variable;
+        for (var index = 0; index < array.length; index++) {
+            var element = array[index];
             if (element.vid == tempVar) {
                 result = element.vValue;
             }
-        }, this);
+        }
         return result;
     }
 };

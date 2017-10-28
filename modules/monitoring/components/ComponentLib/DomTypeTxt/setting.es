@@ -5,12 +5,11 @@ var commonAttrSet = require('modules/monitoring/components/ComponentLib/componen
 var store = require('modules/monitoring/dataService/store.es');
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 module.exports = {
-    id: 1,
     type: Base.CONST_DOM_TYPE.DOMTYPE_TXT,
     icon: 'fa fa-text-width',
     name: '文本',
     desc: '文本类型',
-    renderToCanvas: function() {
+    renderToCanvas: function () {
         var dom = `<div 
         style=' min-width: 20px;
         min-height: 20px;
@@ -21,21 +20,21 @@ module.exports = {
             data-cfg-uuid="J_uuid_${Base.uuid()}">文本</div>`;
         return dom;
     },
-    bindDragEvent: function(uuid) {
-        var dom = $('[data-cfg-uuid=' + uuid + ']')[0];
+    bindDragEvent: function (uuid) {
+        var dom = domUtil.getDomByuuid(uuid);
         baseSetting.bindDragEvent(uuid);
     },
-    bindOpenSetEvent: function(uuid) {
-        var dom = $('[data-cfg-uuid=' + uuid + ']')[0];
+    bindOpenSetEvent: function (uuid) {
+        var dom = domUtil.getDomByuuid(uuid);
         var $dom = $(dom);
-        $dom.click(function() {
+        $dom.dblclick(function () {
             var data = $(this).data();
             // 广播事件打开设置弹窗  传递过去数据
             // SHOW_UNIT_CONFIG 
             Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [uuid]);
         });
     },
-    setDefaultStyle: function(container, dom) {
+    setDefaultStyle: function (container, dom) {
         var x = $(container).width() / 2;
         var y = $(container).height() / 2;
         var target = dom;
@@ -46,19 +45,20 @@ module.exports = {
         target.setAttribute('data-y', y);
 
     },
-    monitorCallBack: function(dom) {
-        baseSetting.monitorCallBack(dom);
-
+    monitorCallBack: function (uuid) {
+        baseSetting.monitorCallBack(uuid);
+    },
+    bindOutputVar: function (uuid) {
+        var dom = domUtil.getDomByuuid(uuid); 
         function justBindVar(dom) {
             // 获取dom上的data 属性 根据 data 属性修改数据
             var data = $(dom).data();
             $(dom).html(store.getValueByVar(data.cfg_var_binded_ouput));
         }
-
         function setCallback(dom, callback) {
             var object = {};
             // 行转列
-            callback.forEach(function(element) {
+            callback.forEach(function (element) {
                 object[element.attr] = element.value;
             }, this);
             for (var key in object) {
@@ -74,9 +74,9 @@ module.exports = {
 
             }
         }
-        Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR, function() {
+        Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR, function () {
             justBindVar(dom);
-            baseSetting.switchOperator(dom, setCallback);
+            baseSetting.switchOperator(uuid, setCallback);
         });
     }
 };

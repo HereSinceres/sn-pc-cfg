@@ -16,8 +16,9 @@ module.exports = {
             // 绑定的变量
             variable: store.variable,
             cfg_var_binded_ouput: null,
-            strokeWidth: null,
-            stroke: null,
+            borderWidth: null,
+            borderColor: null,
+            borderRadius: null, 
             operatorList: baseSetting.operatorList,
             cfg_var_binded_ouput_deal: [],
             isShowOutPutDialog: false
@@ -31,10 +32,12 @@ module.exports = {
         var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
         var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
         this.cfg_var_binded_ouput = $dom.attr('data-cfg_var_binded_ouput');
-        this.strokeWidth = target.style.strokeWidth;
-        this.stroke = target.style.stroke;
+        this.borderWidth = target.style.borderWidth;
+        this.borderColor = target.style.borderColor;
+        this.borderRadius = target.style.borderRadius; 
+
         try {
-            this.cfg_var_binded_ouput_deal = JSON.parse($dom.attr('data-cfg_var_binded_ouput_deal') || []);
+            this.cfg_var_binded_ouput_deal = JSON.parse($dom.attr('data-cfg_var_binded_ouput_deal') || '[]');
         } catch (error) {
 
         }
@@ -44,8 +47,9 @@ module.exports = {
             var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
             var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
             $dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
-            target.style.strokeWidth = this.strokeWidth;
-            target.style.stroke = this.stroke;
+            target.style.borderWidth = this.borderWidth;
+            target.style.borderColor = this.borderColor;
+            target.style.borderRadius = this.borderRadius 
             // 结果处理
             $dom.attr('data-cfg_var_binded_ouput_deal', JSON.stringify(this.cfg_var_binded_ouput_deal));
             $.notify({
@@ -59,12 +63,12 @@ module.exports = {
                 operator: '<=',
                 callback: [{
                         name: '宽度[eg:2px]',
-                        attr: 'strokeWidth',
+                        attr: 'borderWidth',
                         value: ''
                     },
                     {
                         name: '颜色[eg:red]',
-                        attr: 'stroke',
+                        attr: 'borderColor',
                         value: ''
                     }
                 ]

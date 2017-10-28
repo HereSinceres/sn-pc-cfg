@@ -5,12 +5,11 @@ var commonAttrSet = require('modules/monitoring/components/ComponentLib/componen
 
 
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
-module.exports = {
-    id: 1,
+module.exports = { 
     type: Base.CONST_DOM_TYPE.DOMTYPE_LINE,
     name: '直线',
     desc: '直线',
-    renderToCanvas: function() {
+    renderToCanvas: function () {
         var dom = `<svg 
                         class='u-drag'
                         data-cfg_type="${this.type}"
@@ -20,27 +19,29 @@ module.exports = {
                    </svg>`;
         return dom;
     },
-    bindDragEvent: function(uuid) {
-        var dom = $('[data-cfg-uuid=' + uuid + ']')[0];
+    bindDragEvent: function (uuid) {
+        var dom = domUtil.getDomByuuid(uuid);
         baseSetting.bindDragEvent(uuid);
     },
-    bindOpenSetEvent: function(uuid) {
-        var dom = $('[data-cfg-uuid=' + uuid + ']')[0];
+    bindOpenSetEvent: function (uuid) {
+        var dom = domUtil.getDomByuuid(uuid);
         var $dom = $(dom);
-        $dom.click(function() {
+        $dom.dblclick(function () {
             var data = $(this).data();
             // 广播事件打开设置弹窗  传递过去数据
             // SHOW_UNIT_CONFIG
             Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [uuid]);
         });
     },
-    monitorCallBack: function(dom) {
-        baseSetting.monitorCallBack(dom);
-
+    monitorCallBack: function (uuid) {
+        baseSetting.monitorCallBack(uuid);
+    },
+    bindOutputVar: function (uuid) {
+        var dom = domUtil.getDomByuuid(uuid);
         function setCallback(dom, callback) {
             var object = {};
             // 行转列
-            callback.forEach(function(element) {
+            callback.forEach(function (element) {
                 object[element.attr] = element.value;
             }, this);
             for (var key in object) {
@@ -58,8 +59,8 @@ module.exports = {
             // 获取dom上的data 属性 根据 data 属性修改数据
             var data = $(dom).data();
         }
-        Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR, function() {
-            baseSetting.switchOperator(dom, setCallback);
+        Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR, function () {
+            baseSetting.switchOperator(uuid, setCallback);
         });
     }
 };

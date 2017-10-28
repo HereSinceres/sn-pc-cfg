@@ -5,7 +5,7 @@ var store = require('modules/monitoring/dataService/store.es');
 var mulSel = require('modules/monitoring/components/ContentWrapper/mulSel.es');
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 
-var $container = function() {
+var $container = function () {
     return $('.J-wrapper');
 };
 
@@ -14,7 +14,7 @@ function closeMenu() {
 }
 module.exports = {
     components: {},
-    data: function() {
+    data: function () {
         return {
             comlib: comlib,
             rightClickDom: null
@@ -24,32 +24,39 @@ module.exports = {
 
     },
     template: __inline('./index.vue.tpl'),
-    mounted: function() {
+    mounted: function () {
         var self = this;
 
-        function callBack(element) {
-            var html = element.renderToCanvas();
+        function callBack(html) {
             var $html = $.parseHTML(html);
             var eleDom = $html[0];
             var uuid = $(eleDom).data('cfgUuid');
+            var data = $(eleDom).data();
+
+            // ---------------------
             // 添加dom to paint  
             $container().append($html);
-            // 添加弹窗事件
-            if (element.bindOpenSetEvent) {
-                element.bindOpenSetEvent(uuid);
-            }
-            // 绑定拖拽事件
-            if (element.bindDragEvent) {
-                element.bindDragEvent(uuid);
-            }
-            // 设置默认样式
-            if (element.setDefaultStyle) {
-                element.setDefaultStyle(self.$el, eleDom);
-            }
-            // 初始化charts
-            if (element.runChart) {
-                element.runChart(uuid);
-            }
+            comlib.forEach(function (element) {
+                if (data.cfg_type === element.type) {
+
+                    // 添加弹窗事件
+                    if (element.bindOpenSetEvent) {
+                        element.bindOpenSetEvent(uuid);
+                    }
+                    // 绑定拖拽事件
+                    if (element.bindDragEvent) {
+                        element.bindDragEvent(uuid);
+                    }
+                    // 设置默认样式
+                    if (element.setDefaultStyle) {
+                        element.setDefaultStyle(self.$el, eleDom);
+                    }
+                    // 初始化charts
+                    if (element.runChart) {
+                        element.runChart(uuid);
+                    }
+                }
+            }, this);
             self.bindRightClickEvent();
         }
         Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.ADD_NEWUNIT, callBack);
@@ -59,14 +66,14 @@ module.exports = {
 
     },
     methods: {
-        setHtml: function() {
+        setHtml: function () {
             var self = this;
             if (store.currentCfg.html) {
                 var html = decodeURI(store.currentCfg.html);
                 $container().replaceWith(html);
             }
         },
-        bindEvent: function(uuid) {
+        bindEvent: function (uuid) {
             var self = this;
             var array = [];
             if (uuid) {
@@ -78,7 +85,7 @@ module.exports = {
                 var eleDom = array[index];
                 var data = $(eleDom).data();
                 uuid = data['cfgUuid'];
-                comlib.forEach(function(element) {
+                comlib.forEach(function (element) {
                     if (data.cfg_type === element.type) {
 
                         // 添加弹窗事件
@@ -95,32 +102,36 @@ module.exports = {
                         }
                         // 初始化monitorCallBack
                         if (element.monitorCallBack) {
-                            element.monitorCallBack(eleDom);
+                            element.monitorCallBack(uuid);
+                        }
+                        // 初始化绑定输出变量
+                        if (element.bindOutputVar) {
+                            element.bindOutputVar(uuid);
                         }
                     }
                 }, this);
             }
             self.bindRightClickEvent();
         },
-        bindRightClickEvent: function() {
+        bindRightClickEvent: function () {
             var self = this;
             $('.u-drag').contextmenu({
                 target: '.context-menu',
-                before: function(e) {
+                before: function (e) {
                     self.rightClickDom = e.target;
                     e.preventDefault();
                     return true;
                 }
             });
         },
-        tool_del: function() {
+        tool_del: function () {
             function removeDom(dom) {
                 $(dom).remove();
                 closeMenu();
             }
             if (this.rightClickDom) {
                 if (window.__select_ele__.length > 0) {
-                    window.__select_ele__.forEach(function(element) {
+                    window.__select_ele__.forEach(function (element) {
 
                         removeDom($(element));
                     }, this);
@@ -133,12 +144,12 @@ module.exports = {
                 }
             }
         },
-        tool_set: function() {
+        tool_set: function () {
             // 模拟点击双击，当前功能可不用
             $(this.rightClickDom).click();
             closeMenu();
         },
-        tool_copy: function() {
+        tool_copy: function () {
             var self = this;
 
             function copyDom(newDom) {
@@ -153,7 +164,7 @@ module.exports = {
             }
             if (this.rightClickDom) {
                 if (window.__select_ele__.length > 0) {
-                    window.__select_ele__.forEach(function(element) {
+                    window.__select_ele__.forEach(function (element) {
                         copyDom($(element));
                     }, this);
                 } else {

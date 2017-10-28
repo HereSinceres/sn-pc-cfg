@@ -47,7 +47,7 @@ module.exports = {
         this.fontSize = target.style.fontSize;
         this.color = target.style.color;
         try {
-            this.cfg_var_binded_ouput_deal = JSON.parse($dom.attr('data-cfg_var_binded_ouput_deal') || []);
+            this.cfg_var_binded_ouput_deal = JSON.parse($dom.attr('data-cfg_var_binded_ouput_deal') || '[]');
         } catch (error) {}
     },
     methods: {
