@@ -9,7 +9,9 @@ module.exports = {
         };
     },
     watch: {
-
+        searchtxt: function (val) {
+            this.search();
+        }
     },
     template: __inline('./index.vue.tpl'),
     mounted: function () {
@@ -29,9 +31,26 @@ module.exports = {
             var dom = item.renderToCanvas();
             Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.ADD_NEWUNIT, [dom]);
         },
-        search: function (item) {
-            // if(item.de)
-            return true;
+        search: function () {
+            var self = this;
+            var object = this.allComList;
+            for (var key in object) {
+                if (object.hasOwnProperty(key)) {
+                    var array = object[key];
+                    array.forEach(function (element) {
+                        console.log(self.searchtxt);
+                        if (self.searchtxt.length > 0) {
+                            if (element.desc.indexOf(self.searchtxt) > -1 || element.name.indexOf(self.searchtxt) > -1) {
+                                element.isActive = true;
+                            } else {
+                                element.isActive = false;
+                            }
+                        } else {
+                            element.isActive = false;
+                        }
+                    }, this);
+                }
+            }
         }
     }
 };

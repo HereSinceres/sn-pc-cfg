@@ -16,7 +16,7 @@ module.exports = {
         return {
             // 绑定的变量
             variable: store.variable.filter(function (ele) {
-                return ele.IsAcVar;
+                return true;
             }),
             cfg_var_binded_ouput: null,
             cfg_chart_option: baseSetting.defaultChartGaugeOption,

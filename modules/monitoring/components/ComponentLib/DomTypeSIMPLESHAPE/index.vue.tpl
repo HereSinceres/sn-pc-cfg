@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">borderRadius</label>
+                <label class="col-sm-3 control-label">圆角</label>
                 <div class="col-sm-9">
                     <ms-input-font-size v-model='borderRadius'></ms-input-font-size>
                 </div>

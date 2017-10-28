@@ -43,7 +43,7 @@ module.exports = {
             rootMatrix,
             originalPoints = [],
             transformedPoints = [];
-
+        debugger
         for (var i = 0, len = star.points.numberOfItems; i < len; i++) {
             var handle = document.createElementNS(sns, 'use'),
                 point = star.points.getItem(i),
