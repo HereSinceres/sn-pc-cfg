@@ -1,13 +1,13 @@
 <div class="ProjectCFGList ">
-
     <div class="dropdown">
-        <span class="brand dropdown-toggle" type="button" id="cfg-project-list-menu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <i class="brand-icon fa fa-windows" aria-hidden="true"></i>{{activeProName}}
-    </span>
+        <span class="brand dropdown-toggle" type="button" id="cfg-project-list-menu" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <i class="brand-icon fa fa-windows" aria-hidden="true"></i>{{activeProName}}
+        </span>
         <ul class="dropdown-menu" aria-labelledby="cfg-project-list-menu">
             <li v-for="item in proList" v-on:click=" getCfgListByProId(item)" v-bind:class="{'active':activeProId==item.ProjectId}">
                 <a>
-          {{item.PName}}</a>
+                    {{item.PName}}</a>
             </li>
         </ul>
     </div>
@@ -15,24 +15,24 @@
         <li class="cfg-grid-group__item" v-for="item in cfgList" v-on:click="jump(item)" v-bind:class="{'active':activeCfgId==item.id}">
             <div class="card">
                 <span class="card__name">
-          {{item.cfgName}}
-          <i class="fa fa-trash " v-on:click="delCfg(item)"></i>
-          <i class="fa fa-pencil " v-on:click="modifyCfg(item)"></i> 
-          <router-link :to="{ name: 'cfg', params: { cfgId: item.id }}">
-            <i class="fa fa-eye"></i>
-          </router-link>
-          <router-link :to="{ name: 'CfgOnline', params: { cfgId: item.id }}">
-              <i class="fa fa-eye"></i>线上
-            </router-link>
-          
-        </span>
+                    {{item.cfgName}}
+                    <i class="fa fa-trash " v-on:click="delCfg(item)"></i>
+                    <i class="fa fa-pencil " v-on:click="modifyCfg(item)"></i>
+                    <router-link :to="{ name: 'cfg', params: { cfgId: item.id }}">
+                        <i class="fa fa-eye"></i>
+                    </router-link>
+                    <router-link :to="{ name: 'CfgOnline', params: { cfgId: item.id }}">
+                        <i class="fa fa-eye"></i>线上
+                    </router-link>
+
+                </span>
             </div>
         </li>
         <li class="cfg-grid-group__item" v-on:click="addCfg()">
             <div class="card ">
                 <span class="card__add">
-          <i class="fa fa-plus-circle fa-4" aria-hidden="true"></i>
-        </span>
+                    <i class="fa fa-plus-circle fa-4" aria-hidden="true"></i>
+                </span>
             </div>
         </li>
     </ul>

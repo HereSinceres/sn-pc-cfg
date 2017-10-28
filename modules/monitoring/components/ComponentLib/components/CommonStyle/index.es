@@ -43,8 +43,7 @@ module.exports = {
             target.style.webkitTransform = target.style.transform += 'rotate(' + this.rotate + 'deg)';
             target.style.zIndex = this.zIndex;
             $.notify({
-                message: '保存成功',
-                timer: 100000000
+                message: '保存成功'
             });
         }
     }

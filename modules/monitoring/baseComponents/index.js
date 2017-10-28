@@ -112,12 +112,10 @@ Vue.component('ms-json-editor', {
             }
             catch (error) {
                 $.notify({
-                    // options
                     message: '数据格式错误'
                 }, {
-                        // settings
-                        type: 'danger'
-                    });
+                    type: 'danger'
+                });
             }
         },
         onChange: function (value, e) {
