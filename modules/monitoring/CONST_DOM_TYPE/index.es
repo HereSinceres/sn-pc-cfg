@@ -1,8 +1,6 @@
 module.exports = {
     // 文本框（只读，可读写）
-    DOMTYPE_TXT: 'DOMTYPE_TXT',
-    // 直线
-    DOMTYPE_LINE: 'DOMTYPE_LINE',
+    DOMTYPE_TXT: 'DOMTYPE_TXT', 
     // 简单形状
     DOMTYPE_SIMPLESHAPE: 'DOMTYPE_SIMPLESHAPE',
     // 自定SVG

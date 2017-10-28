@@ -9,16 +9,25 @@ module.exports = {
     name: 'SVG',
     desc: '自定义SVG',
     renderToCanvas: function () {
-        var dom = `<svg 
-                        class='u-drag'
-                        data-cfg_type="${this.type}"
-                        data-cfg-uuid="J_uuid_${Base.uuid()}"
-                        xmlns="http://www.w3.org/2000/svg"> 
-                        <path d="M 10 75 Q 50 10 100 75 T 190 75" stroke="black"
-                            stroke-linecap="round" stroke-dasharray="5,10,5" fill="none"/>
-                        <path d="M 10 75 L 190 75" stroke="red"
-                            stroke-linecap="round" stroke-width="1" stroke-dasharray="5,5" fill="none"/>
-                   </svg>`;
+        var dom = ` 
+        <svg
+        class='u-drag'
+        data-cfg_type="${this.type}"
+        data-cfg-uuid="J_uuid_${Base.uuid()}"
+        xmlns="http://www.w3.org/2000/svg" > 
+                <defs>
+                    <circle id="point-handle"
+                        r="3" x="0" y="0"
+                        stroke-width="2"
+                        fill="#fff"
+                        fill-opacity="0.8"
+                        stroke="#fff"/>
+                </defs>
+                <polyline  id="can-drag-line" points="10,120 60,10 180,10"
+                style="fill:none;stroke:#29e;stroke-width:2"/>
+        </svg>
+        
+       `;
         return dom;
     },
     bindDragEvent: function (uuid) {
@@ -36,85 +45,82 @@ module.exports = {
         });
     },
     runSvg: function (uuid) {
-        var root = domUtil.getDomByuuid(uuid);
-        var sns = "http://www.w3.org/2000/svg",
-            xns = "http://www.w3.org/1999/xlink",
-            star = $(root).find('#edit-star')[0],
-            rootMatrix,
-            originalPoints = [],
-            transformedPoints = [];
-        debugger
-        for (var i = 0, len = star.points.numberOfItems; i < len; i++) {
-            var handle = document.createElementNS(sns, 'use'),
-                point = star.points.getItem(i),
-                newPoint = root.createSVGPoint();
+        try {
+            var root = domUtil.getDomByuuid(uuid);
+            var sns = "http://www.w3.org/2000/svg",
+                xns = "http://www.w3.org/1999/xlink",
+                star = $(root).find('#can-drag-line')[0],
+                rootMatrix,
+                originalPoints = [],
+                transformedPoints = [];
+            for (var i = 0, len = star.points.numberOfItems; i < len; i++) {
+                var handle = document.createElementNS(sns, 'use'),
+                    point = star.points.getItem(i),
+                    newPoint = root.createSVGPoint();
 
-            handle.setAttributeNS(xns, 'href', '#point-handle');
-            handle.setAttribute('class', 'point-handle');
+                handle.setAttributeNS(xns, 'href', '#point-handle');
+                handle.setAttribute('class', 'point-handle');
 
-            handle.x.baseVal.value = newPoint.x = point.x;
-            handle.y.baseVal.value = newPoint.y = point.y;
+                handle.x.baseVal.value = newPoint.x = point.x;
+                handle.y.baseVal.value = newPoint.y = point.y;
 
-            handle.setAttribute('data-index', i);
+                handle.setAttribute('data-index', i);
 
-            originalPoints.push(newPoint);
+                originalPoints.push(newPoint);
 
-            root.appendChild(handle);
+                root.appendChild(handle);
+            }
+
+            function applyTransforms(event) {
+                rootMatrix = root.getScreenCTM();
+
+                transformedPoints = originalPoints.map(function (point) {
+                    return point.matrixTransform(rootMatrix);
+                });
+
+                interact('.point-handle').draggable({
+                    snap: {
+                        targets: transformedPoints,
+                        range: 20 * Math.max(rootMatrix.a, rootMatrix.d)
+                    }
+                });
+            }
+
+            interact(root)
+                .on('mousedown', applyTransforms)
+                .on('touchstart', applyTransforms);
+
+            interact('.point-handle')
+                .draggable({
+                    onstart: function (event) {
+                        root.setAttribute('class', 'dragging');
+                    },
+                    onmove: function (event) {
+                        var i = event.target.getAttribute('data-index') | 0,
+                            point = star.points.getItem(i);
+
+                        point.x += event.dx / rootMatrix.a;
+                        point.y += event.dy / rootMatrix.d;
+
+                        event.target.x.baseVal.value = point.x;
+                        event.target.y.baseVal.value = point.y;
+                    },
+                    onend: function (event) {
+                        setTimeout(function () {
+                            root.setAttribute('class', 'u-drag');
+                        }, 1000);
+                    },
+                    snap: {
+                        targets: originalPoints,
+                        range: 10,
+                        relativePoints: [{ x: 0.5, y: 0.5 }]
+                    },
+                    restrict: { restriction: document.rootElement }
+                })
+                .styleCursor(false);
+
+        } catch (error) {
+
         }
-
-        function applyTransforms(event) {
-            rootMatrix = root.getScreenCTM();
-
-            transformedPoints = originalPoints.map(function (point) {
-                return point.matrixTransform(rootMatrix);
-            });
-
-            interact('.point-handle').draggable({
-                snap: {
-                    targets: transformedPoints,
-                    range: 20 * Math.max(rootMatrix.a, rootMatrix.d)
-                }
-            });
-        }
-
-        interact(root)
-            .on('mousedown', applyTransforms)
-            .on('touchstart', applyTransforms);
-
-        interact('.point-handle')
-            .draggable({
-                onstart: function (event) {
-                    root.setAttribute('class', 'dragging');
-                },
-                onmove: function (event) {
-                    var i = event.target.getAttribute('data-index') | 0,
-                        point = star.points.getItem(i);
-
-                    point.x += event.dx / rootMatrix.a;
-                    point.y += event.dy / rootMatrix.d;
-
-                    event.target.x.baseVal.value = point.x;
-                    event.target.y.baseVal.value = point.y;
-                },
-                onend: function (event) {
-                    root.setAttribute('class', '');
-                },
-                snap: {
-                    targets: originalPoints,
-                    range: 10,
-                    relativePoints: [{ x: 0.5, y: 0.5 }]
-                },
-                restrict: { restriction: document.rootElement }
-            })
-            .styleCursor(false);
-
-    },
-    monitorCallBack: function (uuid) {
-        var dom = domUtil.getDomByuuid(uuid);
-        var data = $(dom).data();
-        baseSetting.monitorCallBack(uuid);
-        // 获取dom上的data 属性 根据 data 属性修改数据
-        console.log(data.cfg_var_binded_ouput);
-        $(dom).html(store.getValueByVar(data.cfg_var_binded_ouput));
     }
 };

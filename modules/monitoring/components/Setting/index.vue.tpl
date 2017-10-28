@@ -1,5 +1,4 @@
-<div v-if='data'>
-    <DomTypeLine v-if='data.cfg_type=="DOMTYPE_LINE"' :uuid="uuid"></DomTypeLine>
+<div v-if='data'> 
     <DomTypeSimpleShape v-if='data.cfg_type=="DOMTYPE_SIMPLESHAPE"' :uuid="uuid"></DomTypeSimpleShape> 
     <DomTypeSvg v-if='data.cfg_type=="DOMTYPE_SVG"' :uuid="uuid"></DomTypeSvg>
     <DomTypeTxt v-if='data.cfg_type=="DOMTYPE_TXT"' :uuid="uuid"></DomTypeTxt>

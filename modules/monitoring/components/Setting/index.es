@@ -5,15 +5,14 @@ var domUtil = require('modules/util/dom/domUtil.es');
 module.exports = {
     components: {
         DomTypeTxt: require('modules/monitoring/components/ComponentLib/DomTypeTxt/index.es'),
-        DomTypeLine: require('modules/monitoring/components/ComponentLib/DomTypeLine/index.es'),
-        DomTypeSimpleShape: require('modules/monitoring/components/ComponentLib/DomTypeSimpleShape/index.es'), 
-        DomTypeSvg: require('modules/monitoring/components/ComponentLib/DomTypeSvg/index.es'), 
+        DomTypeSimpleShape: require('modules/monitoring/components/ComponentLib/DomTypeSimpleShape/index.es'),
+        DomTypeSvg: require('modules/monitoring/components/ComponentLib/DomTypeSvg/index.es'),
         DomTypeIcon: require('modules/monitoring/components/ComponentLib/DomTypeIcon/index.es'),
         DomTypeImage: require('modules/monitoring/components/ComponentLib/DomTypeImage/index.es'),
         DomTypeEChartsGauge: require('modules/monitoring/components/ComponentLib/DomTypeEChartsGauge/index.es'),
         DomTypeEChartsLine: require('modules/monitoring/components/ComponentLib/DomTypeEChartsLine/index.es')
     },
-    data: function() {
+    data: function () {
         return {
             data: null,
             uuid: null
@@ -23,16 +22,16 @@ module.exports = {
 
     },
     template: __inline('./index.vue.tpl'),
-    mounted: function() {
+    mounted: function () {
         var self = this;
         var timer;
 
         function callBack(uuid) {
             clearTimeout(timer);
-            timer = setTimeout(function() {
+            timer = setTimeout(function () {
                 self.data = null;
                 self.uuid = null;
-                timer = setTimeout(function() {
+                timer = setTimeout(function () {
                     var dom = domUtil.getDomByuuid(uuid);
                     self.data = $(dom).data();
                     self.uuid = uuid;

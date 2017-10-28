@@ -4,6 +4,7 @@ var Base = require('modules/monitoring/Base.es');
 var store = require('modules/monitoring/dataService/store.es');
 var mulSel = require('modules/monitoring/components/ContentWrapper/mulSel.es');
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
+var domUtil = require('modules/util/dom/domUtil.es');
 
 var $container = function () {
     return $('.J-wrapper');
@@ -28,14 +29,13 @@ module.exports = {
         var self = this;
 
         function callBack(html) {
-            var $html = $.parseHTML(html);
-            var eleDom = $html[0];
-            var uuid = $(eleDom).data('cfgUuid');
-            var data = $(eleDom).data();
-
-            // ---------------------
-            // 添加dom to paint  
-            $container().append($html);
+            $container().append(html);
+            console.log(html);
+            var attrs = domUtil.getAttributes($(html));
+            console.log(attrs);
+            var uuid = attrs['data-cfg-uuid'];
+            console.log(uuid);
+            var data = $(html).data();
             comlib.forEach(function (element) {
                 if (data.cfg_type === element.type) {
 
@@ -49,12 +49,17 @@ module.exports = {
                     }
                     // 设置默认样式
                     if (element.setDefaultStyle) {
-                        element.setDefaultStyle(self.$el, eleDom);
+                        element.setDefaultStyle(self.$el, html);
                     }
                     // 初始化charts
                     if (element.runChart) {
                         element.runChart(uuid);
                     }
+                    // 初始化svg
+                    if (element.runSvg) {
+                        element.runSvg(uuid);
+                    }
+
                 }
             }, this);
             self.bindRightClickEvent();
@@ -82,8 +87,8 @@ module.exports = {
                 array = $(self.$el).find('[data-cfg-uuid]');
             }
             for (var index = 0; index < array.length; index++) {
-                var eleDom = array[index];
-                var data = $(eleDom).data();
+                var dom = array[index];
+                var data = $(dom).data();
                 uuid = data['cfgUuid'];
                 comlib.forEach(function (element) {
                     if (data.cfg_type === element.type) {
@@ -99,6 +104,10 @@ module.exports = {
                         // 初始化charts
                         if (element.runChart) {
                             element.runChart(uuid);
+                        }
+                        // 初始化svg
+                        if (element.runSvg) {
+                            element.runSvg(uuid);
                         }
                         // 初始化monitorCallBack
                         if (element.monitorCallBack) {
