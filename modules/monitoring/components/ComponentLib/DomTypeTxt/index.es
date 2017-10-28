@@ -59,7 +59,7 @@ module.exports = {
                 initValue: 1,
                 operator: '<=',
                 callback: [{
-                        name: '字体大小[eg:12px]',
+                        name: '大小[eg:12px]',
                         attr: 'fontSize',
                         value: ''
                     },

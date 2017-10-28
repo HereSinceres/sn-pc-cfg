@@ -1,6 +1,7 @@
 var comlib = require('modules/monitoring/components/ComponentLib/index.es');
 var interact = require('modules/lib/interact/interact.js');
 var Base = require('modules/monitoring/Base.es');
+var domUtil = require('modules/util/dom/domUtil.es');
 
 
 var store = require('modules/monitoring/dataService/store.es');
@@ -30,9 +31,9 @@ module.exports = {
             var self = this;
             var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
             $dom.html(this.svgPath);
-            var dataAttr = $dom.data();
+            var attrs = domUtil.getAttributes($dom);
             comlib.forEach(function (element) {
-                if (dataAttr.cfg_type === element.type) {
+                if (attrs['data-cfg_type'] === element.type) {
                     element.runSvg(self.uuid);
                 }
             }, this);

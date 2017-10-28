@@ -5,7 +5,8 @@ var Base = require('modules/monitoring/Base.es');
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 
 var store = require('modules/monitoring/dataService/store.es');
- 
+var domUtil = require('modules/util/dom/domUtil.es');
+
 module.exports = {
     props: ['uuid'],
     components: {
@@ -44,12 +45,12 @@ module.exports = {
             var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
             var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
             var self = this;
-            var dataAttr = $(target).data();
+            var attrs = domUtil.getAttributes($dom);
             $dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
             // chart option 配置
             $dom.attr('data-cfg_chart_option', JSON.stringify(this.cfg_chart_option));
             comlib.forEach(function (element) {
-                if (dataAttr.cfg_type === element.type) {
+                if (attrs['data-cfg_type'] === element.type) {
                     element.runChart(self.uuid);
                 }
             }, this);

@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">字体大小</label>
+                <label class="col-sm-3 control-label">大小</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" v-model='fontSize' placeholder="eg:12px">
                 </div>

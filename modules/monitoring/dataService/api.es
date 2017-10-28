@@ -10,19 +10,19 @@ $.ajaxSetup({
             $.notify({
                 message: '登陆验证失败,请重新登陆'
             }, {
-                type: 'danger'
-            });
+                    type: 'danger'
+                });
         }
     }
 });
 // 在接受到数据后并执行完success做统一处理
-$(document).ajaxSuccess(function (event, request, settings) {});
+$(document).ajaxSuccess(function (event, request, settings) { });
 $(document).ajaxError(function (event, request, settings) {
     $.notify({
         message: '服务器正忙，请稍后重试'
     }, {
-        type: 'danger'
-    });
+            type: 'danger'
+        });
 });
 // 执行success之前
 function beforeDealSuccess(data) {
@@ -31,8 +31,8 @@ function beforeDealSuccess(data) {
         $.notify({
             message: data.msg
         }, {
-            type: 'danger'
-        });
+                type: 'danger'
+            });
     }
 }
 // ajax 过滤器
@@ -113,6 +113,13 @@ module.exports = {
             startTime: p.startTime,
             endTime: p.endTime,
             vEquipmentVariableId: p.vEquipmentVariableId
+        });
+    },
+    // 上传接口
+    UpLoadFile: function (pic) {
+        var url = '/api/CommonUpLoad/UpLoadFile';
+        return $.post(url, {
+            pic: pic
         });
     }
 };

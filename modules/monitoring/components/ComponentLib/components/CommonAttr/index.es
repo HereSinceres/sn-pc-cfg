@@ -5,6 +5,7 @@ var Base = require('modules/monitoring/Base.es');
 var commonAttrSet = require('modules/monitoring/components/ComponentLib/components/CommonAttr/commonAttrSet.es');
 
 var store = require('modules/monitoring/dataService/store.es');
+var domUtil = require('modules/util/dom/domUtil.es');
 module.exports = {
     props: ['uuid'],
     components: {},
@@ -19,7 +20,8 @@ module.exports = {
             cfg_var_binded_input_ctr: null, // (输入操作)
             inputCtrList: commonAttrSet.inputCtrList,
             cfg_jump_url: null, // 跳转链接
-            cfg_var_binded_input_value: null // 赋予值
+            cfg_var_binded_input_value: null,// 赋予值
+            isShowCfgDialog: false
         };
     },
     watch: {
@@ -48,15 +50,20 @@ module.exports = {
             $.notify({
                 message: '保存成功'
             });
-            var data = $dom.data();
+            var attrs = domUtil.getAttributes($dom);
             comlib.forEach(function (element) {
-                if (data.cfg_type === element.type) {
+                if (attrs['data-cfg_type'] === element.type) {
                     // 初始化monitorCallBack
                     if (element.monitorCallBack) {
                         element.monitorCallBack(self.uuid);
                     }
                 }
             }, this);
+            this.toggleCfg(0);
+        },
+        toggleCfg: function (isShow) {
+            this.isShowCfgDialog = isShow;
+
         }
     }
 };

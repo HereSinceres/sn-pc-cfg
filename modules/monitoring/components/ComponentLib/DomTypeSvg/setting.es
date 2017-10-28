@@ -46,79 +46,90 @@ module.exports = {
     },
     runSvg: function (uuid) {
         try {
-            var root = domUtil.getDomByuuid(uuid);
-            var sns = "http://www.w3.org/2000/svg",
-                xns = "http://www.w3.org/1999/xlink",
-                star = $(root).find('#can-drag-line')[0],
-                rootMatrix,
-                originalPoints = [],
-                transformedPoints = [];
-            for (var i = 0, len = star.points.numberOfItems; i < len; i++) {
-                var handle = document.createElementNS(sns, 'use'),
-                    point = star.points.getItem(i),
-                    newPoint = root.createSVGPoint();
+            (function (uuid) {
+                var root = domUtil.getDomByuuid(uuid);
+                var sns = "http://www.w3.org/2000/svg",
+                    xns = "http://www.w3.org/1999/xlink",
+                    star = $(root).find('#can-drag-line')[0],
+                    rootMatrix,
+                    originalPoints = [],
+                    transformedPoints = [];
 
-                handle.setAttributeNS(xns, 'href', '#point-handle');
-                handle.setAttribute('class', 'point-handle');
+                $(root).find('.point-handle').remove();
 
-                handle.x.baseVal.value = newPoint.x = point.x;
-                handle.y.baseVal.value = newPoint.y = point.y;
+                for (var i = 0, len = star.points.numberOfItems; i < len; i++) {
+                    var handle = document.createElementNS(sns, 'use'),
+                        point = star.points.getItem(i),
+                        newPoint = root.createSVGPoint();
 
-                handle.setAttribute('data-index', i);
+                    handle.setAttributeNS(xns, 'href', '#point-handle');
+                    handle.setAttribute('class', 'point-handle');
 
-                originalPoints.push(newPoint);
+                    handle.x.baseVal.value = newPoint.x = point.x;
+                    handle.y.baseVal.value = newPoint.y = point.y;
 
-                root.appendChild(handle);
-            }
+                    handle.setAttribute('data-index', i);
 
-            function applyTransforms(event) {
-                rootMatrix = root.getScreenCTM();
+                    originalPoints.push(newPoint);
 
-                transformedPoints = originalPoints.map(function (point) {
-                    return point.matrixTransform(rootMatrix);
-                });
+                    root.appendChild(handle);
+                }
 
-                interact('.point-handle').draggable({
-                    snap: {
-                        targets: transformedPoints,
-                        range: 20 * Math.max(rootMatrix.a, rootMatrix.d)
+                function applyTransforms(event) {
+                    rootMatrix = root.getScreenCTM();
+
+                    transformedPoints = originalPoints.map(function (point) {
+                        return point.matrixTransform(rootMatrix);
+                    });
+                    var array = $(root).find('.point-handle');
+                    for (var index = 0; index < array.length; index++) {
+                        var element = array[index];
+                        interact(element).draggable({
+                            snap: {
+                                targets: transformedPoints,
+                                range: 20 * Math.max(rootMatrix.a, rootMatrix.d)
+                            }
+                        });
                     }
-                });
-            }
+                }
 
-            interact(root)
-                .on('mousedown', applyTransforms)
-                .on('touchstart', applyTransforms);
+                interact(root)
+                    .on('mousedown', applyTransforms)
+                    .on('touchstart', applyTransforms);
+                var array = $(root).find('.point-handle');
+                for (var index = 0; index < array.length; index++) {
+                    var element = array[index];
+                    interact(element)
+                        .draggable({
+                            onstart: function (event) {
+                                root.setAttribute('class', 'dragging');
+                            },
+                            onmove: function (event) {
+                                var i = event.target.getAttribute('data-index') | 0,
+                                    point = star.points.getItem(i);
 
-            interact('.point-handle')
-                .draggable({
-                    onstart: function (event) {
-                        root.setAttribute('class', 'dragging');
-                    },
-                    onmove: function (event) {
-                        var i = event.target.getAttribute('data-index') | 0,
-                            point = star.points.getItem(i);
+                                point.x += event.dx / rootMatrix.a;
+                                point.y += event.dy / rootMatrix.d;
 
-                        point.x += event.dx / rootMatrix.a;
-                        point.y += event.dy / rootMatrix.d;
+                                event.target.x.baseVal.value = point.x;
+                                event.target.y.baseVal.value = point.y;
+                            },
+                            onend: function (event) {
+                                setTimeout(function () {
+                                    root.setAttribute('class', 'u-drag');
+                                }, 1000);
+                            },
+                            snap: {
+                                targets: originalPoints,
+                                range: 10,
+                                relativePoints: [{ x: 0.5, y: 0.5 }]
+                            },
+                            restrict: { restriction: document.rootElement }
+                        })
+                        .styleCursor(false);
+                }
 
-                        event.target.x.baseVal.value = point.x;
-                        event.target.y.baseVal.value = point.y;
-                    },
-                    onend: function (event) {
-                        setTimeout(function () {
-                            root.setAttribute('class', 'u-drag');
-                        }, 1000);
-                    },
-                    snap: {
-                        targets: originalPoints,
-                        range: 10,
-                        relativePoints: [{ x: 0.5, y: 0.5 }]
-                    },
-                    restrict: { restriction: document.rootElement }
-                })
-                .styleCursor(false);
-
+            })(uuid);
         } catch (error) {
 
         }

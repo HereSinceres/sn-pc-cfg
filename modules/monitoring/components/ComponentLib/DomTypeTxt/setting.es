@@ -11,8 +11,8 @@ module.exports = {
     desc: '文本类型',
     renderToCanvas: function () {
         var dom = `<div 
-        style=' min-width: 20px;
-        min-height: 20px;
+        style=' min-width: 50px;
+        min-height: 50px;
         text-align: center;
         '
             class='u-drag'
@@ -33,18 +33,7 @@ module.exports = {
             // SHOW_UNIT_CONFIG 
             Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [uuid]);
         });
-    },
-    setDefaultStyle: function (container, dom) {
-        var x = $(container).width() / 2;
-        var y = $(container).height() / 2;
-        var target = dom;
-        // translate the element
-        target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
-        // update the posiion attributes
-        target.setAttribute('data-x', x);
-        target.setAttribute('data-y', y);
-
-    },
+    }, 
     monitorCallBack: function (uuid) {
         baseSetting.monitorCallBack(uuid);
     },

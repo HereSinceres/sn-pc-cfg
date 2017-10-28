@@ -3,6 +3,7 @@ var interact = require('modules/lib/interact/interact.js');
 var Base = require('modules/monitoring/Base.es');
 var store = require('modules/monitoring/dataService/store.es');
 var api = require('modules/monitoring/dataService/api.es');
+var domUtil = require('modules/util/dom/domUtil.es');
 var $container = function () {
     return $('.J-wrapper');
 };
@@ -47,10 +48,11 @@ module.exports = {
         bindEvent: function () {
             var self = this;
             $(document).find('[data-cfg-uuid]').each(function () {
-                var eleDom = this;
-                var data = $(eleDom).data();
+                var dom = this;
+                var attrs = domUtil.getAttributes($(dom));
+                var uuid = attrs['data-cfg-uuid'];
                 comlib.forEach(function (element) {
-                    if (data.cfg_type === element.type) {
+                    if (attrs['data-cfg_type'] === element.type) {
                         if (element.monitorCallBack) {
                             element.monitorCallBack(uuid);
                         }

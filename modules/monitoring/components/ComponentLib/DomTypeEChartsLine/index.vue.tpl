@@ -2,7 +2,7 @@
     <CommonStyle :uuid="uuid"></CommonStyle>
     <CommonAttr :uuid="uuid"></CommonAttr>
 
-    <div class="box box-cfgset  flat">
+    <div class="box box-cfgset flat">
         <div class="box-header with-border">
             <h3 class="box-title">私有属性</h3>
             <div class="box-tools pull-right">

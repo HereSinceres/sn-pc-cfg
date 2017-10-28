@@ -30,14 +30,10 @@ module.exports = {
 
         function callBack(html) {
             $container().append(html);
-            console.log(html);
             var attrs = domUtil.getAttributes($(html));
-            console.log(attrs);
             var uuid = attrs['data-cfg-uuid'];
-            console.log(uuid);
-            var data = $(html).data();
             comlib.forEach(function (element) {
-                if (data.cfg_type === element.type) {
+                if (attrs['data-cfg_type'] === element.type) {
 
                     // 添加弹窗事件
                     if (element.bindOpenSetEvent) {
@@ -46,10 +42,6 @@ module.exports = {
                     // 绑定拖拽事件
                     if (element.bindDragEvent) {
                         element.bindDragEvent(uuid);
-                    }
-                    // 设置默认样式
-                    if (element.setDefaultStyle) {
-                        element.setDefaultStyle(self.$el, html);
                     }
                     // 初始化charts
                     if (element.runChart) {
@@ -88,10 +80,10 @@ module.exports = {
             }
             for (var index = 0; index < array.length; index++) {
                 var dom = array[index];
-                var data = $(dom).data();
-                uuid = data['cfgUuid'];
+                var attrs = domUtil.getAttributes($(dom));
+                uuid = attrs['data-cfg-uuid'];
                 comlib.forEach(function (element) {
-                    if (data.cfg_type === element.type) {
+                    if (attrs['data-cfg_type'] === element.type) {
 
                         // 添加弹窗事件
                         if (element.bindOpenSetEvent) {
