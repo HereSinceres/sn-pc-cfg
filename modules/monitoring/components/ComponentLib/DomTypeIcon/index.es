@@ -5,55 +5,7 @@ var Base = require('modules/monitoring/Base.es');
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 
 var store = require('modules/monitoring/dataService/store.es');
-var iconList = [{
-    iconName: 'iconcfgfont icon-cfg-anniu3',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-kaiguan2',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-kaiguan1',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-icon',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-kaiguan3',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-kaiguanguan',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-anniu2',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-anniu2',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-anniu1',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-kaiguanguan-copy',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-kaiguan',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-anniu',
-    name: '开关1'
-}
-];
+
 
 module.exports = {
     props: ['uuid'],
@@ -66,7 +18,6 @@ module.exports = {
             // 绑定的变量
             variable: store.variable,
             cfg_var_binded_ouput: null,
-            iconList: iconList,
             icon: null,
             fontSize: null,
             color: null,
@@ -105,6 +56,7 @@ module.exports = {
                 message: '保存成功'
             });
             this.toggleOutPut(0);
+            this.togglePrivateAttr(0);
         },
         addOperate: function () {
             this.cfg_var_binded_ouput_deal.push({

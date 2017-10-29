@@ -2,7 +2,7 @@
     <!-- <i title="保存" class="tool-btn fa fa-floppy-o"></i> -->
     <span title="提交" class="tool-btn pull-right fa fa-upload" v-on:click='save'></span>
     <span title="模拟运行" class="tool-btn pull-right fa fa-play" v-on:click="run()"> </span> 
-    <span title="数据模拟开关" class="tool-btn pull-right fa fa-bug" v-on:click="toggleControlInEffect" v-bind:class="{'active':controleIsEffect}"></span>
+    <span title="数据模拟开关" class="tool-btn pull-right fa fa-bug" v-on:click="toggleControlInEffect" v-bind:class="{'active':!isDebuggerFireToOnline}"></span>
     <span title="数据模拟" class="tool-btn pull-right fa fa-database" v-on:click="toggleVariableSet(1)"></span>
     <span title="画布设置" class="tool-btn pull-right fa fa-cog" v-on:click="toggleCanvasSet(1)"></span>
 

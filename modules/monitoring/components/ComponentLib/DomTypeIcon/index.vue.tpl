@@ -5,7 +5,7 @@
     <CommonAttr :uuid="uuid"></CommonAttr>
     <div class="box box-cfgset  flat">
         <div class="box-header with-border">
-            <h3 class="box-title">输出属性</h3>
+            <h3 class="box-title">绑定变量</h3>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" v-on:click='toggleOutPut(1)'>
                     <i class="fa fa-cog"></i>
@@ -21,7 +21,7 @@
                     <button type="button" class="close" v-on:click="toggleOutPut(0)">
                         <span>×</span>
                     </button>
-                    <h4 class="modal-title">输出属性</h4>
+                    <h4 class="modal-title">绑定变量</h4>
                 </div>
                 <div class="modal-body form-horizontal">
                     <div class="form-group">
@@ -62,7 +62,7 @@
                                             </ms-input-color-pick>
                                             <ms-input-font-size v-else-if="cal.attr=='fontSize'" v-model="cal.value" :placeholder="cal.name">
                                             </ms-input-font-size>
-                                            <ms-input-icon v-else-if="cal.attr=='icon'" v-model="cal.value" :placeholder="cal.name">
+                                            <ms-input-icon v-else-if="cal.attr=='icon'" v-model="cal.value" :placeholder="cal.name">1
                                             </ms-input-icon>
                                             <input v-else type="text" class="form-control" v-model="cal.value" :placeholder="cal.name">
                                         </div>
@@ -104,12 +104,8 @@
                             按钮
                         </label>
                         <div class="col-sm-9">
-                            <span :class="icon"></span>
-                            <select class="form-control" v-model="icon">
-                                <option v-for="option in iconList" v-bind:value="option.iconName">
-                                    {{ option.name }}
-                                </option>
-                            </select>
+                            <ms-input-icon v-model="icon">
+                            </ms-input-icon>
                         </div>
                     </div>
                     <div class="form-group">

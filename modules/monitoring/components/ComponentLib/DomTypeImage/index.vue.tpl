@@ -4,10 +4,11 @@
 
     <div class="box box-cfgset  flat">
         <div class="box-header with-border">
-            <h3 class="box-title">输出属性</h3>
+            <h3 class="box-title">绑定变量</h3>
             <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" v-on:click='toggleOutPut(1)'><i class="fa fa-cog"></i>
-                    </button>
+                <button type="button" class="btn btn-box-tool" v-on:click='toggleOutPut(1)'>
+                    <i class="fa fa-cog"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -17,9 +18,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" v-on:click="toggleOutPut(0)">
-                              <span>×</span>
-                        </button>
-                    <h4 class="modal-title">输出属性</h4>
+                        <span>×</span>
+                    </button>
+                    <h4 class="modal-title">绑定变量</h4>
                 </div>
                 <div class="modal-body form-horizontal">
                     <div class="form-group">
@@ -27,15 +28,15 @@
                         <div class="col-sm-10">
                             <select class="form-control" v-model="cfg_var_binded_ouput">
                                 <option v-for="item in variable" v-bind:value="item.vid">
-                                  {{ item.vName }}: {{ item.vValue }}
+                                    {{ item.vName }}: {{ item.vValue }}
                                 </option>
-                              </select>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">结果
-                              <span class="fa fa-plus" v-on:click='addOperate()'></span>
-                            </label>
+                            <span class="fa fa-plus" v-on:click='addOperate()'></span>
+                        </label>
                         <div class="col-sm-10">
                             <div class="row form-group" v-for="item in cfg_var_binded_ouput_deal">
                                 <div class="col-xs-2">
@@ -45,10 +46,10 @@
                                 </div>
                                 <div class="col-xs-3">
                                     <select class="form-control" v-model="item.operator">
-                                    <option v-for="(value, key) in operatorList" v-bind:value="value">
-                                      {{ key }}: {{ value }}
-                                    </option>
-                                  </select>
+                                        <option v-for="(value, key) in operatorList" v-bind:value="value">
+                                            {{ key }}: {{ value }}
+                                        </option>
+                                    </select>
                                 </div>
                                 <div class="col-xs-2">
                                     <input type="text" class="form-control" v-model="item.initValue" placeholder="值">
@@ -56,11 +57,7 @@
                                 <div class="col-xs-5">
                                     <div class="form-group" v-for="cal in item.callback">
                                         <div class="col-sm-12">
-                                            <select v-if='cal.attr=="backgroundImage"' class="form-control" v-model="cal.value" :placeholder="cal.name">
-                                        <option v-for="item in imgLibList" v-bind:value="item.value">
-                                          {{item.name}}
-                                        </option>
-                                      </select>
+                                            <ms-input-file v-if='cal.attr=="backgroundImage"' v-model="cal.value" :placeholder="cal.name"></ms-input-file>
                                         </div>
                                     </div>
                                 </div>
@@ -75,47 +72,51 @@
         </div>
     </div>
 
-
-
-
     <div class="box box-cfgset  flat">
-            <div class="box-header with-border">
-                <h3 class="box-title">私有属性</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" v-on:click='ok'><i class="fa fa-check-circle-o"></i>
-                                </button>
-                </div>
-            </div>
-            <div class="box-body form-horizontal">
-    
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">图片</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" v-model="backgroundImage">
-                            <option v-for="item in imgLibList" v-bind:value="item.value">
-                            {{item.name}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">上传</label>
-                    <div class="col-sm-9">
-                        {{backgroundImage}}
-                        <ms-input-file v-model='backgroundImage'></ms-input-file>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">类型</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" v-model="backgroundSize">
-                            <option v-for="item in backgroundSizeList" v-bind:value="item.value">
-                            {{item.name}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-    
+        <div class="box-header with-border">
+            <h3 class="box-title">私有属性</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" v-on:click='togglePrivateAttr(1)'>
+                    <i class="fa fa-cog"></i>
+                </button>
             </div>
         </div>
+    </div>
+    <div class="modal flat fade in" style="display:block;" v-if="isShowPrivateAttrDialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" v-on:click="togglePrivateAttr(0)">
+                        <span>×</span>
+                    </button>
+                    <h4 class="modal-title">私有属性</h4>
+                </div>
+                <div class="modal-body form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">上传</label>
+                        <div class="col-sm-9">
+                            <ms-input-file v-model='backgroundImage'></ms-input-file>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">类型</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" v-model="backgroundSize">
+                                <option v-for="item in backgroundSizeList" v-bind:value="item.value">
+                                    {{item.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info " v-on:click="ok()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 </div>

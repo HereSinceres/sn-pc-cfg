@@ -8,7 +8,7 @@ var store = require('modules/monitoring/dataService/store.es');
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 var api = require('modules/monitoring/dataService/api.es');
 
-var defaultChartOption =  baseSetting.defaultChartLineOption;
+var defaultChartOption = baseSetting.defaultChartLineOption;
 module.exports = {
     type: Base.CONST_DOM_TYPE.DOMTYPE_ECHARTSLINE,
     name: '折线图',
@@ -75,12 +75,16 @@ module.exports = {
                 endTime: endTime,
                 vEquipmentVariableId: outputvar
             }).then(function (res) {
-                option.xAxis[0].data = res.Data.vTimes || [];
-                option.series[0].data = [40, 10, 20, 50, 20, 50, 20, 50, 20, 50].map(function (x) {
-                    return x * Math.random();
-                });//res.Data.vValues || []
+                try {
+                    option.xAxis[0].data = res.Data.vTimes || [];
+                    option.series[0].data = res.Data.vValues || [];
+                    //  [40, 10, 20, 50, 20, 50, 20, 50, 20, 50].map(function (x) {
+                    //     return x * Math.random();
+                    // });//res.Data.vValues || []
+                } catch (error) {
 
-                window[uuid].setOption(option); 
+                }
+                window[uuid].setOption(option);
                 window[uuid].hideLoading();
                 window[uuid].resize();
             })
@@ -109,7 +113,9 @@ module.exports = {
                     // if (key == 'fontSize') {
                     //     dom.style[key] = element + 'px';
                     // } else {
-                    dom.style[key] = element;
+                    if (element) {
+                        dom.style[key] = element;
+                    }
                     // }
                 }
 

@@ -33,7 +33,7 @@
     </div>
     <div class="box box-cfgset  flat">
         <div class="box-header with-border">
-            <h3 class="box-title">输出属性</h3>
+            <h3 class="box-title">绑定变量</h3>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" v-on:click='toggleOutPut(1)'>
                     <i class="fa fa-cog"></i>
@@ -48,7 +48,7 @@
                     <button type="button" class="close" v-on:click="toggleOutPut(0)">
                         <span>×</span>
                     </button>
-                    <h4 class="modal-title">输出属性</h4>
+                    <h4 class="modal-title">绑定变量</h4>
                 </div>
                 <div class="modal-body form-horizontal">
                     <div class="form-group">

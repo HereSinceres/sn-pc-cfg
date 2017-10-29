@@ -3,7 +3,6 @@ var interact = require('modules/lib/interact/interact.js');
 var Base = require('modules/monitoring/Base.es');
 
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
-
 var store = require('modules/monitoring/dataService/store.es');
 module.exports = {
     props: ['uuid'],
@@ -21,7 +20,8 @@ module.exports = {
             borderRadius: null, 
             operatorList: baseSetting.operatorList,
             cfg_var_binded_ouput_deal: [],
-            isShowOutPutDialog: false
+            isShowOutPutDialog: false,
+            isShowPrivateAttrDialog: false
         };
     },
     watch: {
@@ -56,6 +56,7 @@ module.exports = {
                 message: '保存成功'
             });
             this.toggleOutPut(0);
+            this.togglePrivateAttr(0);
         },
         addOperate: function() {
             this.cfg_var_binded_ouput_deal.push({
@@ -80,6 +81,9 @@ module.exports = {
         },
         toggleOutPut: function(isShow) {
             this.isShowOutPutDialog = isShow;
+        },
+        togglePrivateAttr: function (isShow) {
+            this.isShowPrivateAttrDialog = isShow;
         }
     }
 };

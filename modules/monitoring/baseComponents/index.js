@@ -1,52 +1,49 @@
 var Vue = require('modules/lib/vue/vue.js');
+var api = require('modules/monitoring/dataService/api.es');
 let iconList = [{
     iconName: 'iconcfgfont icon-cfg-anniu3',
     name: '开关1'
 },
-    {
-        iconName: 'iconcfgfont icon-cfg-kaiguan2',
-        name: '开关1'
-    },
-    {
-        iconName: 'iconcfgfont icon-cfg-kaiguan1',
-        name: '开关1'
-    },
-    {
-        iconName: 'iconcfgfont icon-cfg-icon',
-        name: '开关1'
-    },
-    {
-        iconName: 'iconcfgfont icon-cfg-kaiguan3',
-        name: '开关1'
-    },
-    {
-        iconName: 'iconcfgfont icon-cfg-kaiguanguan',
-        name: '开关1'
-    },
-    {
-        iconName: 'iconcfgfont icon-cfg-anniu2',
-        name: '开关1'
-    },
-    {
-        iconName: 'iconcfgfont icon-cfg-anniu2',
-        name: '开关1'
-    },
-    {
-        iconName: 'iconcfgfont icon-cfg-anniu1',
-        name: '开关1'
-    },
-    {
-        iconName: 'iconcfgfont icon-cfg-kaiguanguan-copy',
-        name: '开关1'
-    },
-    {
-        iconName: 'iconcfgfont icon-cfg-kaiguan',
-        name: '开关1'
-    },
-    {
-        iconName: 'iconcfgfont icon-cfg-anniu',
-        name: '开关1'
-    }
+{
+    iconName: 'iconcfgfont icon-cfg-kaiguan2',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-kaiguan1',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-icon',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-kaiguan3',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-kaiguanguan',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-anniu2',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-anniu1',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-kaiguanguan-copy',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-kaiguan',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-anniu',
+    name: '开关1'
+}
 ];
 Vue.component('ms-input-font-size', {
     props: {
@@ -70,7 +67,7 @@ Vue.component('ms-input-font-size', {
             var localValue = this.value.match(/(\d*)px/)[1];
         }
         catch (error) {
-            var localValue = 12;
+            var localValue = null;
         }
         return {
             localValue: localValue
@@ -92,42 +89,28 @@ Vue.component('ms-input-font-size', {
 Vue.component('ms-input-icon', {
     props: {
         value: {
-            iconList: iconList,
             default: null
         }
     },
     template: `
-   <div class="input-group">
-   <input class="form-control"
-   type='number'
-   :value="localValue"
-   @input="onInput($event.target.value, $event)"
-   @change="onChange($event.target.value, $event)"
-   />
-   <span class="input-group-addon">px</span>
-  </div>
+    <div> 
+        <a class="btn" v-for='item in iconList' v-on:click='setIcon(item)' v-bind:class="{'active':(item.iconName==localValue)}">
+            <i :class='item.iconName'></i>
+        </a>
+    </div>
    `,
     data: function () {
-        try {
-            var localValue = this.value.match(/(\d*)px/)[1];
-        }
-        catch (error) {
-            var localValue = 12;
-        }
+        var localValue = this.value;
         return {
+            iconList: iconList,
             localValue: localValue
         };
     },
     methods: {
-        onInput: function (value, e) {
-            this.localValue = value;
-            console.log('input');
-            this.$emit('input', this.localValue + 'px');
-        },
-        onChange: function (value, e) {
-            this.localValue = value;
-            console.log('change');
-            this.$emit('change', this.localValue + 'px');
+        setIcon: function (item) {
+            this.localValue = item.iconName;
+            this.$emit('input', item.iconName);
+            this.$emit('change', item.iconName);
         }
     }
 });
@@ -151,7 +134,7 @@ Vue.component('ms-input-color-pick', {
             var localValue = this.value;
         }
         catch (error) {
-            var localValue = '#808080';
+            var localValue = null;
         }
         return {
             localValue: localValue
@@ -205,8 +188,8 @@ Vue.component('ms-json-editor', {
                 $.notify({
                     message: '数据格式错误'
                 }, {
-                    type: 'danger'
-                });
+                        type: 'danger'
+                    });
             }
         },
         onChange: function (value, e) {
@@ -228,7 +211,6 @@ Vue.component('ms-input-file', {
    @input="onInput($event.target.value, $event)"
    @change="onChange($event.target.value, $event)"
    />
-   {{localValue}}
   </div>
    `,
     data: function () {
@@ -266,11 +248,12 @@ Vue.component('ms-input-file', {
             let reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onloadend = function () {
-                self.localValue = this.result;
-                self.$emit('change', self.localValue);
-                self.$emit('input', self.localValue);
+                api.UpLoadFile(this.result).then(function (res) {
+                    self.localValue = 'url("' + res.Data + '")';
+                    self.$emit('change', self.localValue);
+                    self.$emit('input', self.localValue);
+                });
             };
-            // }
         }
     }
 });

@@ -15,7 +15,7 @@ module.exports = {
                 bg: null
             },
             variable: store.variable,
-            controleIsEffect: 0
+            isDebuggerFireToOnline: 0
         };
     },
     watch: {
@@ -27,8 +27,8 @@ module.exports = {
         this.canvas.w = (parseFloat(canvasDom.style.width) || canvasDom.clientWidth || 0);
         this.canvas.h = (parseFloat(canvasDom.style.height) || canvasDom.clientHeight || 0);
         this.canvas.bg = canvasDom.style.backgroundColor;
-        this.controleIsEffect = 0;
-        window.__controleIsEffect__ = this.controleIsEffect;
+        this.isDebuggerFireToOnline = 1;
+        window.__isDebuggerFireToOnline__ = this.isDebuggerFireToOnline;
     },
     methods: {
         getHtml: function () {
@@ -71,8 +71,8 @@ module.exports = {
             Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR);
         },
         toggleControlInEffect: function () {
-            this.controleIsEffect = !this.controleIsEffect;
-            window.__controleIsEffect__ = this.controleIsEffect;
+            this.isDebuggerFireToOnline = !this.isDebuggerFireToOnline;
+            window.__isDebuggerFireToOnline__ = this.isDebuggerFireToOnline;
         }
     }
 };

@@ -42,9 +42,15 @@ module.exports = {
                 eVariableId: eVariableId,
                 newValue: newValue
             }).then(function (res) {
-                $.notify({
-                    message: res.msg
-                });
+                if (res.success) {
+                    $.notify({
+                        message:'修改成功'
+                    });
+                }else{
+                    $.notify({
+                        message:'修改失败'
+                    });
+                }
             });
         }
         var attrs = domUtil.getAttributes($(dom));
@@ -56,7 +62,8 @@ module.exports = {
                 break;
             case 2:
                 setVarFun = function () {
-                    bootbox.prompt(attrs['data-cfg_var_binded_input_tip'] + '[' + attrs['data-cfg_var_binded_input'] + ']', function (result) {
+                    // + '[' + attrs['data-cfg_var_binded_input'] + ']'
+                    bootbox.prompt(attrs['data-cfg_var_binded_input_tip'], function (result) {
                         if (result !== null) {
                             setValByValId(attrs['data-cfg_var_binded_input'], result);
                         }
@@ -111,7 +118,7 @@ module.exports = {
         }
         $(dom).off('click');
         $(dom).click(function () {
-            if (!window.__controleIsEffect__) {
+            if (window.__isDebuggerFireToOnline__) {
                 return;
             }
 

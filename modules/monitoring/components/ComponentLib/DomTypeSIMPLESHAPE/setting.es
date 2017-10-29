@@ -4,7 +4,7 @@ var domUtil = require('modules/util/dom/domUtil.es');
 var commonAttrSet = require('modules/monitoring/components/ComponentLib/components/CommonAttr/commonAttrSet.es');
 
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
-module.exports = { 
+module.exports = {
     type: Base.CONST_DOM_TYPE.DOMTYPE_SIMPLESHAPE,
     name: '简单图形',
     desc: '简单图形',
@@ -50,11 +50,13 @@ module.exports = {
             for (var key in object) {
                 if (object.hasOwnProperty(key)) {
                     var element = object[key];
-                    // 可过滤数据
-                    // if (key == 'fontSize') {
-                    //     dom.style[key] = element + 'px';
-                    // } else {  
-                    dom.style[key] = element;
+                    if (element) {
+                        // 可过滤数据
+                        // if (key == 'fontSize') {
+                        //     dom.style[key] = element + 'px';
+                        // } else {  
+                        dom.style[key] = element;
+                    }
                     // }
                 }
 

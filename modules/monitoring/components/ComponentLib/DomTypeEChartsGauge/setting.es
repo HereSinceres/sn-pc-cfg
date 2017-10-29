@@ -6,7 +6,7 @@ var store = require('modules/monitoring/dataService/store.es');
 
 
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
-var defaultChartOption =  baseSetting.defaultChartGaugeOption;
+var defaultChartOption = baseSetting.defaultChartGaugeOption;
 module.exports = {
     type: Base.CONST_DOM_TYPE.DOMTYPE_ECHARTSGAUGE,
     icon: 'fa fa-tachometer',
@@ -58,7 +58,7 @@ module.exports = {
         option.series[0].data[0].value = output;
         // 使用刚指定的配置项和数据显示图表。
         setTimeout(function () {
-            window[uuid].setOption(option); 
+            window[uuid].setOption(option);
             window[uuid].hideLoading();
             window[uuid].resize();
         }, 200);
@@ -86,7 +86,9 @@ module.exports = {
                     // if (key == 'fontSize') {
                     //     dom.style[key] = element + 'px';
                     // } else {
-                    dom.style[key] = element;
+                    if (element) {
+                        dom.style[key] = element;
+                    }
                     // }
                 }
 

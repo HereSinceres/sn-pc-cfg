@@ -1,10 +1,10 @@
 <div>
     <CommonStyle :uuid="uuid"></CommonStyle>
- 
+
     <CommonAttr :uuid="uuid"></CommonAttr>
     <div class="box box-cfgset  flat">
         <div class="box-header with-border">
-            <h3 class="box-title">输出属性</h3>
+            <h3 class="box-title">绑定变量</h3>
             <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" v-on:click='toggleOutPut(1)'>
                     <i class="fa fa-cog"></i>
@@ -19,7 +19,7 @@
                     <button type="button" class="close" v-on:click="toggleOutPut(0)">
                         <span>×</span>
                     </button>
-                    <h4 class="modal-title">输出属性</h4>
+                    <h4 class="modal-title">绑定变量</h4>
                 </div>
                 <div class="modal-body form-horizontal">
                     <div class="form-group">
@@ -71,36 +71,51 @@
         </div>
     </div>
 
-
-
     <div class="box box-cfgset  flat">
-            <div class="box-header with-border">
-                <h3 class="box-title">私有属性</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" v-on:click='ok'>
-                        <i class="fa fa-check-circle-o"></i>
-                    </button>
-                </div>
+        <div class="box-header with-border">
+            <h3 class="box-title">私有属性</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" v-on:click='togglePrivateAttr(1)'>
+                    <i class="fa fa-cog"></i>
+                </button>
             </div>
-            <div class="box-body form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">宽度</label>
-                    <div class="col-sm-9">
-                        <ms-input-font-size v-model='borderWidth'></ms-input-font-size>
+        </div>
+    </div>
+    <div class="modal flat fade in" style="display:block;" v-if="isShowPrivateAttrDialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" v-on:click="togglePrivateAttr(0)">
+                        <span>×</span>
+                    </button>
+                    <h4 class="modal-title">私有属性</h4>
+                </div>
+                <div class="modal-body form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">宽度</label>
+                        <div class="col-sm-9">
+                            <ms-input-font-size v-model='borderWidth'></ms-input-font-size>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">颜色</label>
+                        <div class="col-sm-9">
+                            <ms-input-color-pick v-model='borderColor'></ms-input-color-pick>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">圆角</label>
+                        <div class="col-sm-9">
+                            <ms-input-font-size v-model='borderRadius'></ms-input-font-size>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">颜色</label>
-                    <div class="col-sm-9">
-                        <ms-input-color-pick v-model='borderColor'></ms-input-color-pick>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">圆角</label>
-                    <div class="col-sm-9">
-                        <ms-input-font-size v-model='borderRadius'></ms-input-font-size>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info " v-on:click="ok()">保存</button>
                 </div>
             </div>
         </div>
+    </div>
+
+
 </div>

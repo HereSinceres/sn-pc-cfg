@@ -60,7 +60,9 @@ module.exports = {
                     // if (key == 'fontSize') {
                     //     dom.style[key] = element + 'px';
                     // } else {
-                    dom.style[key] = element;
+                    if (element) {
+                        dom.style[key] = element;
+                    }
                     // }
                 }
 

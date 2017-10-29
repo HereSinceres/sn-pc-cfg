@@ -1,5 +1,5 @@
 var comlib = require('modules/monitoring/components/ComponentLib/index.es');
-var Base = require('modules/monitoring/Base.es');
+var Base = require('modules/monitoring/Base.es'); 
 var result = comlib.slice();
 var groups = {
     base: '基本组件',

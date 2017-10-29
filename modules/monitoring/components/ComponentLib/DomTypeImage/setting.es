@@ -10,8 +10,8 @@ module.exports = {
     name: '图片类型',
     icon: 'fa fa-picture-o',
     desc: '图片类型',
-    renderToCanvas: function() {
-        var img = __uri('modules/monitoring/picLib/test_gif.gif');
+    renderToCanvas: function () {
+        var img = 'http://via.placeholder.com/200x200';
         var dom = `<div 
             class='u-drag'
             data-cfg_type="${this.type}"
@@ -23,11 +23,11 @@ module.exports = {
             </div>`;
         return dom;
     },
-    bindDragEvent: function(uuid) {
+    bindDragEvent: function (uuid) {
         var dom = domUtil.getDomByuuid(uuid);
         baseSetting.bindDragEvent(uuid);
     },
-    bindOpenSetEvent: function(uuid) {
+    bindOpenSetEvent: function (uuid) {
         var dom = domUtil.getDomByuuid(uuid);
         var $dom = $(dom);
         $dom.dblclick(function () {
@@ -37,7 +37,7 @@ module.exports = {
             Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [uuid]);
         });
     },
-    monitorCallBack: function(uuid) {
+    monitorCallBack: function (uuid) {
         baseSetting.monitorCallBack(uuid);
     },
     bindOutputVar: function (uuid) {
@@ -45,7 +45,7 @@ module.exports = {
         function setCallback(dom, callback) {
             var object = {};
             // 行转列
-            callback.forEach(function(element) {
+            callback.forEach(function (element) {
                 object[element.attr] = element.value;
             }, this);
             for (var key in object) {
@@ -54,13 +54,15 @@ module.exports = {
                     // if (key == 'fontSize') {
                     //     dom.style[key] = element + 'px';
                     // } else {
-                    dom.style[key] = element;
+                    if (element) {
+                        dom.style[key] = element;
+                    }
                     // }
                 }
 
             }
         }
-        Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR, function() {
+        Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR, function () {
             baseSetting.switchOperator(uuid, setCallback);
         });
     }
