@@ -48,7 +48,7 @@
                     <button type="button" class="close" v-on:click="toggleOutPut(0)">
                         <span>×</span>
                     </button>
-                    <h4 class="modal-title">绑定变量</h4>
+                    <h4 class="modal-title">绑定变量{{cfg_var_binded_ouput}}</h4>
                 </div>
                 <div class="modal-body form-horizontal">
                     <div class="form-group">
@@ -61,6 +61,12 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-group">
+                            <label class="col-sm-2 control-label">时间(min)之前 </label>
+                            <div class="col-sm-10">
+                                 <input type="number" min="1" class="form-control" v-model="cfg_time_before">
+                            </div>
+                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-info " v-on:click="ok()">保存</button>

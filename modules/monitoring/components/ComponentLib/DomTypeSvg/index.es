@@ -16,7 +16,17 @@ module.exports = {
             // 绑定的变量
             variable: store.variable,
             svgPath: null,
-            isShowPathDialog: false
+            isShowPathDialog: false,
+            style: [
+                {
+                    name: '线条',
+                    attr: 'stroke',
+                    value: ''
+                }, {
+                    name: '宽度',
+                    attr: 'strokeWidth',
+                    value: ''
+                }]
         };
     },
     watch: {
@@ -26,11 +36,19 @@ module.exports = {
     mounted: function () {
         var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
         this.svgPath = $dom.html();
+        var target = $dom[0];
+        var array = this.style;
+        for (var index = 0; index < array.length; index++) {
+            var element = array[index];
+            element.value = target.style[element.attr];
+        }
     },
     methods: {
         ok: function () {
             var self = this;
             var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
+            var target = $dom[0];
+
             $dom.html(this.svgPath);
             var attrs = domUtil.getAttributes($dom);
             comlib.forEach(function (element) {
@@ -38,6 +56,12 @@ module.exports = {
                     element.runSvg(self.uuid);
                 }
             }, this);
+            var array = this.style;
+            for (var index = 0; index < array.length; index++) {
+                var element = array[index];
+                target.style[element.attr] = element.value;
+            }
+
             this.togglePath(0);
         },
         togglePath: function (isShow) {

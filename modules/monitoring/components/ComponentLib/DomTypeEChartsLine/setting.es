@@ -35,7 +35,7 @@ module.exports = {
         var $dom = $(dom);
         $dom.dblclick(function () {
             var data = $(this).data();
-            console.log(data)
+            // console.log(data)
             // 广播事件打开设置弹窗  传递过去数据
             // SHOW_UNIT_CONFIG 
             Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [uuid]);
@@ -46,15 +46,16 @@ module.exports = {
         var dom = domUtil.getDomByuuid(uuid);
         var attrs = domUtil.getAttributes($(dom));
         var endTime = new Date().valueOf();
-        var startTime = endTime - 500 * 60 * 1000; // 5 min
-        startTime = 1506816000000;
-        endTime = 1506816100000;
+        // console.log(attrs['data-cfg_time_before']);
+        var cfgTimeBefore = attrs['data-cfg_time_before'] || 10;
+        var startTime = endTime - cfgTimeBefore * 60 * 1000;
         var outputvar = attrs['data-cfg_var_binded_ouput'];
         if (!outputvar) {
-            console.log('没有绑定变量');
+            $.notify({
+                message: '没有绑定变量'
+            });
             return;
         }
-        outputvar = '707d15bd-585a-4ea9-b60d-f8df593a63b1';
         (function (startTime, endTime, outputvar, uuid, defaultChartOption, dom) {
 
             if (!window[uuid]) {
@@ -74,13 +75,26 @@ module.exports = {
                 startTime: startTime,
                 endTime: endTime,
                 vEquipmentVariableId: outputvar
-            }).then(function (res) {
+            }).then(function (res) { 
                 try {
                     option.xAxis[0].data = res.Data.vTimes || [];
-                    option.series[0].data = res.Data.vValues || [];
-                    //  [40, 10, 20, 50, 20, 50, 20, 50, 20, 50].map(function (x) {
-                    //     return x * Math.random();
-                    // });//res.Data.vValues || []
+                    var result = res.Data.vValues || [];
+                    var format = attrs['data-cfg_fix_num'];
+                    if (typeof (format) === 'undefined') {
+                        result = result
+                    }
+                    else {
+                        if (format != -1) {
+                            result=   result.map(function (x) {
+                                return Number(x).toFixed(format);
+                            });
+                        }
+                        else {
+                            result = result;
+                        }
+                    }
+                    option.series[0].data = result;
+
                 } catch (error) {
 
                 }

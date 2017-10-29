@@ -76,12 +76,12 @@ Vue.component('ms-input-font-size', {
     methods: {
         onInput: function (value, e) {
             this.localValue = value;
-            console.log('input');
+            // console.log('input');
             this.$emit('input', this.localValue + 'px');
         },
         onChange: function (value, e) {
             this.localValue = value;
-            console.log('change');
+            // console.log('change');
             this.$emit('change', this.localValue + 'px');
         }
     }
@@ -143,12 +143,12 @@ Vue.component('ms-input-color-pick', {
     methods: {
         onInput: function (value, e) {
             this.localValue = value;
-            console.log('input');
+            // console.log('input');
             this.$emit('input', this.localValue);
         },
         onChange: function (value, e) {
             this.localValue = value;
-            console.log('change');
+            // console.log('change');
             this.$emit('change', this.localValue);
         }
     }

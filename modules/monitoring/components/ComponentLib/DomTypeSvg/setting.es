@@ -24,7 +24,7 @@ module.exports = {
                         stroke="#808080"/>
                 </defs>
                 <polyline  id="can-drag-line" points="10,120 60,10 180,10"
-                style="fill:none;stroke:#29e;stroke-width:2"/>
+                style=""/>
         </svg>
         
        `;

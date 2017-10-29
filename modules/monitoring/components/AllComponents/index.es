@@ -38,7 +38,7 @@ module.exports = {
                 if (object.hasOwnProperty(key)) {
                     var array = object[key];
                     array.forEach(function (element) {
-                        console.log(self.searchtxt);
+                        // console.log(self.searchtxt);
                         if (self.searchtxt.length > 0) {
                             if (element.desc.indexOf(self.searchtxt) > -1 || element.name.indexOf(self.searchtxt) > -1) {
                                 element.isActive = true;

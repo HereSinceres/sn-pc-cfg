@@ -17,8 +17,8 @@ module.exports = {
             data-cfg_type="${this.type}"
             data-cfg-uuid="J_uuid_${Base.uuid()}" style='
             background-image: url(${img});
-            width:200px;
-            height:200px;
+            min-width:20px;
+            min-height:20px;
             '> 
             </div>`;
         return dom;

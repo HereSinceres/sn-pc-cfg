@@ -48,6 +48,9 @@ fis依赖node，了解node请看这里[nodejs.org](http://nodejs.org/)。
 
     fis3 install
 
+
+    fis3 release prod-debug -d output
+
 更多信息请看[fis用户文档](http://fis.baidu.com/fis3/docs/beginning/install.html)。
 
 

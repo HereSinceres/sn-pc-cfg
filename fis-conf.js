@@ -2,7 +2,7 @@
 fis.set('project.name', 'fis3-base');
 fis.set('project.static', '/static');
 fis.set('project.files', ['*.html', 'map.json', '/test/*']);
- 
+
 // 引入模块化开发插件，设置规范为 commonJs 规范。
 
 fis.hook('commonjs', {
@@ -149,7 +149,7 @@ var map = {
     },
     'prod-debug': {
         host: '',
-        path: ''
+        path: '/sn-pc-cfg'
     }
 };
 
@@ -206,9 +206,6 @@ Object.keys(map).forEach(function (v) {
         })
         .match('/modules/**.{es,js}', {
             packTo: '/pkg/modules.js'
-        })
-        .match('/modules/app/**.{es,js}', {
-            packTo: '/pkg/aio.js'
         })
     // 为了上线方便，将静态文件发布到同一个目录
     // .match('**/(*.{css,less,scss,es,js,jpg,png,gif})', {

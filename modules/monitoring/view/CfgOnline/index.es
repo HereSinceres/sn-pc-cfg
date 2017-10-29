@@ -22,7 +22,7 @@ module.exports = {
         self.setHtml();
         self.bindEvent();
         $(window).resize(function () {
-            console.log("不建议调整窗口大小!");
+            // console.log("不建议调整窗口大小!");
             var width = $container().width();
             var wwidth = $(window).width();
             if (wwidth < width) {

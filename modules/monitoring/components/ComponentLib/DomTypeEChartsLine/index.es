@@ -26,7 +26,8 @@ module.exports = {
             cfg_var_binded_ouput: null,
             cfg_chart_option: baseSetting.defaultChartLineOption,
             isShowOutPutDialog: false,
-            isShowOptionCfgDialog: false
+            isShowOptionCfgDialog: false,
+            cfg_time_before:10
         };
     },
     watch: {
@@ -38,6 +39,7 @@ module.exports = {
         var dom = domUtil.getDomByuuid(this.uuid);
         var $dom = $(dom);
         this.cfg_var_binded_ouput = $dom.attr('data-cfg_var_binded_ouput');
+        this.cfg_time_before = $dom.attr('data-cfg_time_before'); 
         try {
             if ($dom.attr('data-cfg_chart_option')) {
                 this.cfg_chart_option = JSON.parse($dom.attr('data-cfg_chart_option'));
@@ -52,6 +54,7 @@ module.exports = {
             var self = this;
             var attrs = domUtil.getAttributes($(dom));
             $dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
+            $dom.attr('data-cfg_time_before', this.cfg_time_before);
             // chart option 配置
             $dom.attr('data-cfg_chart_option', JSON.stringify(this.cfg_chart_option));
             comlib.forEach(function (element) {

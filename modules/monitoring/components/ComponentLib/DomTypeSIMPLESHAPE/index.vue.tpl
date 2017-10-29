@@ -104,6 +104,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                            <label class="col-sm-3 control-label">背景</label>
+                            <div class="col-sm-9">
+                                <ms-input-color-pick v-model='backgroundColor'></ms-input-color-pick>
+                            </div>
+                        </div>
+                    <div class="form-group">
                         <label class="col-sm-3 control-label">圆角</label>
                         <div class="col-sm-9">
                             <ms-input-font-size v-model='borderRadius'></ms-input-font-size>

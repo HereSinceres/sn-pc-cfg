@@ -44,21 +44,21 @@ module.exports = {
             }).then(function (res) {
                 if (res.success) {
                     $.notify({
-                        message:'修改成功'
+                        message: '修改成功'
                     });
-                }else{
+                } else {
                     $.notify({
-                        message:'修改失败'
+                        message: '修改失败'
                     });
                 }
             });
         }
         var attrs = domUtil.getAttributes($(dom));
-        // console.log('直接设置变量');
+        // // console.log('直接设置变量');
         var setVarFun = function () { };
         switch (parseInt(attrs['data-cfg_attr_input'], 10)) {
             case 1:
-                // console.log('什么都不做');
+                // // console.log('什么都不做');
                 break;
             case 2:
                 setVarFun = function () {
@@ -104,7 +104,7 @@ module.exports = {
                         };
                         break;
                     default:
-                    // console.log('Sorry, we are out of ' + expr + '.');
+                    // // console.log('Sorry, we are out of ' + expr + '.');
                 }
 
                 break;
@@ -114,7 +114,7 @@ module.exports = {
                 };
                 break;
             default:
-            // console.log('Sorry, we are out of ' + expr + '.');
+            // // console.log('Sorry, we are out of ' + expr + '.');
         }
         $(dom).off('click');
         $(dom).click(function () {
@@ -147,7 +147,7 @@ module.exports = {
                         var target = event.target;
                         moveTarget(target, dx, dy);
                     }
-                    console.log(1);
+                    // console.log(1);
                 }
             })
             .resizable({
@@ -243,7 +243,6 @@ module.exports = {
 
     },
     defaultChartGaugeOption: {
-        backgroundColor: 'rgba(234,32,23,0.2)',
         tooltip: {
             formatter: '{a} <br/>{b} : {c}%'
         },
@@ -258,26 +257,17 @@ module.exports = {
         }]
     },
     defaultChartLineOption: {
-        backgroundColor: 'rgba(234,32,23,0.2)',
         tooltip: {
             trigger: 'axis'
         },
-        grid: {
-            left: 0,
-            right: 0,
-            bottom: 0
-        },
         xAxis: [{
-            show: false,
             type: 'category',
             data: []
         }],
         yAxis: [{
-            show: false,
             type: 'value'
         }],
         series: [{
-            showSymbol: false,
             type: 'line',
             data: []
         }]

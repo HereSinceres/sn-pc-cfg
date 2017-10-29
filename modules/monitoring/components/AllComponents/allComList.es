@@ -1,11 +1,13 @@
 var comlib = require('modules/monitoring/components/ComponentLib/index.es');
-var Base = require('modules/monitoring/Base.es'); 
+var Base = require('modules/monitoring/Base.es');
 var result = comlib.slice();
 var groups = {
     base: '基本组件',
-    shape: '形状'
+    shape: '形状',
+    chart: '图表'
 };
 result = result.filter(function (ele) {
+    var groupName = groups.base;
     // 隐藏基本图形
     if (ele.type === Base.CONST_DOM_TYPE.DOMTYPE_SIMPLESHAPE) {
         return false;
@@ -14,7 +16,16 @@ result = result.filter(function (ele) {
     if (ele.type === Base.CONST_DOM_TYPE.DOMTYPE_SVG) {
         return false;
     }
-    ele.groupName = groups.base;
+    if (ele.type === Base.CONST_DOM_TYPE.DOMTYPE_SVG) {
+        return false;
+    }
+    if (ele.type === Base.CONST_DOM_TYPE.DOMTYPE_ECHARTSLINE) {
+        groupName = groups.chart;
+    }
+    if (ele.type === Base.CONST_DOM_TYPE.DOMTYPE_ECHARTSGAUGE) {
+        groupName = groups.chart;
+    }
+    ele.groupName = groupName;
     return true;
 });
 var array = [
@@ -68,7 +79,7 @@ var array = [
             class='u-drag'
             data-cfg_type="${this.type}"
             data-cfg-uuid="J_uuid_${Base.uuid()}"
-            xmlns="http://www.w3.org/2000/svg" > 
+            xmlns="http://www.w3.org/2000/svg" style="stroke:#29e;stroke-width:2"> 
                     <defs>
                         <circle id="point-handle"
                             r="3" x="0" y="0"
@@ -78,7 +89,7 @@ var array = [
                             stroke="#808080"/>
                     </defs>
                     <polyline  id="can-drag-line" points="10,120 60,10 "
-                    style="fill:none;stroke:#29e;stroke-width:2"/>
+                    style="fill:none;"/>
             </svg>`;
             return dom;
         }
@@ -93,7 +104,7 @@ var array = [
             class='u-drag'
             data-cfg_type="${this.type}"
             data-cfg-uuid="J_uuid_${Base.uuid()}"
-            xmlns="http://www.w3.org/2000/svg" > 
+            xmlns="http://www.w3.org/2000/svg" style="stroke:#29e;stroke-width:2"> 
                     <defs>
                         <circle id="point-handle"
                             r="3" x="0" y="0"
@@ -103,7 +114,7 @@ var array = [
                             stroke="#808080"/>
                     </defs>
                     <polyline  id="can-drag-line" points="10,120 60,10 180,10"
-                    style="fill:none;stroke:#29e;stroke-width:2"/>
+                    style="fill:none;"/>
             </svg>`;
             return dom;
         }
