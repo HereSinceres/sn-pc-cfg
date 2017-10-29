@@ -28,12 +28,12 @@ function moveTarget(target, dx, dy) {
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
     var data = $(target).data();
-    var uuid = data['cfgUuid'];
+    var uuid = data.cfgUuid;
     Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [uuid]);
-};
+}
 module.exports = {
     getDomUuid: function () {
-        return "J_uuid_" + Base.uuid() + "";
+        return 'J_uuid_' + Base.uuid() + '';
     },
     monitorCallBack: function (uuid) {
         var dom = domUtil.getDomByuuid(uuid);
@@ -42,13 +42,15 @@ module.exports = {
                 eVariableId: eVariableId,
                 newValue: newValue
             }).then(function (res) {
-                $.notify({ message: res.msg });
-            })
+                $.notify({
+                    message: res.msg
+                });
+            });
         }
         var attrs = domUtil.getAttributes($(dom));
         // console.log('直接设置变量');
         var setVarFun = function () { };
-        switch (parseInt(attrs['data-cfg_attr_input'])) {
+        switch (parseInt(attrs['data-cfg_attr_input'], 10)) {
             case 1:
                 // console.log('什么都不做');
                 break;
@@ -58,11 +60,12 @@ module.exports = {
                         if (result !== null) {
                             setValByValId(attrs['data-cfg_var_binded_input'], result);
                         }
+
                     });
-                }
+                };
                 break;
             case 3:
-                switch (parseInt(attrs['data-cfg_var_binded_input_ctr'])) {
+                switch (parseInt(attrs['data-cfg_var_binded_input_ctr'], 10)) {
                     // 置0
                     case 1:
                         setVarFun = function () {
@@ -101,7 +104,7 @@ module.exports = {
             case 4:
                 setVarFun = function () {
                     window.location.href = attrs['data-cfg_jump_url'];
-                }
+                };
                 break;
             default:
             // console.log('Sorry, we are out of ' + expr + '.');
@@ -111,6 +114,7 @@ module.exports = {
             if (!window.__controleIsEffect__) {
                 return;
             }
+
             setVarFun();
         });
 
@@ -129,12 +133,14 @@ module.exports = {
                     if (window.__select_ele__.length) {
                         window.__select_ele__.forEach(function (target) {
                             target = target[0];
-                            moveTarget(target, dx, dy)
+                            moveTarget(target, dx, dy);
                         }, this);
-                    } else {
-                        var target = event.target;
-                        moveTarget(target, dx, dy)
                     }
+                    else {
+                        var target = event.target;
+                        moveTarget(target, dx, dy);
+                    }
+                    console.log(1);
                 }
             })
             .resizable({
@@ -163,74 +169,85 @@ module.exports = {
                 target.setAttribute('data-x', x);
                 target.setAttribute('data-y', y);
                 // target.textContent = Math.round(event.rect.width) + '×' + Math.round(event.rect.height);
+                // 处理图表resize
+                if (window[uuid]) {
+                    window[uuid].resize();
+                }
+
             });
     },
     operatorList: operatorList,
     switchOperator: function (uuid, setCallback) {
+
         var dom = domUtil.getDomByuuid(uuid);
         var attrs = domUtil.getAttributes($(dom));
         var output = store.getValueByVar(attrs['data-cfg_var_binded_ouput']);
-        var cfg_var_binded_ouput_deal = attrs['data-cfg_var_binded_ouput_deal'];
-        if (cfg_var_binded_ouput_deal) {
-            for (var index = 0; index < cfg_var_binded_ouput_deal.length; index++) {
-                var element = cfg_var_binded_ouput_deal[index];
-                var initValue = element.initValue;
-                switch (element.operator) {
-                    case operatorList.equal:
-                        if (output == initValue) {
-                            setCallback(dom, element.callback);
-                        }
+        if (attrs['data-cfg_var_binded_ouput_deal']) {
+            var cfg_var_binded_ouput_deal = JSON.parse(attrs['data-cfg_var_binded_ouput_deal']);
+            if (cfg_var_binded_ouput_deal) {
+                for (var index = 0; index < cfg_var_binded_ouput_deal.length; index++) {
+                    var element = cfg_var_binded_ouput_deal[index];
+                    var initValue = element.initValue;
+                    switch (element.operator) {
+                        case operatorList.equal:
+                            if (output == initValue) {
+                                setCallback(dom, element.callback);
+                            }
 
-                        break;
-                    case operatorList.notEqual:
-                        if (output != initValue) {
-                            setCallback(dom, element.callback);
-                        }
+                            break;
+                        case operatorList.notEqual:
+                            if (output != initValue) {
+                                setCallback(dom, element.callback);
+                            }
 
-                        break;
-                    case operatorList.greaterThan:
+                            break;
+                        case operatorList.greaterThan:
 
-                        if (output > initValue) {
-                            setCallback(dom, element.callback);
-                        }
+                            if (output > initValue) {
+                                setCallback(dom, element.callback);
+                            }
 
-                        break;
-                    case operatorList.greaterThanOrEqual:
-                        if (output >= initValue) {
-                            setCallback(dom, element.callback);
-                        }
+                            break;
+                        case operatorList.greaterThanOrEqual:
+                            if (output >= initValue) {
+                                setCallback(dom, element.callback);
+                            }
 
-                        break;
-                    case operatorList.lessThan:
-                        if (output < initValue) {
-                            setCallback(dom, element.callback);
-                        }
+                            break;
+                        case operatorList.lessThan:
+                            if (output < initValue) {
+                                setCallback(dom, element.callback);
+                            }
 
-                        break;
-                    case operatorList.lessThanOrEqual:
-                        if (output <= initValue) {
-                            setCallback(dom, element.callback);
-                        }
+                            break;
+                        case operatorList.lessThanOrEqual:
+                            if (output <= initValue) {
+                                setCallback(dom, element.callback);
+                            }
 
-                        break;
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
+
     },
     defaultChartGaugeOption: {
         backgroundColor: 'rgba(234,32,23,0.2)',
         tooltip: {
-            formatter: "{a} <br/>{b} : {c}%"
+            formatter: '{a} <br/>{b} : {c}%'
         },
         series: [{
             type: 'gauge',
             min: 0,
             max: 220,
-            detail: { formatter: '{value}' },
-            data: [{ value: null, name: 'title' }]
+            detail: {
+                formatter: '{value}'
+            },
+            data: [{ value: null, name: '修改title' }]
         }]
     },
     defaultChartLineOption: {
@@ -258,4 +275,4 @@ module.exports = {
             data: []
         }]
     }
-}
+};

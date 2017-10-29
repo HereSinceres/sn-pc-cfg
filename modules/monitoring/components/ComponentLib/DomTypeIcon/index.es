@@ -6,13 +6,53 @@ var baseSetting = require('modules/monitoring/components/ComponentLib/baseSettin
 
 var store = require('modules/monitoring/dataService/store.es');
 var iconList = [{
-        iconName: 'fa fa-bath',
-        name: 'bath'
-    },
-    {
-        iconName: 'fa fa-lightbulb-o',
-        name: 'lightbulb'
-    }
+    iconName: 'iconcfgfont icon-cfg-anniu3',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-kaiguan2',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-kaiguan1',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-icon',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-kaiguan3',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-kaiguanguan',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-anniu2',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-anniu2',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-anniu1',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-kaiguanguan-copy',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-kaiguan',
+    name: '开关1'
+},
+{
+    iconName: 'iconcfgfont icon-cfg-anniu',
+    name: '开关1'
+}
 ];
 
 module.exports = {
@@ -21,7 +61,7 @@ module.exports = {
         CommonStyle: require('modules/monitoring/components/ComponentLib/components/CommonStyle/index.es'),
         CommonAttr: require('modules/monitoring/components/ComponentLib/components/CommonAttr/index.es')
     },
-    data: function() {
+    data: function () {
         return {
             // 绑定的变量
             variable: store.variable,
@@ -32,14 +72,15 @@ module.exports = {
             color: null,
             operatorList: baseSetting.operatorList,
             cfg_var_binded_ouput_deal: [],
-            isShowOutPutDialog: false
+            isShowOutPutDialog: false,
+            isShowPrivateAttrDialog: false
         };
     },
     watch: {
 
     },
     template: __inline('./index.vue.tpl'),
-    mounted: function() {
+    mounted: function () {
         var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
         var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
         this.cfg_var_binded_ouput = $dom.attr('data-cfg_var_binded_ouput');
@@ -48,10 +89,10 @@ module.exports = {
         this.color = target.style.color;
         try {
             this.cfg_var_binded_ouput_deal = JSON.parse($dom.attr('data-cfg_var_binded_ouput_deal') || '[]');
-        } catch (error) {}
+        } catch (error) { }
     },
     methods: {
-        ok: function() {
+        ok: function () {
             var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
             var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
             $dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
@@ -65,32 +106,36 @@ module.exports = {
             });
             this.toggleOutPut(0);
         },
-        setIcon: function(item) {
-            this.icon = item.iconName;
-        },
-        addOperate: function() {
+        addOperate: function () {
             this.cfg_var_binded_ouput_deal.push({
                 initValue: 1,
                 operator: '<=',
                 callback: [{
-                        name: '大小[eg:12px]',
-                        attr: 'fontSize',
-                        value: ''
-                    },
-                    {
-                        name: '颜色[eg:red]',
-                        attr: 'color',
-                        value: ''
-                    }
+                    name: '大小[eg:12px]',
+                    attr: 'fontSize',
+                    value: ''
+                },
+                {
+                    name: '颜色[eg:red]',
+                    attr: 'color',
+                    value: ''
+                }, {
+                    name: '图标',
+                    attr: 'icon',
+                    value: ''
+                }
                 ]
             });
         },
-        removeOperate: function(item) {
+        removeOperate: function (item) {
             let index = this.cfg_var_binded_ouput_deal.indexOf(item);
             this.cfg_var_binded_ouput_deal.splice(index, 1);
         },
-        toggleOutPut: function(isShow) {
+        toggleOutPut: function (isShow) {
             this.isShowOutPutDialog = isShow;
+        },
+        togglePrivateAttr: function (isShow) {
+            this.isShowPrivateAttrDialog = isShow;
         }
     }
 };

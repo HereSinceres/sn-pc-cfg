@@ -22,7 +22,7 @@ module.exports = {
             class='u-drag'
             data-cfg_type="${this.type}"
             data-cfg-uuid="J_uuid_${Base.uuid()}">
-                折线图
+                折线图[请绑定变量]
             </div>`;
         return dom;
     },

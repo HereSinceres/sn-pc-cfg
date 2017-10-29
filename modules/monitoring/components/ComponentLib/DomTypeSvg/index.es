@@ -15,7 +15,8 @@ module.exports = {
         return {
             // 绑定的变量
             variable: store.variable,
-            svgPath: null
+            svgPath: null,
+            isShowPathDialog: false
         };
     },
     watch: {
@@ -37,6 +38,10 @@ module.exports = {
                     element.runSvg(self.uuid);
                 }
             }, this);
+            this.togglePath(0);
+        },
+        togglePath: function (isShow) {
+            this.isShowPathDialog = isShow;
         }
     }
 };

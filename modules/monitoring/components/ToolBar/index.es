@@ -50,7 +50,7 @@ module.exports = {
             store.variable = this.variable;
             this.toggleVariableSet(0);
             $.notify({
-                message: '保存成功'
+                message: '修改模拟数据成功'
             });
         },
         save: function () {
@@ -60,7 +60,7 @@ module.exports = {
             data.html = encodeURI(this.getHtml());
             api.UpdateCfgManagement(data).then(function () {
                 $.notify({
-                    message: '保存成功'
+                    message: '提交成功'
                 });
             })
         },

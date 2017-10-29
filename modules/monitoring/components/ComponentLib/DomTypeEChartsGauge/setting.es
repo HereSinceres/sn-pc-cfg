@@ -40,7 +40,7 @@ module.exports = {
     runChart: function (uuid) {
         var dom = domUtil.getDomByuuid(uuid);
         var attrs = domUtil.getAttributes($(dom));
-        var output = store.getValueByVar(attrs['data-cfg_var_binded_ouput']);
+        var output = store.getValueByVar(attrs['data-cfg_var_binded_ouput'], attrs['data-cfg_fix_num']);
         if (!window[uuid]) {
             $(dom).html('');
             window[uuid] = echarts.init(dom);

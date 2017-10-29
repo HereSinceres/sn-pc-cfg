@@ -1,31 +1,9 @@
 <div>
     <CommonStyle :uuid="uuid"></CommonStyle>
-    <CommonAttr :uuid="uuid"></CommonAttr>
 
-    <div class="box box-cfgset  flat">
-        <div class="box-header with-border">
-            <h3 class="box-title">私有属性</h3>
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" v-on:click='ok'>
-                    <i class="fa fa-check-circle-o"></i>
-                </button>
-            </div>
-        </div>
-        <div class="box-body form-horizontal">
-            <div class="form-group">
-                <label class="col-sm-3 control-label">大小</label>
-                <div class="col-sm-9">
-                    <ms-input-font-size v-model='fontSize'></ms-input-font-size>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">颜色</label>
-                <div class="col-sm-9">
-                    <ms-input-color-pick v-model='color'></ms-input-color-pick>
-                </div>
-            </div>
-        </div>
-    </div>
+ 
+
+    <CommonAttr :uuid="uuid"></CommonAttr>
     <div class="box box-cfgset  flat">
         <div class="box-header with-border">
             <h3 class="box-title">输出属性</h3>
@@ -81,7 +59,11 @@
                                 <div class="col-xs-5">
                                     <div class="form-group" v-for="cal in item.callback">
                                         <div class="col-sm-12">
-                                            <input type="text" class="form-control" v-model="cal.value" :placeholder="cal.name">
+                                            <ms-input-color-pick v-if="cal.attr=='color'" v-model="cal.value" :placeholder="cal.name">
+                                            </ms-input-color-pick>
+                                            <ms-input-font-size v-else-if="cal.attr=='fontSize'" v-model="cal.value" :placeholder="cal.name">
+                                            </ms-input-font-size>
+                                            <input v-else type="text" class="form-control" v-model="cal.value" :placeholder="cal.name">
                                         </div>
                                     </div>
                                 </div>
@@ -95,4 +77,44 @@
             </div>
         </div>
     </div>
+
+
+
+
+    <div class="box box-cfgset  flat">
+            <div class="box-header with-border">
+                <h3 class="box-title">私有属性</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" v-on:click='ok'>
+                        <i class="fa fa-check-circle-o"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">大小</label>
+                    <div class="col-sm-9">
+                        <ms-input-font-size v-model='fontSize'></ms-input-font-size>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">颜色</label>
+                    <div class="col-sm-9">
+                        <ms-input-color-pick v-model='color'></ms-input-color-pick>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">前缀</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" v-model="prefix">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">后缀</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" v-model="suffix">
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>

@@ -34,7 +34,6 @@ module.exports = {
             var uuid = attrs['data-cfg-uuid'];
             comlib.forEach(function (element) {
                 if (attrs['data-cfg_type'] === element.type) {
-
                     // 添加弹窗事件
                     if (element.bindOpenSetEvent) {
                         element.bindOpenSetEvent(uuid);
@@ -51,7 +50,14 @@ module.exports = {
                     if (element.runSvg) {
                         element.runSvg(uuid);
                     }
-
+                    // 初始化monitorCallBack
+                    if (element.monitorCallBack) {
+                        element.monitorCallBack(uuid);
+                    }
+                    // 初始化绑定输出变量
+                    if (element.bindOutputVar) {
+                        element.bindOutputVar(uuid);
+                    }
                 }
             }, this);
             self.bindRightClickEvent();
@@ -60,6 +66,7 @@ module.exports = {
         // 初始化项目
         self.setHtml();
         self.bindEvent();
+        Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR);
 
     },
     methods: {

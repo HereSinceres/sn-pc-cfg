@@ -65,8 +65,8 @@ module.exports = {
         ok: function() {
             var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
             var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
-            $dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
-            debugger
+            $dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput); 
+          
             target.style.backgroundImage = this.backgroundImage;
             target.style.backgroundSize = this.backgroundSize;
             // 结果处理

@@ -12,7 +12,7 @@ module.exports = {
         CommonStyle: require('modules/monitoring/components/ComponentLib/components/CommonStyle/index.es'),
         CommonAttr: require('modules/monitoring/components/ComponentLib/components/CommonAttr/index.es'),
     },
-    data: function() {
+    data: function () {
         return {
             // 绑定的变量
             variable: store.variable,
@@ -21,17 +21,21 @@ module.exports = {
             color: null,
             operatorList: baseSetting.operatorList,
             cfg_var_binded_ouput_deal: [],
-            isShowOutPutDialog: false
+            isShowOutPutDialog: false,
+            prefix: null,
+            suffix: null
         };
     },
     watch: {
 
     },
     template: __inline('./index.vue.tpl'),
-    mounted: function() {
+    mounted: function () {
         var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
         var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
         this.cfg_var_binded_ouput = $dom.attr('data-cfg_var_binded_ouput');
+        this.prefix = $dom.attr('data-prefix');
+        this.suffix = $dom.attr('data-suffix');
         this.fontSize = target.style.fontSize;
         this.color = target.style.color;
         try {
@@ -41,10 +45,12 @@ module.exports = {
         }
     },
     methods: {
-        ok: function() {
+        ok: function () {
             var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
             var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
             $dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
+            $dom.attr('data-prefix', this.prefix);
+            $dom.attr('data-suffix', this.suffix);
             target.style.fontSize = this.fontSize;
             target.style.color = this.color;
             // 结果处理
@@ -54,28 +60,28 @@ module.exports = {
             });
             this.toggleOutPut(0);
         },
-        addOperate: function() {
+        addOperate: function () {
             this.cfg_var_binded_ouput_deal.push({
                 initValue: 1,
                 operator: '<=',
                 callback: [{
-                        name: '大小[eg:12px]',
-                        attr: 'fontSize',
-                        value: ''
-                    },
-                    {
-                        name: '颜色[eg:red]',
-                        attr: 'color',
-                        value: ''
-                    }
+                    name: '大小[eg:12px]',
+                    attr: 'fontSize',
+                    value: ''
+                },
+                {
+                    name: '颜色[eg:red]',
+                    attr: 'color',
+                    value: ''
+                }
                 ]
             });
         },
-        removeOperate: function(item) {
+        removeOperate: function (item) {
             let index = this.cfg_var_binded_ouput_deal.indexOf(item)
             this.cfg_var_binded_ouput_deal.splice(index, 1);
         },
-        toggleOutPut: function(isShow) {
+        toggleOutPut: function (isShow) {
             this.isShowOutPutDialog = isShow;
         }
     }

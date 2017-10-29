@@ -1,7 +1,98 @@
 var Vue = require('modules/lib/vue/vue.js');
+let iconList = [{
+    iconName: 'iconcfgfont icon-cfg-anniu3',
+    name: '开关1'
+},
+    {
+        iconName: 'iconcfgfont icon-cfg-kaiguan2',
+        name: '开关1'
+    },
+    {
+        iconName: 'iconcfgfont icon-cfg-kaiguan1',
+        name: '开关1'
+    },
+    {
+        iconName: 'iconcfgfont icon-cfg-icon',
+        name: '开关1'
+    },
+    {
+        iconName: 'iconcfgfont icon-cfg-kaiguan3',
+        name: '开关1'
+    },
+    {
+        iconName: 'iconcfgfont icon-cfg-kaiguanguan',
+        name: '开关1'
+    },
+    {
+        iconName: 'iconcfgfont icon-cfg-anniu2',
+        name: '开关1'
+    },
+    {
+        iconName: 'iconcfgfont icon-cfg-anniu2',
+        name: '开关1'
+    },
+    {
+        iconName: 'iconcfgfont icon-cfg-anniu1',
+        name: '开关1'
+    },
+    {
+        iconName: 'iconcfgfont icon-cfg-kaiguanguan-copy',
+        name: '开关1'
+    },
+    {
+        iconName: 'iconcfgfont icon-cfg-kaiguan',
+        name: '开关1'
+    },
+    {
+        iconName: 'iconcfgfont icon-cfg-anniu',
+        name: '开关1'
+    }
+];
 Vue.component('ms-input-font-size', {
     props: {
         value: {
+            default: null
+        }
+    },
+    template: `
+   <div class="input-group">
+   <input class="form-control"
+   type='number'
+   :value="localValue"
+   @input="onInput($event.target.value, $event)"
+   @change="onChange($event.target.value, $event)"
+   />
+   <span class="input-group-addon">px</span>
+  </div>
+   `,
+    data: function () {
+        try {
+            var localValue = this.value.match(/(\d*)px/)[1];
+        }
+        catch (error) {
+            var localValue = 12;
+        }
+        return {
+            localValue: localValue
+        };
+    },
+    methods: {
+        onInput: function (value, e) {
+            this.localValue = value;
+            console.log('input');
+            this.$emit('input', this.localValue + 'px');
+        },
+        onChange: function (value, e) {
+            this.localValue = value;
+            console.log('change');
+            this.$emit('change', this.localValue + 'px');
+        }
+    }
+});
+Vue.component('ms-input-icon', {
+    props: {
+        value: {
+            iconList: iconList,
             default: null
         }
     },
@@ -166,7 +257,6 @@ Vue.component('ms-input-file', {
 
         },
         imgPreview: function (file) {
-            debugger
             let self = this;
             if (!file || !window.FileReader) {
                 return;

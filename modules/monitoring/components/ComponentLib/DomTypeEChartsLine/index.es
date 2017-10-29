@@ -34,8 +34,9 @@ module.exports = {
     },
     template: __inline('./index.vue.tpl'),
     mounted: function () {
-        var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
-        var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
+        var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]); 
+        var dom = domUtil.getDomByuuid(this.uuid);
+        var $dom = $(dom);
         this.cfg_var_binded_ouput = $dom.attr('data-cfg_var_binded_ouput');
         try {
             if ($dom.attr('data-cfg_chart_option')) {
@@ -46,8 +47,8 @@ module.exports = {
     },
     methods: {
         ok: function () {
-            var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
-            var target = $('[data-cfg-uuid=' + this.uuid + ']')[0];
+            var dom = domUtil.getDomByuuid(this.uuid);
+            var $dom = $(dom); 
             var self = this;
             var attrs = domUtil.getAttributes($(dom));
             $dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);

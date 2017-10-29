@@ -2,21 +2,13 @@
     <CommonStyle :uuid="uuid"></CommonStyle>
     <CommonAttr :uuid="uuid"></CommonAttr>
 
-    <div class="box box-cfgset flat">
+    <div class="box box-cfgset  flat">
         <div class="box-header with-border">
-            <h3 class="box-title">私有属性</h3>
+            <h3 class="box-title">图表配置</h3>
             <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" v-on:click='ok'>
-                    <i class="fa fa-check-circle-o"></i>
+                <button type="button" class="btn btn-box-tool" v-on:click='toggleOptionCfg(1)'>
+                    <i class="fa fa-cog"></i>
                 </button>
-            </div>
-        </div>
-        <div class="box-body form-horizontal">
-            <div class="form-group">
-                <label class="col-sm-3  control-label">配置</label>
-                <div class="col-sm-9 ">
-                    <i class="fa fa-cog" v-on:click='toggleOptionCfg(1)'></i>
-                </div>
             </div>
         </div>
     </div>

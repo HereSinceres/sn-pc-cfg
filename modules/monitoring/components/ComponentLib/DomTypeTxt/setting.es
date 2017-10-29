@@ -33,16 +33,19 @@ module.exports = {
             // SHOW_UNIT_CONFIG 
             Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [uuid]);
         });
-    }, 
+    },
     monitorCallBack: function (uuid) {
         baseSetting.monitorCallBack(uuid);
     },
     bindOutputVar: function (uuid) {
-        var dom = domUtil.getDomByuuid(uuid); 
+        var dom = domUtil.getDomByuuid(uuid);
         function justBindVar(dom) {
-            // 获取dom上的data 属性 根据 data 属性修改数据
-            var data = $(dom).data();
-            $(dom).html(store.getValueByVar(data.cfg_var_binded_ouput));
+            var attrs = domUtil.getAttributes($(dom));
+            $(dom).html(
+                (attrs['data-prefix'] || "") +
+                store.getValueByVar(attrs['data-cfg_var_binded_ouput'], attrs['data-cfg_fix_num']) +
+                (attrs['data-suffix'] || "")
+            );
         }
         function setCallback(dom, callback) {
             var object = {};

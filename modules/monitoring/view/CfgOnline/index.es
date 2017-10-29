@@ -43,6 +43,8 @@ module.exports = {
                 $container().replaceWith(html);
             }
             $container().addClass('online');
+            // 删除无用样式
+            $container().find('.point-handle').remove();
         },
 
         bindEvent: function () {

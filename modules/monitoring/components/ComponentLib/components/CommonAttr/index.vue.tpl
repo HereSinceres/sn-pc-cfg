@@ -1,22 +1,14 @@
-<div class="box box-cfgset flat">
-    <div class="box-header with-border">
-        <h3 class="box-title">输入属性[公用]</h3>
-        <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" v-on:click='ok'>
-                <i class="fa fa-check-circle-o"></i>
-            </button>
-        </div>
-    </div>
-    <div class="box-body form-horizontal">
-        <div class="form-group">
-            <label class="col-sm-3  control-label">配置</label>
-            <div class="col-sm-9 ">
-                <i class="fa fa-cog" v-on:click='toggleCfg(1)'></i>
+<div>
+    <div class="box box-cfgset  flat">
+        <div class="box-header with-border">
+            <h3 class="box-title">输入属性</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" v-on:click='toggleCfg(1)'>
+                    <i class="fa fa-cog"></i>
+                </button>
             </div>
         </div>
     </div>
-
-
     <div class="modal flat fade in" style="display:block;" v-if="isShowCfgDialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">

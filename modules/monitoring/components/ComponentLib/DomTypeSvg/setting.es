@@ -19,9 +19,9 @@ module.exports = {
                     <circle id="point-handle"
                         r="3" x="0" y="0"
                         stroke-width="2"
-                        fill="#fff"
+                        fill="#808080"
                         fill-opacity="0.8"
-                        stroke="#fff"/>
+                        stroke="#808080"/>
                 </defs>
                 <polyline  id="can-drag-line" points="10,120 60,10 180,10"
                 style="fill:none;stroke:#29e;stroke-width:2"/>

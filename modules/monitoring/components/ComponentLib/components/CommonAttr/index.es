@@ -63,7 +63,6 @@ module.exports = {
         },
         toggleCfg: function (isShow) {
             this.isShowCfgDialog = isShow;
-
         }
     }
 };
