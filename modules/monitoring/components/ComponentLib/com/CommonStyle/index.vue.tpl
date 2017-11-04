@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="modal flat fade in" style="display:block;" v-if="isShowCfgDialog">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-dialog--cfg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" v-on:click="toggleCfg(0)">
@@ -59,7 +59,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">层级</label>
                         <div class="col-sm-10">
-                            <input type="number" class="form-control" v-model='zIndex'>
+                            <input type="number" min="0" max="100" class="form-control" v-model='zIndex'>
                         </div>
                     </div>
                     <div class="form-group">

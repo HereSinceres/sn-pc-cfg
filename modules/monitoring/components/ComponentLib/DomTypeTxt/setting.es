@@ -1,7 +1,7 @@
 var Base = require('modules/monitoring/Base.es');
 var interact = require('modules/lib/interact/interact.js');
 var domUtil = require('modules/util/dom/domUtil.es');
-var commonAttrSet = require('modules/monitoring/components/ComponentLib/components/CommonAttr/commonAttrSet.es');
+var commonAttrSet = require('modules/monitoring/components/ComponentLib/com/CommonAttr/commonAttrSet.es');
 var store = require('modules/monitoring/dataService/store.es');
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 module.exports = {
@@ -41,9 +41,10 @@ module.exports = {
         var dom = domUtil.getDomByuuid(uuid);
         function justBindVar(dom) {
             var attrs = domUtil.getAttributes($(dom));
+            console.log(store.getValueByVar(attrs['data-cfg_var_binded_ouput'], attrs['data-cfg_fix_num']));
             $(dom).html(
                 (attrs['data-prefix'] || "") +
-                store.getValueByVar(attrs['data-cfg_var_binded_ouput'], attrs['data-cfg_fix_num']) +
+                (store.getValueByVar(attrs['data-cfg_var_binded_ouput'], attrs['data-cfg_fix_num']) || "") +
                 (attrs['data-suffix'] || "")
             );
         }

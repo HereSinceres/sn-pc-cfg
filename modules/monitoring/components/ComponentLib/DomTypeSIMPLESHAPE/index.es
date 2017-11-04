@@ -7,8 +7,8 @@ var store = require('modules/monitoring/dataService/store.es');
 module.exports = {
     props: ['uuid'],
     components: {
-        CommonStyle: require('modules/monitoring/components/ComponentLib/components/CommonStyle/index.es'),
-        CommonAttr: require('modules/monitoring/components/ComponentLib/components/CommonAttr/index.es'),
+        CommonStyle: require('modules/monitoring/components/ComponentLib/com/CommonStyle/index.es'),
+        CommonAttr: require('modules/monitoring/components/ComponentLib/com/CommonAttr/index.es'),
     },
     data: function () {
         return {

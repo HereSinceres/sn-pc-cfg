@@ -11,8 +11,10 @@ module.exports = {
 
     },
     template: __inline('./index.vue.tpl'),
-    mounted: function () {},
+    mounted: function () { },
     methods: {
-
+        jumpCFGList: function () { 
+            this.$router.push({ path: '/ProjectCFGList'} );
+        }
     }
 };

@@ -9,8 +9,8 @@ var store = require('modules/monitoring/dataService/store.es');
 module.exports = {
     props: ['uuid'],
     components: {
-        CommonStyle: require('modules/monitoring/components/ComponentLib/components/CommonStyle/index.es'),
-        CommonAttr: require('modules/monitoring/components/ComponentLib/components/CommonAttr/index.es'),
+        CommonStyle: require('modules/monitoring/components/ComponentLib/com/CommonStyle/index.es'),
+        CommonAttr: require('modules/monitoring/components/ComponentLib/com/CommonAttr/index.es'),
     },
     data: function () {
         return {
@@ -22,6 +22,7 @@ module.exports = {
             operatorList: baseSetting.operatorList,
             cfg_var_binded_ouput_deal: [],
             isShowOutPutDialog: false,
+            isShowPrivateAttrDialog: false,
             prefix: null,
             suffix: null
         };
@@ -59,6 +60,7 @@ module.exports = {
                 message: '保存成功'
             });
             this.toggleOutPut(0);
+            this.togglePrivateAttr(0);
         },
         addOperate: function () {
             this.cfg_var_binded_ouput_deal.push({
@@ -83,6 +85,9 @@ module.exports = {
         },
         toggleOutPut: function (isShow) {
             this.isShowOutPutDialog = isShow;
+        },
+        togglePrivateAttr: function (isShow) {
+            this.isShowPrivateAttrDialog = isShow;
         }
     }
 };

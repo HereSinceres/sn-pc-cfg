@@ -1,4 +1,4 @@
 <header class="nav-bar">
-    <span class="brand">🕷️</span>
-    <a class="link" href="#/">组态列表</a>
+    <span class="brand">CFG</span>
+    <a class="link" v-on:click='jumpCFGList'>组态列表</a>
 </header>

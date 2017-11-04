@@ -5,27 +5,28 @@
             <i class="brand-icon fa fa-windows" aria-hidden="true"></i>{{activeProName}}
         </span>
         <ul class="dropdown-menu" aria-labelledby="cfg-project-list-menu">
-            <li v-for="item in proList" v-on:click=" getCfgListByProId(item)" v-bind:class="{'active':activeProId==item.ProjectId}">
+            <li v-for="item in proList" v-on:click=" jumpToProId(item)" v-bind:class="{'active':activeProId==item.ProjectId}">
                 <a>
                     {{item.PName}}</a>
             </li>
         </ul>
     </div>
     <ul class="cfg-grid-group__component clearfix">
-        <li class="cfg-grid-group__item" v-for="item in cfgList" v-on:click="jump(item)" v-bind:class="{'active':activeCfgId==item.id}">
+        <li class="cfg-grid-group__item" v-for="item in cfgList" v-bind:class="{'active':activeCfgId==item.id}">
             <div class="card">
                 <span class="card__name">
                     {{item.cfgName}}
-                    <i class="fa fa-trash " v-on:click="delCfg(item)"></i>
-                    <i class="fa fa-pencil " v-on:click="modifyCfg(item)"></i>
+                </span>
+                <div class="card_ctrlist">
+                    <span v-on:click="delCfg(item)"> 删除</span>
+                    <span v-on:click="modifyCfg(item)">修改</span>
                     <router-link :to="{ name: 'cfg', params: { cfgId: item.id }}">
-                        <i class="fa fa-eye"></i>
+                        编辑
                     </router-link>
                     <router-link :to="{ name: 'CfgOnline', params: { cfgId: item.id }}">
-                        <i class="fa fa-eye"></i>线上
+                        在线
                     </router-link>
-
-                </span>
+                </div>
             </div>
         </li>
         <li class="cfg-grid-group__item" v-on:click="addCfg()">

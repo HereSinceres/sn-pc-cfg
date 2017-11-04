@@ -1,7 +1,7 @@
 <div>
     <NavBar></NavBar>
     <ToolBar></ToolBar>
-    <div class="g-bd5 f-cb">
+    <div class="g-bd5 clearfix">
         <div class="g-sd51">
             <div class="g-sd51c">
                 <AllComponents></AllComponents>

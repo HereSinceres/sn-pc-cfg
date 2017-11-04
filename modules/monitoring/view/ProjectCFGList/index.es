@@ -1,6 +1,6 @@
 var comlib = require('modules/monitoring/components/ComponentLib/index.es');
 var interact = require('modules/lib/interact/interact.js');
-var Base = require('modules/monitoring/Base.es'); 
+var Base = require('modules/monitoring/Base.es');
 
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 var api = require('modules/monitoring/dataService/api.es');
@@ -24,7 +24,7 @@ function getCFGListByProId(proId, callback) {
                 getCFGListByProId(proId, callback);
             })
         }
-    }, function (error) {});
+    }, function (error) { });
 }
 module.exports = {
     props: [],
@@ -54,26 +54,26 @@ module.exports = {
         }
     },
     watch: {
-
+        '$route'(to, from) {
+            this.getCfgList();
+        }
     },
     template: __inline('./index.vue.tpl'),
     mounted: function () {
         this.cfgList = store.cfgList;
         this.proList = store.proList;
-        this.activeProId = this.proList[0].ProjectId;
-        var self = this;
-        getCFGListByProId(this.activeProId, function () {
-            self.cfgList = store.cfgList;
-        });
-        var self = this;
+        this.getCfgList();
     },
     methods: {
-        getCfgListByProId: function (item) {
+        getCfgList: function () {
+            this.activeProId = this.$route.query.proId;
             var self = this;
-            this.activeProId = item.ProjectId;
-            getCFGListByProId(item.ProjectId, function () {
+            getCFGListByProId(this.activeProId, function () {
                 self.cfgList = store.cfgList;
             });
+        },
+        jumpToProId: function (item) {
+            this.$router.push({ path: '/ProjectCFGList', query: { proId: item.ProjectId } });
         },
         jump: function (item) {
             // this.isShowCfg = false;

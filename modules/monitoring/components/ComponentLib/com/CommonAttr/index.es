@@ -2,7 +2,7 @@ var comlib = require('modules/monitoring/components/ComponentLib/index.es');
 var interact = require('modules/lib/interact/interact.js');
 var Base = require('modules/monitoring/Base.es');
 
-var commonAttrSet = require('modules/monitoring/components/ComponentLib/components/CommonAttr/commonAttrSet.es');
+var commonAttrSet = require('modules/monitoring/components/ComponentLib/com/CommonAttr/commonAttrSet.es');
 
 var store = require('modules/monitoring/dataService/store.es');
 var domUtil = require('modules/util/dom/domUtil.es');

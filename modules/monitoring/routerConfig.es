@@ -34,10 +34,25 @@ var routes = [{
     path: '/ProjectCFGList',
     component: ProjectCFGList,
     beforeEnter: (to, from, next) => {
-        api.getProList().then(function (res) {
-            store.proList = res.rows;
+        function jump(proId) {
+            if (proId) {
+                next({ path: '/ProjectCFGList', query: { proId: proId } });
+            }
             next();
-        });
+        }
+        if (store.proList.length > 0) {
+            if (to.query.proId) {
+                jump();
+            }
+            else {
+                jump(store.proList[0].ProjectId);
+            }
+        } else {
+            api.getProList().then(function (res) {
+                store.proList = res.rows;
+                jump(store.proList[0].ProjectId);
+            });
+        }
     }
 },
 {
@@ -50,8 +65,8 @@ var routes = [{
             api.getVarValueByProId(
                 store.currentCfg.proId
             ).then(function (res) {
-                store.variable = res.Data.sort(function (a, b) {  
-                    return a.vName.localeCompare(b.vName); 
+                store.variable = res.Data.sort(function (a, b) {
+                    return a.vName.localeCompare(b.vName);
                 });
                 next();
             })
@@ -68,8 +83,8 @@ var routes = [{
             api.getVarValueByProId(
                 store.currentCfg.proId
             ).then(function (res) {
-                store.variable = res.Data.sort(function (a, b) { 
-                    return a.vName.localeCompare(b.vName); 
+                store.variable = res.Data.sort(function (a, b) {
+                    return a.vName.localeCompare(b.vName);
                 });
                 next();
             })

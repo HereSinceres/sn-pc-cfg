@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="modal flat fade in" style="display:block;" v-if="isShowCfgDialog">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-dialog--cfg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" v-on:click="toggleCfg(0)">
