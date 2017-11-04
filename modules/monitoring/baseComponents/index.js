@@ -279,7 +279,7 @@ Vue.component('ms-input-border-style', {
         var localValue = this.value.toString();
         return {
             list:
-            [' dotted ', ' dashed ', ' solid ', ' double ', ' groove ', ' ridge ', ' inset ', ' outset'].map(function (ele) {
+            ['dotted','dashed','solid','double','groove','ridge','inset','outset'].map(function (ele) {
                 return {
                     name: ele,
                     value: ele

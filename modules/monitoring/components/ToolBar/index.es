@@ -5,7 +5,7 @@ var api = require('modules/monitoring/dataService/api.es');
 var store = require('modules/monitoring/dataService/store.es');
 var domUtil = require('modules/util/dom/domUtil.es');
 function setScale(currentScale) {
-    $('.J-wrapper-container').css({
+    $('.J-wrapper').css({
         'transform': 'scale(' + currentScale + ')',
         'transform-origin': 'left top',
         '-webkit-transform-origin': 'left top'
@@ -88,6 +88,7 @@ module.exports = {
             });
         },
         save: function () {
+            this.reset();
             var self = this;
             var data;
             data = store.currentCfg;

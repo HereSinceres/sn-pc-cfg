@@ -6,7 +6,8 @@
     <span title="数据模拟" class="tool-btn pull-right fa fa-database" v-on:click="toggleVariableSet(1)"></span>
     <span title="全局设置" class="tool-btn pull-right fa fa-cog" v-on:click="toggleCanvasSet(1)"></span>
     <span title="放大" class="tool-btn pull-right fa fa-expand" v-on:click='expand'></span>
-    <span title="重置" class="tool-btn pull-right fa fa-undo" v-on:click='reset'></span> 
+    <span title="重置" class="tool-btn pull-right fa fa-undo" v-on:click='reset'></span>
+    <span title="当前缩放" class="tool-btn pull-right  " > {{this.currentScale}}</span> 
     <span title="缩小" class="tool-btn pull-right fa fa-compress" v-on:click='compress'></span>
 
 
