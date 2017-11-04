@@ -4,14 +4,14 @@
     <span title="模拟运行" class="tool-btn pull-right fa fa-play" v-on:click="run()"> </span>
     <span title="数据模拟开关" class="tool-btn pull-right fa fa-bug" v-on:click="toggleControlInEffect" v-bind:class="{'active':!isDebuggerFireToOnline}"></span>
     <span title="数据模拟" class="tool-btn pull-right fa fa-database" v-on:click="toggleVariableSet(1)"></span>
-    <span title="画布设置" class="tool-btn pull-right fa fa-cog" v-on:click="toggleCanvasSet(1)"></span>
+    <span title="全局设置" class="tool-btn pull-right fa fa-cog" v-on:click="toggleCanvasSet(1)"></span>
 
 
 
 
 
 
-    <!-- 画布设置 -->
+    <!-- 全局设置 -->
     <div class="modal fade in" style="display:block;" v-if="isShowCanvasSetDialog">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -19,25 +19,31 @@
                     <button type="button" class="close" v-on:click="toggleCanvasSet(0)">
                         <span>×</span>
                     </button>
-                    <h4 class="modal-title">画布设置</h4>
+                    <h4 class="modal-title">全局设置</h4>
                 </div>
                 <div class="modal-body form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">宽</label>
-                        <div class="col-sm-10">
-                            <input type="number" class="form-control" v-model='canvas.w'>
+                        <label class="col-sm-3 control-label">宽</label>
+                        <div class="col-sm-9">
+                            <ms-input-font-size v-model='canvas.w'></ms-input-font-size>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">高</label>
-                        <div class="col-sm-10">
-                            <input type="number" class="form-control" v-model='canvas.h'>
+                        <label class="col-sm-3 control-label">高</label>
+                        <div class="col-sm-9">
+                            <ms-input-font-size v-model='canvas.h'></ms-input-font-size>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">背景颜色</label>
-                        <div class="col-sm-10">
+                        <label class="col-sm-3 control-label">背景颜色</label>
+                        <div class="col-sm-9">
                             <ms-input-color-pick v-model='canvas.bg'></ms-input-color-pick>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">刷新频率[s]</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" v-model='cfg.refreshTimer'>
                         </div>
                     </div>
                 </div>

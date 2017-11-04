@@ -18,6 +18,7 @@ module.exports = {
             borderWidth: null,
             borderColor: null,
             borderRadius: null,
+            borderStyle:null,
             backgroundColor: null,
             operatorList: baseSetting.operatorList,
             cfg_var_binded_ouput_deal: [],
@@ -36,6 +37,8 @@ module.exports = {
         this.borderWidth = target.style.borderWidth;
         this.borderColor = target.style.borderColor;
         this.borderRadius = target.style.borderRadius;
+        this.borderStyle = target.style.borderStyle;
+        console.log(target.style.borderStyle);
         this.backgroundColor = target.style.backgroundColor;
         
 
@@ -53,7 +56,9 @@ module.exports = {
             target.style.borderWidth = this.borderWidth;
             target.style.borderColor = this.borderColor;
             target.style.backgroundColor = this.backgroundColor;
-            target.style.borderRadius = this.borderRadius
+            target.style.borderRadius = this.borderRadius;
+            target.style.borderStyle = this.borderStyle;
+            
             // 结果处理
             $dom.attr('data-cfg_var_binded_ouput_deal', JSON.stringify(this.cfg_var_binded_ouput_deal));
             $.notify({

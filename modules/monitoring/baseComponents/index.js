@@ -55,7 +55,7 @@ Vue.component('ms-input-font-size', {
    <div class="input-group">
    <input class="form-control"
    type='number'
-   :value="localValue"
+   :value="localValue" 
    @input="onInput($event.target.value, $event)"
    @change="onChange($event.target.value, $event)"
    />
@@ -198,6 +198,7 @@ Vue.component('ms-json-editor', {
         }
     }
 });
+
 Vue.component('ms-input-file', {
     props: {
         value: {
@@ -254,6 +255,49 @@ Vue.component('ms-input-file', {
                     self.$emit('input', self.localValue);
                 });
             };
+        }
+    }
+});
+Vue.component('ms-input-border-style', {
+    props: {
+        value: {
+            default: null
+        }
+    },
+    template: ` 
+    <select class="form-control"
+    v-model='localValue'
+    :value="localValue" 
+    @input="onInput($event.target.value, $event)"
+    @change="onChange($event.target.value, $event)">
+    <option v-for="option in list" v-bind:value="option.value">
+        {{ option.name }}
+    </option>
+</select> 
+   `,
+    data: function () {
+        var localValue = this.value.toString();
+        return {
+            list:
+            [' dotted ', ' dashed ', ' solid ', ' double ', ' groove ', ' ridge ', ' inset ', ' outset'].map(function (ele) {
+                return {
+                    name: ele,
+                    value: ele
+                }
+            }),
+            localValue: localValue
+        };
+    },
+    methods: {
+        onInput: function (value, e) {
+            this.localValue = value;
+            // console.log('input');
+            this.$emit('input', this.localValue);
+        },
+        onChange: function (value, e) {
+            this.localValue = value;
+            // console.log('change');
+            this.$emit('change', this.localValue);
         }
     }
 });

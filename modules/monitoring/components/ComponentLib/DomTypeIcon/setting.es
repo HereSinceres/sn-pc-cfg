@@ -12,8 +12,9 @@ module.exports = {
     desc: '按钮类型',
     renderToCanvas: function () {
         var dom = `<div 
-            style=' min-width: 50px;
-            min-height: 50px;
+            style=' 
+            width: 50px;
+            height: 50px;
             text-align: center;
             '
             class='u-drag'

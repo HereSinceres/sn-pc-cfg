@@ -66,14 +66,10 @@ module.exports = {
             this.cfg_var_binded_ouput_deal.push({
                 initValue: 1,
                 operator: '<=',
-                callback: [{
-                    name: '大小[eg:12px]',
-                    attr: 'fontSize',
-                    value: ''
-                },
+                callback: [
                 {
-                    name: '颜色[eg:red]',
-                    attr: 'color',
+                    name: '修改文本（如果为空默认为变量值)',
+                    attr: 'text',
                     value: ''
                 }
                 ]

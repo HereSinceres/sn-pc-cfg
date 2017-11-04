@@ -11,8 +11,8 @@ module.exports = {
     desc: '文本类型',
     renderToCanvas: function () {
         var dom = `<div 
-        style=' min-width: 50px;
-        min-height: 50px;
+        style=' width: 50px;
+       height: 20px;
         text-align: center;
         '
             class='u-drag'
@@ -41,7 +41,6 @@ module.exports = {
         var dom = domUtil.getDomByuuid(uuid);
         function justBindVar(dom) {
             var attrs = domUtil.getAttributes($(dom));
-            console.log(store.getValueByVar(attrs['data-cfg_var_binded_ouput'], attrs['data-cfg_fix_num']));
             $(dom).html(
                 (attrs['data-prefix'] || "") +
                 (store.getValueByVar(attrs['data-cfg_var_binded_ouput'], attrs['data-cfg_fix_num']) || "") +
@@ -58,13 +57,18 @@ module.exports = {
                 if (object.hasOwnProperty(key)) {
                     var element = object[key];
                     // 可过滤数据
-                    // if (key == 'fontSize') {
-                    //     dom.style[key] = element + 'px';
-                    // } else {
-                    if (element) {
-                        dom.style[key] = element;
+                    var attrs = domUtil.getAttributes($(dom)); 
+                    if (key == 'text' && !!element) {
+                        $(dom).html(
+                            (attrs['data-prefix'] || "") +
+                            element +
+                            (attrs['data-suffix'] || "")
+                        );
+                    } else {
+                        if (element) {
+                            dom.style[key] = element;
+                        }
                     }
-                    // }
                 }
 
             }

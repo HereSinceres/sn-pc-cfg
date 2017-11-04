@@ -15,8 +15,9 @@ module.exports = {
     desc: '折线图',
     renderToCanvas: function () {
         var dom =
-            `<div style=' min-width: 50px;
-                    min-height: 50px;
+            `<div style='
+            width: 50px;
+            height: 50px;
                     text-align: center;
                     '
             class='u-drag'

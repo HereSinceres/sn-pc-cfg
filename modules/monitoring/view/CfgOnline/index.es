@@ -68,6 +68,8 @@ module.exports = {
             this.startRequest();
         },
         startRequest: function () {
+            var canvasDom = $('.J-wrapper')[0];
+            var attrs = domUtil.getAttributes($(canvasDom));
             var self = this;
             api.getVarValueByProId(
                 store.currentCfg.proId
@@ -76,7 +78,7 @@ module.exports = {
                 Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR);
                 setTimeout(function () {
                     self.startRequest();
-                }, 10000);
+                }, (attrs['data-cfg_refresh_timer'] || 10) * 1000);
             })
         }
     }

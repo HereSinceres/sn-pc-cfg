@@ -1,41 +1,50 @@
  /* 两列右侧自适应布局 */
 
- .g-bd5 {
-     margin: 72px 0 0 0;
-     height: calc(100% - 72px);
- }
-1212122111221122
- .g-sd51,
- .g-sd52 {
-     position: relative;
-     float: left;
-     width: 190px;
-     margin: 0 -190px 0 0;
- }
+.g-bd5 {
+    margin: 72px 0 0 0;
+}
 
- .g-sd51c {
-     width: 190px;
-     overflow-y: auto;
-     border-right: 1px solid #e8e8e8;
- }
+.g-sd51,
+.g-sd52 {
+    position: relative;
+    float: left;
+    width: 190px;
+    margin: 0 -190px 0 0;
+}
 
- .g-sd52 {
-     float: right;
-     width: 190px;
-     margin: 0 0 0 -190px;
- }
+.g-sd51c {
+    position: fixed;
+    z-index: 101;
+    top: 72px;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+    width: 190px;
+    border-right: 1px solid #e8e8e8;
+}
 
- .g-sd52c {
-     width: 190px;
-     overflow-y: auto;
-     border-left: 1px solid #e8e8e8;
- }
+.g-sd52 {
+    float: right;
+    width: 190px;
+    margin: 0 0 0 -190px;
+}
 
- .g-mn5 {
-     float: left;
-     width: 100%;
- }
+.g-sd52c {
+    position: fixed;
+    z-index: 101;
+    top: 72px;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    width: 190px;
+    border-left: 1px solid #e8e8e8;
+}
 
- .g-mn5c {
-     margin: 0 200px 0 200px;
- }
+.g-mn5 {
+    float: left;
+    width: 100%;
+}
+
+.g-mn5c {
+    margin: 0 200px 0 200px;
+}

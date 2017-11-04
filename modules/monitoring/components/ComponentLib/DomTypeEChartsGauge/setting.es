@@ -13,8 +13,9 @@ module.exports = {
     name: '仪表盘',
     desc: '仪表盘',
     renderToCanvas: function () {
-        var dom = `<div style=' min-width: 50px;
-                                min-height: 50px;
+        var dom = `<div style=' 
+        width: 50px;
+        height: 50px;
                                 text-align: center;
                                 '
             class='u-drag'
