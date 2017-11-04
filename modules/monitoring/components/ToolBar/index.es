@@ -4,6 +4,13 @@ var Base = require('modules/monitoring/Base.es');
 var api = require('modules/monitoring/dataService/api.es');
 var store = require('modules/monitoring/dataService/store.es');
 var domUtil = require('modules/util/dom/domUtil.es');
+function setScale(currentScale) {
+    $('.J-wrapper-container').css({
+        'transform': 'scale(' + currentScale + ')',
+        'transform-origin': 'left top',
+        '-webkit-transform-origin': 'left top'
+    });
+}
 module.exports = {
     components: {},
     data: function () {
@@ -19,7 +26,8 @@ module.exports = {
                 refreshTimer: null
             },
             variable: store.variable,
-            isDebuggerFireToOnline: 0
+            isDebuggerFireToOnline: 0,
+            currentScale: 1
         };
     },
     watch: {
@@ -32,6 +40,22 @@ module.exports = {
         window.__isDebuggerFireToOnline__ = this.isDebuggerFireToOnline;
     },
     methods: {
+
+        compress: function () {
+            this.currentScale = this.currentScale - 0.02;
+            setScale(this.currentScale);
+        },
+        reset: function () {
+            this.currentScale = 1;
+            setScale(this.currentScale);
+        },
+        expand: function () {
+            this.currentScale = this.currentScale + 0.02;
+            if (this.currentScale > 1) {
+                this.currentScale = 1;
+            }
+            setScale(this.currentScale);
+        },
         getHtml: function () {
             return $('.J-wrapper')[0].outerHTML;
         },
@@ -43,7 +67,6 @@ module.exports = {
             var attrs = domUtil.getAttributes($(canvasDom));
             this.cfg.refreshTimer = attrs['data-cfg_refresh_timer'] || 10;
 
-
             this.isShowCanvasSetDialog = isShow;
         },
         savePaintSet: function () {
@@ -54,6 +77,7 @@ module.exports = {
                 canvasDom.style.height = this.canvas.h;
                 canvasDom.style.backgroundColor = this.canvas.bg;
             }
+
             $(canvasDom).attr('data-cfg_refresh_timer', this.cfg.refreshTimer);
         },
         saveMockVariable: function () {
@@ -72,7 +96,7 @@ module.exports = {
                 $.notify({
                     message: '提交成功'
                 });
-            })
+            });
         },
         toggleVariableSet: function (isShow) {
             this.isShowVariableSetDialog = isShow;

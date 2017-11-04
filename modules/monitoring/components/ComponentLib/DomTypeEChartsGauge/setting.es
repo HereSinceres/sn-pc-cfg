@@ -9,7 +9,7 @@ var baseSetting = require('modules/monitoring/components/ComponentLib/baseSettin
 var defaultChartOption = baseSetting.defaultChartGaugeOption;
 module.exports = {
     type: Base.CONST_DOM_TYPE.DOMTYPE_ECHARTSGAUGE,
-    icon: 'fa fa-tachometer',
+    icon: 'fa fa-area-chart',
     name: '仪表盘',
     desc: '仪表盘',
     renderToCanvas: function () {

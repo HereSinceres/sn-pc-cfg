@@ -1,10 +1,13 @@
 <div class='tool-bar clearfix'>
-    <!-- <i title="保存" class="tool-btn fa fa-floppy-o"></i> -->
+    <!-- <i title="保存" class="tool-btn fa fa-floppy-o"></i> --> 
     <span title="提交" class="tool-btn pull-right fa fa-upload" v-on:click='save'></span>
     <span title="模拟运行" class="tool-btn pull-right fa fa-play" v-on:click="run()"> </span>
     <span title="数据模拟开关" class="tool-btn pull-right fa fa-bug" v-on:click="toggleControlInEffect" v-bind:class="{'active':!isDebuggerFireToOnline}"></span>
     <span title="数据模拟" class="tool-btn pull-right fa fa-database" v-on:click="toggleVariableSet(1)"></span>
     <span title="全局设置" class="tool-btn pull-right fa fa-cog" v-on:click="toggleCanvasSet(1)"></span>
+    <span title="放大" class="tool-btn pull-right fa fa-expand" v-on:click='expand'></span>
+    <span title="重置" class="tool-btn pull-right fa fa-undo" v-on:click='reset'></span> 
+    <span title="缩小" class="tool-btn pull-right fa fa-compress" v-on:click='compress'></span>
 
 
 
