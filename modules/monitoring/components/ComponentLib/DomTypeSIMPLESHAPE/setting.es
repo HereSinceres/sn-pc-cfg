@@ -14,8 +14,8 @@ module.exports = {
                         data-cfg_type="${this.type}"
                         data-cfg-uuid="J_uuid_${Base.uuid()}"
                         style="
-                        width: 50px;
-                        height: 50px;
+                        width: 300px;
+                        height: 300px;
                         border-color: black;
                         border-radius: 50%;
                         border-style: solid;">

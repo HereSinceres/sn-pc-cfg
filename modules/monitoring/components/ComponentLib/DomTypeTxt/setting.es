@@ -11,7 +11,7 @@ module.exports = {
     desc: '文本类型',
     renderToCanvas: function () {
         var dom = `<div 
-        style=' width: 50px;
+        style=' width: 300px;
        height: 20px;
         text-align: center;
         '
