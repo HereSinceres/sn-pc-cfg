@@ -113,11 +113,15 @@ module.exports = {
         },
         delCfg: function (item) {
             var self = this;
-            api.DeleteCfgManagement(item.id).then(function () {
-                let index = store.cfgList.indexOf(item);
-                store.cfgList.splice(index, 1);
-                self.cfgList = store.cfgList;
-            })
+            bootbox.confirm("确认是否删除!", function (result) {
+                if (result) {
+                    api.DeleteCfgManagement(item.id).then(function () {
+                        let index = store.cfgList.indexOf(item);
+                        store.cfgList.splice(index, 1);
+                        self.cfgList = store.cfgList;
+                    })
+                }
+            });
         },
         sethome: function (item) {
             var self = this;

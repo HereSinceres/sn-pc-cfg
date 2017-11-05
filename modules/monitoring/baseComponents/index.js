@@ -186,65 +186,7 @@ Vue.component('ms-json-editor', {
     }
 });
 
-Vue.component('ms-input-file', {
-    props: {
-        value: {
-            default: null
-        }
-    },
-    template: `
-   <div class="input-group">
-   <input class="form-control"
-   type='file' 
-   @input="onInput($event.target.value, $event)"
-   @change="onChange($event.target.value, $event)"
-   />
-  </div>
-   `,
-    data: function () {
-        var localValue = this.value;
-        return {
-            localValue: localValue
-        };
-    },
-    methods: {
-        onInput: function (value, e) {
-            this.localValue = value;
-            this.$emit('input', this.localValue + 'px');
-        },
-        onChange: function (value, e) {
-            var file = null;
-            if (typeof e.target === 'undefined') {
-                file = e[0];
-            }
-            else {
-                file = e.target.files[0];
-            }
-            if (file) {
-                let size = Math.floor(file.size / 1024);
-                this.imgPreview(file);
-            }
-
-        },
-        imgPreview: function (file) {
-            let self = this;
-            if (!file || !window.FileReader) {
-                return;
-            }
-
-            // if (/^image/.test(file.type)) {
-            let reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onloadend = function () {
-                api.UpLoadFile(this.result).then(function (res) {
-                    self.localValue = 'url("' + res.Data + '")';
-                    self.$emit('change', self.localValue);
-                    self.$emit('input', self.localValue);
-                });
-            };
-        }
-    }
-});
+Vue.component('ms-input-file',require('modules/monitoring/baseComponents/ms-input-file.es'));
 Vue.component('ms-input-border-style', {
     props: {
         value: {
@@ -329,8 +271,7 @@ Vue.component('ms-input-var-search', {
     },
     watch: {
         'searchtxt': {
-            handler: function (val, oldVal) {
-                console.log(val);
+            handler: function (val, oldVal) { 
                 this.search();
             }
         }
@@ -346,8 +287,7 @@ Vue.component('ms-input-var-search', {
             // console.log('change');
             this.$emit('change', this.localValue);
         },
-        search: function () {
-            console.log('search');
+        search: function () { 
             var self = this;
             this.variable = store.variable.filter(function (element) {
                 if (self.searchtxt.length > 0) {
