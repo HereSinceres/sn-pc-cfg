@@ -34,7 +34,9 @@ function getCfgManagementById(params, callback) {
                 store.variable = res.Data.sort(function (a, b) {
                     return a.vName.localeCompare(b.vName);
                 });
-            } 
+            } else {
+                store.variable = [];
+            }
             store.variable.unshift({
                 IsAcVar: true,
                 vName: "请选择",
@@ -93,6 +95,23 @@ var routes = [{
     beforeEnter: (to, from, next) => {
         getCfgManagementById(to.params, function () {
             next();
+        })
+    }
+},
+{
+    name: 'CfgOnlineByProId',
+    path: '/cfgOnlineByProId/:proId',
+    component: CfgOnline,
+    beforeEnter: (to, from, next) => {
+        // /cfgOnlineByProId/c4c68125-d970-4909-a87a-58af26b73352
+        getCFGListByProId(to.params.proId, function () {
+            var home = store.cfgList[0];
+            store.cfgList.forEach(function (element) {
+                if (element.tag == 1) {
+                    home = element;
+                }
+            }, this);
+            next({ name: 'CfgOnline', params: { cfgId: home.id } });
         })
     }
 }

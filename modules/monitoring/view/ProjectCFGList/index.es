@@ -65,6 +65,7 @@ module.exports = {
         this.getCfgList();
     },
     methods: {
+
         getCfgList: function () {
             this.activeProId = this.$route.query.proId;
             var self = this;
@@ -116,6 +117,12 @@ module.exports = {
                 let index = store.cfgList.indexOf(item);
                 store.cfgList.splice(index, 1);
                 self.cfgList = store.cfgList;
+            })
+        },
+        sethome: function (item) {
+            var self = this;
+            api.SetTopCfgManagementById(item.id).then(function () {
+                self.getCfgList();
             })
         }
     }

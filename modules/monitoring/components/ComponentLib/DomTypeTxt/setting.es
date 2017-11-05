@@ -41,10 +41,11 @@ module.exports = {
         var dom = domUtil.getDomByuuid(uuid);
         function justBindVar(dom) {
             var attrs = domUtil.getAttributes($(dom));
-            $(dom).html(
-                (attrs['data-prefix'] || "") +
+            var html = (attrs['data-prefix'] || "") +
                 (store.getValueByVar(attrs['data-cfg_var_binded_ouput'], attrs['data-cfg_fix_num']) || "") +
-                (attrs['data-suffix'] || "")
+                (attrs['data-suffix'] || "");
+            $(dom).html(
+                html || '当前文本无任何处理'
             );
         }
         function setCallback(dom, callback) {
@@ -57,12 +58,11 @@ module.exports = {
                 if (object.hasOwnProperty(key)) {
                     var element = object[key];
                     // 可过滤数据
-                    var attrs = domUtil.getAttributes($(dom)); 
+                    var attrs = domUtil.getAttributes($(dom));
                     if (key == 'text' && !!element) {
+                        var html = (attrs['data-prefix'] || "") + element + (attrs['data-suffix'] || "");
                         $(dom).html(
-                            (attrs['data-prefix'] || "") +
-                            element +
-                            (attrs['data-suffix'] || "")
+                            html || '当前文本无任何处理'
                         );
                     } else {
                         if (element) {

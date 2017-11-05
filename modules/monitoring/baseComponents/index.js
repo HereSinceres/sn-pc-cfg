@@ -76,7 +76,7 @@ Vue.component('ms-input-icon', {
     },
     template: `
     <div> 
-        <span class="" v-for='item in iconList' v-on:click='setIcon(item)' v-bind:class="{'active':(item.iconName==localValue)}">
+        <span class="icon-btn-list" v-for='item in iconList' v-on:click='setIcon(item)' v-bind:class="{'active':(item.iconName==localValue)}">
             <i :class='item.iconName'></i>
         </span>
     </div>
@@ -297,10 +297,10 @@ Vue.component('ms-input-var-search', {
 
     template: `
     <div class="row  "> 
-        <div class="col-xs-6">
+        <div class="col-xs-4">
             <input type="text" class="form-control" placeholder="查询条件" v-model='searchtxt'>
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-8">
             <select class="form-control"
             v-model='localValue'
             :value="localValue" 

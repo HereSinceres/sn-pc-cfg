@@ -7,7 +7,8 @@
         <ul class="dropdown-menu" aria-labelledby="cfg-project-list-menu">
             <li v-for="item in proList" v-on:click=" jumpToProId(item)" v-bind:class="{'active':activeProId==item.ProjectId}">
                 <a>
-                    {{item.PName}}</a>
+                    {{item.PName}}
+                </a>
             </li>
         </ul>
     </div>
@@ -16,8 +17,12 @@
             <div class="card">
                 <span class="card__name">
                     {{item.cfgName}}
-                </span>
+                </span> 
+                <router-link :to="{ name: 'CfgOnlineByProId', params: { proId: item.proId }}" class="card__sethome pull-right " v-if='item.tag==1'> 
+                    <i class="fa fa-home "></i>
+                </router-link>
                 <div class="card_ctrlist">
+                    <span v-on:click="sethome(item)"> 设置为主页</span>
                     <span v-on:click="delCfg(item)"> 删除</span>
                     <span v-on:click="modifyCfg(item)">修改</span>
                     <router-link :to="{ name: 'cfg', params: { cfgId: item.id }}">

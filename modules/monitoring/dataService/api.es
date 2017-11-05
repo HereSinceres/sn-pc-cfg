@@ -92,6 +92,12 @@ module.exports = {
             cfgId: cfgId
         });
     },
+    SetTopCfgManagementById: function (cfgId) {
+        var url = '/useradmin/Project/SetTopCfgManagementById';
+        return $.post(url, {
+            cfgId: cfgId
+        });
+    },
     getVarValueByProId: function (proId) {
         var url = '/useradmin/Project/GetVariableValueByProjectId';
         return $.post(url, {
