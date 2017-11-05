@@ -71,6 +71,7 @@ module.exports = {
     },
     methods: {
         setHtml: function () {
+            console.log(store.currentCfg.html);
             var self = this;
             if (store.currentCfg.html) {
                 var html = decodeURI(store.currentCfg.html);
@@ -161,7 +162,7 @@ module.exports = {
         tool_modifyWidthHeight: function () {
             function getInnerWidth(element) {
                 var wrapper = document.createElement('span'),
-                    result={};
+                    result = {};
 
                 while (element.firstChild) {
                     wrapper.appendChild(element.firstChild);

@@ -13,8 +13,8 @@ module.exports = {
     renderToCanvas: function () {
         var dom = `<div 
             style=' 
-            width: 300px;
-            height: 300px;
+            width: 50px;
+            height: 50px;
             text-align: center;
             '
             class='u-drag'
