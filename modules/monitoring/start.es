@@ -6,7 +6,7 @@ Vue.use(VueRouter);
 var routerConfig = require('./routerConfig.es');
 var api = require('modules/monitoring/dataService/api.es');
 var store = require('modules/monitoring/dataService/store.es');
-
+ 
 const router = new VueRouter({
     routes: routerConfig
 });
