@@ -54,19 +54,16 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">变量 </label>
                         <div class="col-sm-10">
-                            <select class="form-control" v-model="cfg_var_binded_ouput">
-                                <option v-for="item in variable" v-bind:value="item.vid">
-                                    {{ item.vName }}: {{ item.vValue }}
-                                </option>
-                            </select>
+                            <ms-input-var-search v-model="cfg_var_binded_ouput">
+                            </ms-input-var-search>
                         </div>
                     </div>
                     <div class="form-group">
-                            <label class="col-sm-2 control-label">时间(min)之前 </label>
-                            <div class="col-sm-10">
-                                 <input type="number" min="1" class="form-control" v-model="cfg_time_before">
-                            </div>
+                        <label class="col-sm-2 control-label">时间(min)之前 </label>
+                        <div class="col-sm-10">
+                            <input type="number" min="1" class="form-control" v-model="cfg_time_before">
                         </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-info " v-on:click="ok()">保存</button>

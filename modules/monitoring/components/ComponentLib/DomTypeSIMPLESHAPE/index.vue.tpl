@@ -24,12 +24,9 @@
                 <div class="modal-body form-horizontal">
                     <div class="form-group">
                         <label class="col-sm-2 control-label">变量</label>
-                        <div class="col-sm-10">
-                            <select class="form-control" v-model="cfg_var_binded_ouput">
-                                <option v-for="item in variable" v-bind:value="item.vid">
-                                    {{ item.vName }}: {{ item.vValue }}
-                                </option>
-                            </select>
+                        <div class="col-sm-10"> 
+                            <ms-input-var-search v-model="cfg_var_binded_ouput"  >
+                            </ms-input-var-search>  
                         </div>
                     </div>
                     <div class="form-group">
@@ -56,7 +53,9 @@
                                 <div class="col-xs-5">
                                     <div class="form-group" v-for="cal in item.callback">
                                         <div class="col-sm-12">
-                                            <input type="text" class="form-control" v-model="cal.value" :placeholder="cal.name">
+                                            <ms-input-color-pick v-if="cal.attr=='borderColor'" v-model="cal.value" :placeholder="cal.name">
+                                            </ms-input-color-pick>
+                                            <input v-else type="text" class="form-control" v-model="cal.value" :placeholder="cal.name">
                                         </div>
                                     </div>
                                 </div>

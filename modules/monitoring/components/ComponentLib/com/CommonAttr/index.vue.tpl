@@ -35,11 +35,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">变量</label>
                             <div class="col-sm-10">
-                                <select class="form-control" v-model="cfg_var_binded_input">
-                                    <option v-for="item in variable" v-bind:value="item.vid">
-                                        {{ item.vName }}: {{ item.vValue }}
-                                    </option>
-                                </select>
+
+                                <ms-input-var-search v-model="cfg_var_binded_input">
+                                </ms-input-var-search>
                             </div>
                         </div>
                         <div class="form-group">
@@ -54,11 +52,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">变量</label>
                             <div class="col-sm-10">
-                                <select class="form-control" v-model="cfg_var_binded_input">
-                                    <option v-for="item in variable" v-bind:value="item.vid">
-                                        {{ item.vName }}: {{ item.vValue }}
-                                    </option>
-                                </select>
+
+                                <ms-input-var-search v-model="cfg_var_binded_input">
+                                </ms-input-var-search>
                             </div>
                         </div>
                         <div class="form-group">

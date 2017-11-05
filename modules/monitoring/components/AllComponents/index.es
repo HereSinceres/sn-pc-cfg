@@ -9,8 +9,10 @@ module.exports = {
         };
     },
     watch: {
-        searchtxt: function (val) {
-            this.search();
+        'searchtxt': {
+            handler: function (val, oldVal) { 
+                this.search();
+            } 
         }
     },
     template: __inline('./index.vue.tpl'),
@@ -31,7 +33,7 @@ module.exports = {
             var dom = item.renderToCanvas();
             Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.ADD_NEWUNIT, [dom]);
         },
-        search: function () {
+        search: function () { 
             var self = this;
             var object = this.allComList;
             for (var key in object) {

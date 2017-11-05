@@ -1,49 +1,31 @@
 var Vue = require('modules/lib/vue/vue.js');
 var api = require('modules/monitoring/dataService/api.es');
-let iconList = [{
-    iconName: 'iconcfgfont icon-cfg-anniu3',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-kaiguan2',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-kaiguan1',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-icon',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-kaiguan3',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-kaiguanguan',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-anniu2',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-anniu1',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-kaiguanguan-copy',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-kaiguan',
-    name: '开关1'
-},
-{
-    iconName: 'iconcfgfont icon-cfg-anniu',
-    name: '开关1'
-}
+var store = require('modules/monitoring/dataService/store.es');
+let iconList = [
+    {
+        iconName: 'iconcfgfont icon-cfg-type2-guan', name: '开关1'
+
+    }, {
+        iconName: 'iconcfgfont icon-cfg-btn2', name: '开关1'
+
+    }, {
+        iconName: 'iconcfgfont icon-cfg-type2-kai', name: '开关1'
+
+    }, {
+        iconName: 'iconcfgfont icon-cfg-close2', name: '开关1'
+
+    }, {
+        iconName: 'iconcfgfont icon-cfg-close1', name: '开关1'
+
+    }, {
+        iconName: 'iconcfgfont icon-cfg-btn1', name: '开关1'
+
+    }, {
+        iconName: 'iconcfgfont icon-cfg-type1-kai', name: '开关1'
+
+    }, {
+        iconName: 'iconcfgfont icon-cfg-type1-ting', name: '开关1'
+    }
 ];
 Vue.component('ms-input-font-size', {
     props: {
@@ -94,9 +76,9 @@ Vue.component('ms-input-icon', {
     },
     template: `
     <div> 
-        <a class="btn" v-for='item in iconList' v-on:click='setIcon(item)' v-bind:class="{'active':(item.iconName==localValue)}">
+        <span class="" v-for='item in iconList' v-on:click='setIcon(item)' v-bind:class="{'active':(item.iconName==localValue)}">
             <i :class='item.iconName'></i>
-        </a>
+        </span>
     </div>
    `,
     data: function () {
@@ -121,7 +103,10 @@ Vue.component('ms-input-color-pick', {
         }
     },
     template: `
-    <div class="color-picker"  ></div> 
+    <div class="input-group">
+    <span class="color-picker form-control"></span> 
+    <span class="input-group-addon" v-on:click='clear' >清空</span> 
+    </div> 
   `,
     data: function () {
         try {
@@ -136,7 +121,7 @@ Vue.component('ms-input-color-pick', {
     },
     mounted: function () {
         var self = this;
-        $(this.$el).colorPick({
+        $(this.$el).find('.color-picker').colorPick({
             'initialColor': self.localValue,
             'onColorSelected': function () {
                 this.element.css({ 'backgroundColor': this.color, 'color': this.color });
@@ -147,7 +132,12 @@ Vue.component('ms-input-color-pick', {
         });
     },
     methods: {
-        
+        clear: function () {
+            this.color = '';
+            $(this.$el).find('.color-picker').css({ 'backgroundColor': this.color, 'color': this.color });
+            this.$emit('input', this.color);
+            this.$emit('change', this.color);
+        }
     }
 });
 
@@ -295,6 +285,78 @@ Vue.component('ms-input-border-style', {
             this.localValue = value;
             // console.log('change');
             this.$emit('change', this.localValue);
+        }
+    }
+});
+Vue.component('ms-input-var-search', {
+    props: {
+        value: {
+            default: null
+        }
+    },
+
+    template: `
+    <div class="row  "> 
+        <div class="col-xs-6">
+            <input type="text" class="form-control" placeholder="查询条件" v-model='searchtxt'>
+        </div>
+        <div class="col-xs-6">
+            <select class="form-control"
+            v-model='localValue'
+            :value="localValue" 
+            @input="onInput($event.target.value, $event)"
+            @change="onChange($event.target.value, $event)">
+                <option v-for="item in variable" v-bind:value="item.vid">
+                    {{ item.vName }}: {{ item.vValue }}
+                </option>
+            </select>
+        </div>
+    </div>
+   `,
+
+    data: function () {
+        try {
+            var localValue = this.value;
+        }
+        catch (error) {
+            var localValue = null;
+        }
+        return {
+            searchtxt: "",
+            variable: store.variable,
+            localValue: localValue
+        };
+    },
+    watch: {
+        'searchtxt': {
+            handler: function (val, oldVal) {
+                console.log(val);
+                this.search();
+            }
+        }
+    },
+    methods: {
+        onInput: function (value, e) {
+            this.localValue = value;
+            // console.log('input');
+            this.$emit('input', this.localValue);
+        },
+        onChange: function (value, e) {
+            this.localValue = value;
+            // console.log('change');
+            this.$emit('change', this.localValue);
+        },
+        search: function () {
+            console.log('search');
+            var self = this;
+            this.variable = store.variable.filter(function (element) {
+                if (self.searchtxt.length > 0) {
+                    return (element.vName.indexOf(self.searchtxt) > -1)
+                } else {
+                    return true;
+                }
+            });
+
         }
     }
 });

@@ -16,7 +16,7 @@ module.exports = {
                         style="
                         width: 50px;
                         height: 50px;
-                        border-color: red;
+                        border-color: black;
                         border-radius: 50%;
                         border-style: solid;">
                    </div>`;

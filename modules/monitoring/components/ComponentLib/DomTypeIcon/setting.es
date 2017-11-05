@@ -20,7 +20,7 @@ module.exports = {
             class='u-drag'
             data-cfg_type="${this.type}"
             data-cfg-uuid="J_uuid_${Base.uuid()}">
-                <span class='iconcfgfont icon-cfg-anniu3'></span>
+                <span class='iconcfgfont icon-cfg-btn2'></span>
             </div>`;
         return dom;
     },

@@ -70,11 +70,7 @@ module.exports = {
             this.cfg_var_binded_ouput_deal.push({
                 initValue: 1,
                 operator: '<=',
-                callback: [{
-                    name: '宽度[eg:2px]',
-                    attr: 'borderWidth',
-                    value: ''
-                },
+                callback: [ 
                 {
                     name: '颜色[eg:red]',
                     attr: 'borderColor',

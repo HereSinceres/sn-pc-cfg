@@ -11,9 +11,9 @@
             <li>
                 <a tabindex="-1" v-on:click='tool_copy'>复制</a>
             </li>
-            <li>
+            <!-- <li>
                 <a tabindex="-1" v-on:click='tool_modifyWidthHeight'>修正高宽</a>
-            </li>
+            </li> -->
         </ul>
     </div>
 </div>

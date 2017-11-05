@@ -34,7 +34,13 @@ function getCfgManagementById(params, callback) {
                 store.variable = res.Data.sort(function (a, b) {
                     return a.vName.localeCompare(b.vName);
                 });
-            }
+            } 
+            store.variable.unshift({
+                IsAcVar: true,
+                vName: "请选择",
+                vValue: null,
+                vid: null
+            })
             callback();
         })
     })
