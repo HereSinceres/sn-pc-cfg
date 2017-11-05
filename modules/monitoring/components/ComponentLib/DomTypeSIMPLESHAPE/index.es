@@ -38,7 +38,6 @@ module.exports = {
         this.borderColor = target.style.borderColor;
         this.borderRadius = target.style.borderRadius;
         this.borderStyle = target.style.borderStyle;
-        console.log(target.style.borderStyle);
         this.backgroundColor = target.style.backgroundColor;
         
 

@@ -2,7 +2,7 @@ var Base = require('modules/monitoring/Base.es');
 var interact = require('modules/lib/interact/interact.js');
 var domUtil = require('modules/util/dom/domUtil.es');
 var commonAttrSet = require('modules/monitoring/components/ComponentLib/com/CommonAttr/commonAttrSet.es');
-var api = require('modules/monitoring/dataService/api.es'); 
+var api = require('modules/monitoring/dataService/api.es');
 var store = require('modules/monitoring/dataService/store.es');
 
 var operatorList = {
@@ -26,10 +26,13 @@ function moveTarget(target, dx, dy) {
     // update the posiion attributes
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
-    var data = $(target).data();
-    var uuid = data.cfgUuid;
-    Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [uuid]);
 }
+function resizeTarget(target, width, height) {
+    // update the element's style
+    target.style.width = width + 'px';
+    target.style.height = height + 'px';
+}
+
 module.exports = {
     getDomUuid: function () {
         return 'J_uuid_' + Base.uuid() + '';
@@ -109,6 +112,8 @@ module.exports = {
                 break;
             case 4:
                 setVarFun = function () {
+                    // TODO
+                    console.log(111);
                     window.location.href = attrs['data-cfg_jump_url'];
                 };
                 break;
@@ -133,6 +138,7 @@ module.exports = {
         interact(dom)
             .draggable({
                 onmove: function (event) {
+                    debugger
                     var dx = event.dx;
                     var dy = event.dy;
 
@@ -160,21 +166,13 @@ module.exports = {
             })
             .on('resizemove', function (event) {
                 var target = event.target;
-                var x = (parseFloat(target.getAttribute('data-x')) || 0);
-                var y = (parseFloat(target.getAttribute('data-y')) || 0);
-                // update the element's style
-                target.style.width = event.rect.width + 'px';
-                target.style.height = event.rect.height + 'px';
-                // translate when resizing from top or left edges
-                x += event.deltaRect.left;
-                y += event.deltaRect.top;
-                var rotate = domUtil.getRotationDegrees($(target));
-                target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px,' + y + 'px)';
-                target.style.webkitTransform = target.style.transform += 'rotate(' + rotate + 'deg)';
-
-                target.setAttribute('data-x', x);
-                target.setAttribute('data-y', y);
-                // target.textContent = Math.round(event.rect.width) + '×' + Math.round(event.rect.height);
+                var width = event.rect.width;
+                var height = event.rect.height;
+                var left = event.deltaRect.left;
+                var top = event.deltaRect.top;
+                resizeTarget(target, width, height);
+                debugger
+                moveTarget(target, left, top);
                 // 处理图表resize
                 if (window[uuid]) {
                     window[uuid].resize();

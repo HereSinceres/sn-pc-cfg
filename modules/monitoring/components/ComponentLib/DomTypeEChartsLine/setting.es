@@ -11,7 +11,7 @@ var api = require('modules/monitoring/dataService/api.es');
 var defaultChartOption = baseSetting.defaultChartLineOption;
 module.exports = {
     type: Base.CONST_DOM_TYPE.DOMTYPE_ECHARTSLINE,
-    icon: 'fa fa-tachometer',
+    icon: 'fa fa-area-chart',
     name: '折线图',
     desc: '折线图',
     renderToCanvas: function () {

@@ -24,6 +24,21 @@ function getCFGListByProId(proId, callback) {
         }
     }, function (error) { });
 }
+function getCfgManagementById(params, callback) {
+    api.getCfgManagementById(params.cfgId).then(function (res) {
+        store.currentCfg = res.Data;
+        api.getVarValueByProId(
+            store.currentCfg.proId
+        ).then(function (res) {
+            if (!!res.Data && res.Data.length > 0) {
+                store.variable = res.Data.sort(function (a, b) {
+                    return a.vName.localeCompare(b.vName);
+                });
+            }
+            callback();
+        })
+    })
+}
 var routes = [{
     path: '/',
     beforeEnter: (to, from, next) => {
@@ -60,16 +75,8 @@ var routes = [{
     path: '/cfg/:cfgId',
     component: ConfigPage,
     beforeEnter: (to, from, next) => {
-        api.getCfgManagementById(to.params.cfgId).then(function (res) {
-            store.currentCfg = res.Data;
-            api.getVarValueByProId(
-                store.currentCfg.proId
-            ).then(function (res) {
-                store.variable = res.Data.sort(function (a, b) {
-                    return a.vName.localeCompare(b.vName);
-                });
-                next();
-            })
+        getCfgManagementById(to.params, function () {
+            next();
         })
     }
 },
@@ -78,16 +85,8 @@ var routes = [{
     path: '/cfgOnline/:cfgId',
     component: CfgOnline,
     beforeEnter: (to, from, next) => {
-        api.getCfgManagementById(to.params.cfgId).then(function (res) {
-            store.currentCfg = res.Data;
-            api.getVarValueByProId(
-                store.currentCfg.proId
-            ).then(function (res) {
-                store.variable = res.Data.sort(function (a, b) {
-                    return a.vName.localeCompare(b.vName);
-                });
-                next();
-            })
+        getCfgManagementById(to.params, function () {
+            next();
         })
     }
 }

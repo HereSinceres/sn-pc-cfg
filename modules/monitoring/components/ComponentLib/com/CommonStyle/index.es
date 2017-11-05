@@ -15,6 +15,7 @@ module.exports = {
             rotate: 0,
             zIndex: 0,
             isShowCfgDialog: false,
+            isShowDataCfgDialog: false,
             cfg_fix_num: -1
         };
     },
@@ -53,9 +54,13 @@ module.exports = {
                 message: '保存成功'
             });
             this.toggleCfg(0);
+            this.toggleDataCfg(0);
         },
         toggleCfg: function (isShow) {
             this.isShowCfgDialog = isShow;
+        },
+        toggleDataCfg:  function (isShow) {
+            this.isShowDataCfgDialog = isShow;
         }
     }
 };

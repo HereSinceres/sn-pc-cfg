@@ -1,0 +1,97 @@
+@font-face {
+    font-family: "Open Sans";
+    font-weight: 400;
+    font-style: normal;
+    src: local("Open Sans"), local("OpenSans"), url(http://fonts.gstatic.com/s/opensans/v13/cJZKeOuBrn4kERxqtaUH3bO3LdcAZYWl9Si6vvxL-qU.woff) format("woff");
+}
+
+@font-face {
+    font-family: "Open Sans";
+    font-weight: 700;
+    font-style: normal;
+    src: local("Open Sans Bold"), local("OpenSans-Bold"), url(http://fonts.gstatic.com/s/opensans/v13/k3k702ZOKiLJc3WVjuplzKRDOzjiPcYnFooOUGCOsRk.woff) format("woff");
+}
+
+#colorPick * {
+    -webkit-transition: all linear .2s;
+    -moz-transition: all linear .2s;
+    -ms-transition: all linear .2s;
+    -o-transition: all linear .2s;
+    transition: all linear .2s;
+}
+
+#colorPick {
+    position: absolute;
+    width: 140px; 
+    padding: 15px;
+    font-family: "Open Sans", sans-serif;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, .85);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .2);
+    z-index: 102;
+    -webkit-backdrop-filter: blur(15px);
+}
+
+#colorPick span {
+    display: block;
+    clear: both;
+    ;
+    margin-bottom: 5px;
+    font-size: 9pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #bbb;
+}
+
+.customColorHash {
+	width: 96px;
+    height: 23px;
+    margin: 1px 4px;
+    padding: 0 4px;
+    border: 1px solid #babbba;
+    border-radius: 5px;
+    outline: 0;
+}
+
+.customColorHash.error {
+    border-color: #ff424c;
+    color: #ff424c;
+}
+
+.colorPickButton {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 0 3px;
+    border: thin solid #eee;
+    ;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.colorPickButton:hover {
+    transform: scale(1.1);
+}
+
+.colorPickDummy {
+    border: 1px dashed #bbb;
+    ;
+    background: #fff;
+}
+
+.color-picker {
+    border-radius: 5px;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    -webkit-transition: all linear .2s;
+    -moz-transition: all linear .2s;
+    -ms-transition: all linear .2s;
+    -o-transition: all linear .2s;
+    transition: all linear .2s;
+    border: thin solid #eee;
+}
+
+.color-picker:hover {
+    transform: scale(1.1);
+}

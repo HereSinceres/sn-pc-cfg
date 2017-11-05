@@ -157,6 +157,30 @@ module.exports = {
             $(this.rightClickDom).click();
             closeMenu();
         },
+        // TODO
+        tool_modifyWidthHeight: function () {
+            function getInnerWidth(element) {
+                var wrapper = document.createElement('span'),
+                    result={};
+
+                while (element.firstChild) {
+                    wrapper.appendChild(element.firstChild);
+                }
+
+                element.appendChild(wrapper);
+
+                result.width = wrapper.offsetWidth;
+                result.height = wrapper.offsetHeight;
+
+                element.removeChild(wrapper);
+
+                while (wrapper.firstChild) {
+                    element.appendChild(wrapper.firstChild);
+                }
+                return result;
+            }
+            console.log(getInnerWidth(this.rightClickDom));
+        },
         tool_copy: function () {
             var self = this;
 

@@ -121,13 +121,7 @@ Vue.component('ms-input-color-pick', {
         }
     },
     template: `
-  <div class="input-group">
-  <input class="form-control"
-  type='color'
-  :value="localValue"
-  @input="onInput($event.target.value, $event)"
-  @change="onChange($event.target.value, $event)"
-  /> <span class="input-group-addon">rgb</span></div>
+    <div class="color-picker"  ></div> 
   `,
     data: function () {
         try {
@@ -140,17 +134,20 @@ Vue.component('ms-input-color-pick', {
             localValue: localValue
         };
     },
+    mounted: function () {
+        var self = this;
+        $(this.$el).colorPick({
+            'initialColor': self.localValue,
+            'onColorSelected': function () {
+                this.element.css({ 'backgroundColor': this.color, 'color': this.color });
+                self.$emit('input', this.color);
+                self.$emit('change', this.color);
+            },
+            'allowCustomColor': true
+        });
+    },
     methods: {
-        onInput: function (value, e) {
-            this.localValue = value;
-            // console.log('input');
-            this.$emit('input', this.localValue);
-        },
-        onChange: function (value, e) {
-            this.localValue = value;
-            // console.log('change');
-            this.$emit('change', this.localValue);
-        }
+        
     }
 });
 
@@ -279,7 +276,7 @@ Vue.component('ms-input-border-style', {
         var localValue = this.value.toString();
         return {
             list:
-            ['dotted','dashed','solid','double','groove','ridge','inset','outset'].map(function (ele) {
+            ['dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset'].map(function (ele) {
                 return {
                     name: ele,
                     value: ele

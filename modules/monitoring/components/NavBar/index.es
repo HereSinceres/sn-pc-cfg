@@ -1,20 +1,22 @@
-var comlib = require('modules/monitoring/components/ComponentLib/index.es');
+  
 var Base = require('modules/monitoring/Base.es');
+var store = require('modules/monitoring/dataService/store.es');
 module.exports = {
     components: {},
     data: function () {
-        return {
-            comlib: comlib
+        return { 
+            currentCfg:store.currentCfg
         };
     },
     watch: {
 
     },
     template: __inline('./index.vue.tpl'),
-    mounted: function () { },
+    mounted: function () { 
+    },
     methods: {
-        jumpCFGList: function () { 
-            this.$router.push({ path: '/ProjectCFGList'} );
+        jumpCFGList: function () {
+            this.$router.push({ path: '/ProjectCFGList' });
         }
     }
 };
