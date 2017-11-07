@@ -11,7 +11,7 @@ module.exports = {
     name: '按钮',
     desc: '按钮类型',
     renderToCanvas: function () {
-        var dom = `<div 
+        var dom = `<foreignObject><div 
             style=' 
             width: 50px;
             height: 50px;
@@ -21,7 +21,7 @@ module.exports = {
             data-cfg_type="${this.type}"
             data-cfg-uuid="J_uuid_${Base.uuid()}">
                 <span class='iconcfgfont icon-cfg-btn2'></span>
-            </div>`;
+            </div></foreignObject>`;
         return dom;
     },
     bindDragEvent: function (uuid) {

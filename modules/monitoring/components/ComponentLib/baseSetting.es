@@ -2,7 +2,7 @@ var Base = require('modules/monitoring/Base.es');
 var interact = require('modules/lib/interact/interact.js');
 var domUtil = require('modules/util/dom/domUtil.es');
 var commonAttrSet = require('modules/monitoring/components/ComponentLib/com/CommonAttr/commonAttrSet.es');
-var api = require('modules/monitoring/dataService/api.es'); 
+var api = require('modules/monitoring/dataService/api.es');
 var store = require('modules/monitoring/dataService/store.es');
 
 var operatorList = {
@@ -108,7 +108,7 @@ module.exports = {
 
                 break;
             case 4:
-            // TODO
+                // TODO
                 setVarFun = function () {
                     window.location.href = attrs['data-cfg_jump_url'];
                 };
@@ -136,17 +136,8 @@ module.exports = {
                 onmove: function (event) {
                     var dx = event.dx;
                     var dy = event.dy;
-
-                    if (window.__select_ele__.length) {
-                        window.__select_ele__.forEach(function (target) {
-                            target = target[0];
-                            moveTarget(target, dx, dy);
-                        }, this);
-                    }
-                    else {
-                        var target = event.target;
-                        moveTarget(target, dx, dy);
-                    }
+                    var target = event.target;
+                    moveTarget(target, dx, dy);
                     // console.log(1);
                 }
             })

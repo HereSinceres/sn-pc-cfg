@@ -61,8 +61,8 @@ module.exports = {
         },
         toggleCanvasSet: function (isShow) {
             var canvasDom = $('.J-wrapper')[0];
-            this.canvas.w = (canvasDom.style.width || canvasDom.clientWidth || 0);
-            this.canvas.h = (canvasDom.style.height || canvasDom.clientHeight || 0);
+            this.canvas.w = $(canvasDom).attr('width') || 0;
+            this.canvas.h = $(canvasDom).attr('height') || 0;
             this.canvas.bg = canvasDom.style.backgroundColor;
             var attrs = domUtil.getAttributes($(canvasDom));
             this.cfg.refreshTimer = attrs['data-cfg_refresh_timer'] || 10;
@@ -73,8 +73,8 @@ module.exports = {
             this.isShowCanvasSetDialog = 0;
             var canvasDom = $('.J-wrapper')[0];
             if (canvasDom) {
-                canvasDom.style.width = this.canvas.w;
-                canvasDom.style.height = this.canvas.h;
+                $(canvasDom).attr('width', this.canvas.w);
+                $(canvasDom).attr('height', this.canvas.h);
                 canvasDom.style.backgroundColor = this.canvas.bg;
             }
 

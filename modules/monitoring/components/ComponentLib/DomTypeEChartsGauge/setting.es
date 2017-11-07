@@ -13,7 +13,7 @@ module.exports = {
     name: '仪表盘',
     desc: '仪表盘',
     renderToCanvas: function () {
-        var dom = `<div style=' 
+        var dom = `  <foreignObject><div style=' 
         width: 300px;
         height: 300px;
                                 text-align: center;
@@ -22,7 +22,7 @@ module.exports = {
             data-cfg_type="${this.type}"
             data-cfg-uuid="J_uuid_${Base.uuid()}">
                仪表盘
-            </div>`;
+            </div>   </foreignObject>`;
         return dom;
     },
     bindDragEvent: function (uuid) {
@@ -40,12 +40,14 @@ module.exports = {
     },
     runChart: function (uuid) {
         var dom = domUtil.getDomByuuid(uuid);
+        if(!dom){
+            return;
+        }
         var attrs = domUtil.getAttributes($(dom));
         var output = store.getValueByVar(attrs['data-cfg_var_binded_ouput'], attrs['data-cfg_fix_num']);
-        if (!window[uuid]) {
-            $(dom).html('');
-            window[uuid] = echarts.init(dom);
-        }
+        $(dom).html('');
+        $(dom).removeAttr('_echarts_instance_');
+        window[uuid] = echarts.init(dom);
         window[uuid].showLoading();
         // 指定图表的配置项和数据
         var option = defaultChartOption;

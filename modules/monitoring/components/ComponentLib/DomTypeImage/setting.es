@@ -12,7 +12,7 @@ module.exports = {
     desc: '图片类型',
     renderToCanvas: function () {
         var img = 'http://via.placeholder.com/200x200';
-        var dom = `<div 
+        var dom = `<foreignObject><div 
             class='u-drag'
             data-cfg_type="${this.type}"
             data-cfg-uuid="J_uuid_${Base.uuid()}" style='
@@ -21,7 +21,7 @@ module.exports = {
             width: 200px;
             height: 200px;
             '> 
-            </div>`;
+            </div></foreignObject>`;
         return dom;
     },
     bindDragEvent: function (uuid) {

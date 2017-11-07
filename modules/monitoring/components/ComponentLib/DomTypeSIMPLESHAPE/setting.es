@@ -9,7 +9,7 @@ module.exports = {
     name: '简单图形',
     desc: '简单图形',
     renderToCanvas: function () {
-        var dom = `<div 
+        var dom = `<foreignObject><div 
                         class='u-drag'
                         data-cfg_type="${this.type}"
                         data-cfg-uuid="J_uuid_${Base.uuid()}"
@@ -19,7 +19,7 @@ module.exports = {
                         border-color: black;
                         border-radius: 50%;
                         border-style: solid;">
-                   </div>`;
+                   </div></foreignObject>`;
         return dom;
     },
     bindDragEvent: function (uuid) {

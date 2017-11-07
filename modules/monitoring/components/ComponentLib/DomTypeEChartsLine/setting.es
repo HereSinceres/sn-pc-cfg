@@ -16,7 +16,7 @@ module.exports = {
     desc: '折线图',
     renderToCanvas: function () {
         var dom =
-            `<div style='
+            `<foreignObject><div style='
             width: 300px;
             height: 300px;
                     text-align: center;
@@ -25,7 +25,7 @@ module.exports = {
             data-cfg_type="${this.type}"
             data-cfg-uuid="J_uuid_${Base.uuid()}">
                 折线图[请绑定变量]
-            </div>`;
+            </div></foreignObject>`;
         return dom;
     },
     bindDragEvent: function (uuid) {
@@ -46,6 +46,9 @@ module.exports = {
 
     runChart: function (uuid) {
         var dom = domUtil.getDomByuuid(uuid);
+        if(!dom){
+            return;
+        }
         var attrs = domUtil.getAttributes($(dom));
         var endTime = new Date().valueOf();
         // console.log(attrs['data-cfg_time_before']);
@@ -60,10 +63,9 @@ module.exports = {
         }
         (function (startTime, endTime, outputvar, uuid, defaultChartOption, dom) {
 
-            if (!window[uuid]) {
-                $(dom).html('');
-                window[uuid] = echarts.init(dom);
-            }
+            $(dom).html('');
+            $(dom).removeAttr('_echarts_instance_');
+            window[uuid] = echarts.init(dom);
             window[uuid].showLoading();
             // 指定图表的配置项和数据 
             var option = defaultChartOption;
@@ -77,7 +79,7 @@ module.exports = {
                 startTime: startTime,
                 endTime: endTime,
                 vEquipmentVariableId: outputvar
-            }).then(function (res) { 
+            }).then(function (res) {
                 try {
                     option.xAxis[0].data = res.Data.vTimes || [];
                     var result = res.Data.vValues || [];
@@ -87,7 +89,7 @@ module.exports = {
                     }
                     else {
                         if (format != -1) {
-                            result=   result.map(function (x) {
+                            result = result.map(function (x) {
                                 return Number(x).toFixed(format);
                             });
                         }

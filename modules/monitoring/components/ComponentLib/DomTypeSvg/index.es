@@ -50,12 +50,7 @@ module.exports = {
             var target = $dom[0];
 
             $dom.html(this.svgPath);
-            var attrs = domUtil.getAttributes($dom);
-            comlib.forEach(function (element) {
-                if (attrs['data-cfg_type'] === element.type) {
-                    element.runSvg(self.uuid);
-                }
-            }, this);
+             
             var array = this.style;
             for (var index = 0; index < array.length; index++) {
                 var element = array[index];

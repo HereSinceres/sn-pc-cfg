@@ -2,14 +2,97 @@ var comlib = require('modules/monitoring/components/ComponentLib/index.es');
 var interact = require('modules/lib/interact/interact.js');
 var Base = require('modules/monitoring/Base.es');
 var store = require('modules/monitoring/dataService/store.es');
-var mulSel = require('modules/monitoring/components/ContentWrapper/mulSel.es');
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 var domUtil = require('modules/util/dom/domUtil.es');
-
 var $container = function () {
     return $('.J-wrapper');
 };
+function bindSvgPoint() {
+    var root = $container()[0];
+    var sns = "http://www.w3.org/2000/svg",
+        xns = "http://www.w3.org/1999/xlink",
+        star = document.getElementById('edit-star'),
+        rootMatrix,
+        originalPoints = [],
+        transformedPoints = [];
+    var allPoints = [];
+    // 删除所有点
+    $(root).find('.point-handle').remove();
+    var starArray = $container().find('[data-cfg-uuid]');
+    console.log(starArray);
+    for (var index = 0; index < starArray.length; index++) { 
+        var star = starArray[index];
+        if (star.points) {
+            for (var ssss = 0; ssss < star.points.numberOfItems; ssss++) {
+                var element = star.points.getItem(ssss);
+                allPoints.push(element)
+            }
+        }
+    }
+    console.log(allPoints);
+    for (var i = 0, len = allPoints.length; i < len; i++) {
+        var handle = document.createElementNS(sns, 'use'),
+            point = allPoints[i],
+            newPoint = root.createSVGPoint();
 
+        handle.setAttributeNS(xns, 'href', '#point-handle');
+        handle.setAttribute('class', 'point-handle');
+
+        handle.x.baseVal.value = newPoint.x = point.x;
+        handle.y.baseVal.value = newPoint.y = point.y;
+
+        handle.setAttribute('data-index', i);
+
+        originalPoints.push(newPoint);
+
+        root.appendChild(handle);
+    }
+
+    function applyTransforms(event) {
+        rootMatrix = root.getScreenCTM();
+
+        transformedPoints = originalPoints.map(function (point) {
+            return point.matrixTransform(rootMatrix);
+        });
+
+        interact('.point-handle').draggable({
+            snap: {
+                targets: transformedPoints,
+                range: 20 * Math.max(rootMatrix.a, rootMatrix.d)
+            }
+        });
+    }
+
+    interact(root)
+        .on('mousedown', applyTransforms)
+        .on('touchstart', applyTransforms);
+
+    interact('.point-handle')
+        .draggable({
+            onstart: function (event) {
+            },
+            onmove: function (event) {
+                var i = event.target.getAttribute('data-index') | 0,
+                    point = allPoints[i];
+
+                point.x += event.dx / rootMatrix.a;
+                point.y += event.dy / rootMatrix.d;
+
+                event.target.x.baseVal.value = point.x;
+                event.target.y.baseVal.value = point.y;
+            },
+            onend: function (event) {
+            },
+            snap: {
+                targets: originalPoints,
+                range: 10,
+                relativePoints: [{ x: 0.5, y: 0.5 }]
+            },
+            restrict: { restriction: document.rootElement }
+        })
+        .styleCursor(false);
+
+}
 function closeMenu() {
     $('.context-menu').removeClass('open');
 }
@@ -30,37 +113,7 @@ module.exports = {
 
         function callBack(html) {
             $container().append(html);
-            var attrs = domUtil.getAttributes($(html));
-            var uuid = attrs['data-cfg-uuid'];
-            comlib.forEach(function (element) {
-                if (attrs['data-cfg_type'] === element.type) {
-                    // 添加弹窗事件
-                    if (element.bindOpenSetEvent) {
-                        element.bindOpenSetEvent(uuid);
-                    }
-                    // 绑定拖拽事件
-                    if (element.bindDragEvent) {
-                        element.bindDragEvent(uuid);
-                    }
-                    // 初始化charts
-                    if (element.runChart) {
-                        element.runChart(uuid);
-                    }
-                    // 初始化svg
-                    if (element.runSvg) {
-                        element.runSvg(uuid);
-                    }
-                    // 初始化monitorCallBack
-                    if (element.monitorCallBack) {
-                        element.monitorCallBack(uuid);
-                    }
-                    // 初始化绑定输出变量
-                    if (element.bindOutputVar) {
-                        element.bindOutputVar(uuid);
-                    }
-                }
-            }, this);
-            self.bindRightClickEvent();
+            self.refresh();
         }
         Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.ADD_NEWUNIT, callBack);
         // 初始化项目
@@ -70,6 +123,10 @@ module.exports = {
 
     },
     methods: {
+        refresh() {
+            $container().html($container().html());
+            this.bindEvent();
+        },
         setHtml: function () {
             console.log(store.currentCfg.html);
             var self = this;
@@ -78,18 +135,14 @@ module.exports = {
                 $container().replaceWith(html);
             }
         },
-        bindEvent: function (uuid) {
+        bindEvent: function () {
             var self = this;
             var array = [];
-            if (uuid) {
-                array = $(self.$el).find('[data-cfg-uuid=' + uuid + ']');
-            } else {
-                array = $(self.$el).find('[data-cfg-uuid]');
-            }
+            array = $container().find('[data-cfg-uuid]');
             for (var index = 0; index < array.length; index++) {
                 var dom = array[index];
                 var attrs = domUtil.getAttributes($(dom));
-                uuid = attrs['data-cfg-uuid'];
+                var uuid = attrs['data-cfg-uuid'];
                 comlib.forEach(function (element) {
                     if (attrs['data-cfg_type'] === element.type) {
 
@@ -103,12 +156,9 @@ module.exports = {
                         }
                         // 初始化charts
                         if (element.runChart) {
+                            console.log('run charts');
                             element.runChart(uuid);
-                        }
-                        // 初始化svg
-                        if (element.runSvg) {
-                            element.runSvg(uuid);
-                        }
+                        } 
                         // 初始化monitorCallBack
                         if (element.monitorCallBack) {
                             element.monitorCallBack(uuid);
@@ -120,11 +170,12 @@ module.exports = {
                     }
                 }, this);
             }
+            bindSvgPoint();
             self.bindRightClickEvent();
         },
         bindRightClickEvent: function () {
             var self = this;
-            $('.u-drag').contextmenu({
+            $('[data-cfg-uuid]').contextmenu({
                 target: '.context-menu',
                 before: function (e) {
                     self.rightClickDom = e.target;
@@ -133,82 +184,42 @@ module.exports = {
                 }
             });
         },
-        tool_del: function () {
-            function removeDom(dom) {
-                $(dom).remove();
-                closeMenu();
-            }
-            if (this.rightClickDom) {
-                if (window.__select_ele__.length > 0) {
-                    window.__select_ele__.forEach(function (element) {
 
-                        removeDom($(element));
-                    }, this);
-                } else {
-                    if ($(this.rightClickDom).hasClass('u-drag')) {
-                        removeDom($(this.rightClickDom));
-                    } else {
-                        removeDom($(this.rightClickDom).closest('.u-drag'));
-                    }
-                }
-            }
-        },
         tool_set: function () {
             // 模拟点击双击，当前功能可不用
             $(this.rightClickDom).click();
             closeMenu();
         },
-        // TODO
-        tool_modifyWidthHeight: function () {
-            function getInnerWidth(element) {
-                var wrapper = document.createElement('span'),
-                    result = {};
-
-                while (element.firstChild) {
-                    wrapper.appendChild(element.firstChild);
-                }
-
-                element.appendChild(wrapper);
-
-                result.width = wrapper.offsetWidth;
-                result.height = wrapper.offsetHeight;
-
-                element.removeChild(wrapper);
-
-                while (wrapper.firstChild) {
-                    element.appendChild(wrapper.firstChild);
-                }
-                return result;
+        tool_del: function () {
+            var self = this;
+            function removeDom(dom) {
+                $(dom).remove();
+                closeMenu();
             }
-            console.log(getInnerWidth(this.rightClickDom));
+            if (this.rightClickDom) {
+                debugger
+                var $forObject = $(this.rightClickDom).closest('foreignObject');
+                if ($forObject.length === 0) {
+                    // 说明是线条
+                    $forObject = $(this.rightClickDom);
+                }
+                removeDom($forObject);
+                self.refresh();
+            }
         },
         tool_copy: function () {
             var self = this;
-
             function copyDom(newDom) {
                 var newUuid = baseSetting.getDomUuid();
                 var $clone = $(newDom).clone(true);
-                $clone[0].setAttribute('data-cfg-uuid', newUuid);
-                $clone.data('cfgUuid', newUuid);
-                // 删除 echarts 属性
-                $clone.removeAttr('_echarts_instance_');
+                $clone.find('[data-cfg-uuid]')[0].setAttribute('data-cfg-uuid', newUuid);
                 $clone.appendTo($container());
-                self.bindEvent(newUuid);
             }
             if (this.rightClickDom) {
-                if (window.__select_ele__.length > 0) {
-                    window.__select_ele__.forEach(function (element) {
-                        copyDom($(element));
-                    }, this);
-                } else {
-                    var newDom = null;
-                    if ($(this.rightClickDom).hasClass('u-drag')) {
-                        newDom = $(this.rightClickDom);
-                    } else {
-                        newDom = $(this.rightClickDom).closest('.u-drag');
-                    }
-                    copyDom(newDom);
-                }
+                // 只有foreignObject 才可以复制
+                var $forObject = $(this.rightClickDom).closest('foreignObject');
+                copyDom($forObject);
+                self.refresh();
             }
         }
     }

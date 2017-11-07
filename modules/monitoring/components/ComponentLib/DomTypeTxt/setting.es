@@ -10,14 +10,14 @@ module.exports = {
     name: '文本',
     desc: '文本类型',
     renderToCanvas: function () {
-        var dom = `<div 
+        var dom = `<foreignObject><div 
         style=' width: 300px;
        height: 20px;
         text-align: center;
         '
             class='u-drag'
             data-cfg_type="${this.type}"
-            data-cfg-uuid="J_uuid_${Base.uuid()}">文本</div>`;
+            data-cfg-uuid="J_uuid_${Base.uuid()}">文本</div></foreignObject>`;
         return dom;
     },
     bindDragEvent: function (uuid) {
