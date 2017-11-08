@@ -20,7 +20,7 @@ function bindSvgPoint() {
     $(root).find('.point-handle').remove();
     var starArray = $container().find('[data-cfg-uuid]');
     console.log(starArray);
-    for (var index = 0; index < starArray.length; index++) { 
+    for (var index = 0; index < starArray.length; index++) {
         var star = starArray[index];
         if (star.points) {
             for (var ssss = 0; ssss < star.points.numberOfItems; ssss++) {
@@ -77,7 +77,8 @@ function bindSvgPoint() {
 
                 point.x += event.dx / rootMatrix.a;
                 point.y += event.dy / rootMatrix.d;
-
+                point.x = Math.ceil(point.x);
+                point.y = Math.ceil(point.y);
                 event.target.x.baseVal.value = point.x;
                 event.target.y.baseVal.value = point.y;
             },
@@ -145,8 +146,7 @@ module.exports = {
                 var uuid = attrs['data-cfg-uuid'];
                 comlib.forEach(function (element) {
                     if (attrs['data-cfg_type'] === element.type) {
-
-                        // 添加弹窗事件
+                        // 添加设置事件
                         if (element.bindOpenSetEvent) {
                             element.bindOpenSetEvent(uuid);
                         }
@@ -158,7 +158,7 @@ module.exports = {
                         if (element.runChart) {
                             console.log('run charts');
                             element.runChart(uuid);
-                        } 
+                        }
                         // 初始化monitorCallBack
                         if (element.monitorCallBack) {
                             element.monitorCallBack(uuid);

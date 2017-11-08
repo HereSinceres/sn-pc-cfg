@@ -15,10 +15,9 @@ var operatorList = {
 };
 
 function moveTarget(target, dx, dy) {
-    var x = (parseFloat(target.getAttribute('data-x')) || 0) + dx;
-    var y = (parseFloat(target.getAttribute('data-y')) || 0) + dy;
-
-    var rotate = domUtil.getRotationDegrees($(target));
+    var x = Math.ceil((parseFloat(target.getAttribute('data-x')) || 0) + dx);
+    var y = Math.ceil((parseFloat(target.getAttribute('data-y')) || 0) + dy);
+    var rotate = Math.ceil(domUtil.getRotationDegrees($(target)));
     // translate the element
     target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
     target.style.webkitTransform = target.style.transform += 'rotate(' + rotate + 'deg)';

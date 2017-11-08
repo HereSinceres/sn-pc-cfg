@@ -17,3 +17,4 @@ fis3 base有如下功能特色。
 
 ## 说明文档
 [INTRO](INTRO.md)
+fis3 release prod-debug -d output
