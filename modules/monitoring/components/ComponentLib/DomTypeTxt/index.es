@@ -72,7 +72,7 @@ module.exports = {
                         attr: 'color',
                         value: ''
                     }, {
-                        name: '修改文本（12如果为dfs空默认为变量值)',
+                        name: '修改文本（为空时默认为变量值)',
                         attr: 'text',
                         value: ''
                     }

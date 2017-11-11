@@ -31,6 +31,13 @@ function getCfgManagementById(params, callback) {
             store.currentCfg.proId
         ).then(function (res) {
             if (!!res.Data && res.Data.length > 0) {
+                res.Data = res.Data.map(function (x) {
+                    x.IsAcVar = x.IsAcquisitionVariable;
+                    x.vName = x.VName;
+                    x.vValue = x.CurrentValue;
+                    x.vid = x.EVaribaleId;
+                    return x;
+                }); 
                 store.variable = res.Data.sort(function (a, b) {
                     return a.vName.localeCompare(b.vName);
                 });

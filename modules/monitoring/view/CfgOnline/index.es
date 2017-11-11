@@ -74,6 +74,13 @@ module.exports = {
             api.getVarValueByProId(
                 store.currentCfg.proId
             ).then(function (res) {
+                res.Data = res.Data.map(function (x) {
+                    x.IsAcVar = x.IsAcquisitionVariable;
+                    x.vName = x.VName;
+                    x.vValue = x.CurrentValue;
+                    x.vid = x.EVaribaleId;
+                    return x;
+                });
                 store.variable = res.Data;
                 Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR);
                 setTimeout(function () {
