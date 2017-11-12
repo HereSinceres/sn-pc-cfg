@@ -34,7 +34,7 @@ function getCfgManagementById(params, callback) {
                 res.Data = res.Data.map(function (x) {
                     x.IsAcVar = x.IsAcquisitionVariable;
                     x.vName = x.VName;
-                    x.vValue = x.CurrentValue;
+                    x.vValue = x.OriginalValue;
                     x.vid = x.EVaribaleId;
                     return x;
                 }); 

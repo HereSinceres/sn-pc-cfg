@@ -35,7 +35,6 @@ module.exports = {
     template: __inline('./index.vue.tpl'),
     mounted: function () {
         var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
-        debugger
         this.svgPath = $dom.html();
         var target = $dom[0];
         var array = this.style;
@@ -51,7 +50,7 @@ module.exports = {
             var target = $dom[0];
 
             $dom.html(this.svgPath);
-             
+
             var array = this.style;
             for (var index = 0; index < array.length; index++) {
                 var element = array[index];

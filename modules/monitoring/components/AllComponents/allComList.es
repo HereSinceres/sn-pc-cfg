@@ -76,9 +76,11 @@ var array = [
         groupName: groups.shape,
         renderToCanvas: function () {
             var dom = `  
-                    <polyline data-cfg_type="${this.type}"
-                    data-cfg-uuid="J_uuid_${Base.uuid()}"  id="can-drag-line" points="10,120 60,10 "
-                    style="stroke:#29e;stroke-width:2;fill:none;"/> `;
+            <g data-cfg_type="${this.type}"
+            data-cfg-uuid="J_uuid_${Base.uuid()}" style="stroke:#29e;stroke-width:10px;fill:none;">
+                 <polyline  id="can-drag-line" points= "10,120  180,10"
+              />
+            </g> `;
             return dom;
         }
     },
@@ -89,9 +91,11 @@ var array = [
         groupName: groups.shape,
         renderToCanvas: function () {
             var dom = `
-                <polyline data-cfg_type="${this.type}"
-                data-cfg-uuid="J_uuid_${Base.uuid()}"  id= "can-drag-line" points= "10,120 60,10 180,10"
-            style = "stroke:#29e;stroke-width:2;fill:none;" />` ;
+            <g data-cfg_type="${this.type}"
+            data-cfg-uuid="J_uuid_${Base.uuid()}" style="stroke:#29e;stroke-width:10px;fill:none;">
+                  <polyline  id="can-drag-line" points= "10,120 60,10 180,10"
+              />
+            </g> `;
             return dom;
         }
     }

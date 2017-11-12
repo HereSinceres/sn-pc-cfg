@@ -4,96 +4,11 @@ var Base = require('modules/monitoring/Base.es');
 var store = require('modules/monitoring/dataService/store.es');
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 var domUtil = require('modules/util/dom/domUtil.es');
+var domUtil = require('modules/util/dom/domUtil.es');
 var $container = function () {
     return $('.J-wrapper');
 };
-function bindSvgPoint() {
-    var root = $container()[0];
-    var sns = "http://www.w3.org/2000/svg",
-        xns = "http://www.w3.org/1999/xlink",
-        star = document.getElementById('edit-star'),
-        rootMatrix,
-        originalPoints = [],
-        transformedPoints = [];
-    var allPoints = [];
-    // 删除所有点
-    $(root).find('.point-handle').remove();
-    var starArray = $container().find('[data-cfg-uuid]');
-    console.log(starArray);
-    for (var index = 0; index < starArray.length; index++) {
-        var star = starArray[index];
-        if (star.points) {
-            for (var ssss = 0; ssss < star.points.numberOfItems; ssss++) {
-                var element = star.points.getItem(ssss);
-                allPoints.push(element)
-            }
-        }
-    }
-    console.log(allPoints);
-    for (var i = 0, len = allPoints.length; i < len; i++) {
-        var handle = document.createElementNS(sns, 'use'),
-            point = allPoints[i],
-            newPoint = root.createSVGPoint();
 
-        handle.setAttributeNS(xns, 'href', '#point-handle');
-        handle.setAttribute('class', 'point-handle');
-
-        handle.x.baseVal.value = newPoint.x = point.x;
-        handle.y.baseVal.value = newPoint.y = point.y;
-
-        handle.setAttribute('data-index', i);
-
-        originalPoints.push(newPoint);
-
-        root.appendChild(handle);
-    }
-
-    function applyTransforms(event) {
-        rootMatrix = root.getScreenCTM();
-
-        transformedPoints = originalPoints.map(function (point) {
-            return point.matrixTransform(rootMatrix);
-        });
-
-        interact('.point-handle').draggable({
-            snap: {
-                targets: transformedPoints,
-                range: 20 * Math.max(rootMatrix.a, rootMatrix.d)
-            }
-        });
-    }
-
-    interact(root)
-        .on('mousedown', applyTransforms)
-        .on('touchstart', applyTransforms);
-
-    interact('.point-handle')
-        .draggable({
-            onstart: function (event) {
-            },
-            onmove: function (event) {
-                var i = event.target.getAttribute('data-index') | 0,
-                    point = allPoints[i];
-
-                point.x += event.dx / rootMatrix.a;
-                point.y += event.dy / rootMatrix.d;
-                point.x = Math.ceil(point.x);
-                point.y = Math.ceil(point.y);
-                event.target.x.baseVal.value = point.x;
-                event.target.y.baseVal.value = point.y;
-            },
-            onend: function (event) {
-            },
-            snap: {
-                targets: originalPoints,
-                range: 10,
-                relativePoints: [{ x: 0.5, y: 0.5 }]
-            },
-            restrict: { restriction: document.rootElement }
-        })
-        .styleCursor(false);
-
-}
 function closeMenu() {
     $('.context-menu').removeClass('open');
 }
@@ -140,6 +55,7 @@ module.exports = {
             var self = this;
             var array = [];
             array = $container().find('[data-cfg-uuid]');
+            console.log(array);
             for (var index = 0; index < array.length; index++) {
                 var dom = array[index];
                 var attrs = domUtil.getAttributes($(dom));
@@ -159,6 +75,7 @@ module.exports = {
                             console.log('run charts');
                             element.runChart(uuid);
                         }
+
                         // 初始化monitorCallBack
                         if (element.monitorCallBack) {
                             element.monitorCallBack(uuid);
@@ -170,7 +87,6 @@ module.exports = {
                     }
                 }, this);
             }
-            bindSvgPoint();
             self.bindRightClickEvent();
         },
         bindRightClickEvent: function () {
@@ -197,11 +113,10 @@ module.exports = {
                 closeMenu();
             }
             if (this.rightClickDom) {
-                debugger
                 var $forObject = $(this.rightClickDom).closest('foreignObject');
                 if ($forObject.length === 0) {
                     // 说明是线条
-                    $forObject = $(this.rightClickDom);
+                    var $forObject = $(this.rightClickDom).closest('g');
                 }
                 removeDom($forObject);
                 self.refresh();
@@ -212,13 +127,37 @@ module.exports = {
             function copyDom(newDom) {
                 var newUuid = baseSetting.getDomUuid();
                 var $clone = $(newDom).clone(true);
-                $clone.find('[data-cfg-uuid]')[0].setAttribute('data-cfg-uuid', newUuid);
+                var trueDom = $clone.find('[data-cfg-uuid]')[0];
+                trueDom.setAttribute('data-cfg-uuid', newUuid);
                 $clone.appendTo($container());
+                var arrayXY = baseSetting.getComputedTranslateXY(trueDom);
+                baseSetting.moveTarget(trueDom,
+                    0,
+                    10 + $(trueDom).height());
+            }
+            function copySvg(newDom) {
+                var newUuid = baseSetting.getDomUuid();
+                var $clone = $(newDom).clone(true);
+                var trueDom = $clone[0];
+                trueDom.setAttribute('data-cfg-uuid', newUuid);
+                $clone.appendTo($container());
+                var arrayXY = baseSetting.getComputedTranslateXY(trueDom);
+                baseSetting.moveTarget(trueDom,
+                    0,
+                    10 + $(trueDom).height());
             }
             if (this.rightClickDom) {
                 // 只有foreignObject 才可以复制
                 var $forObject = $(this.rightClickDom).closest('foreignObject');
-                copyDom($forObject);
+                if ($forObject.length > 0) {
+
+                    copyDom($forObject);
+                }
+                var $forObject = $(this.rightClickDom).closest('g');
+                if ($forObject.length > 0) {
+                    // 说明是线条
+                    copySvg($forObject);
+                }
                 self.refresh();
             }
         }

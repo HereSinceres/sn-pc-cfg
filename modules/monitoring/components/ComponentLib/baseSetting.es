@@ -30,6 +30,19 @@ function moveTarget(target, dx, dy) {
     Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [uuid]);
 }
 module.exports = {
+    getComputedTranslateXY: function (obj) {
+        const transArr = [];
+        if (!window.getComputedStyle) return;
+        const style = getComputedStyle(obj),
+            transform = style.transform || style.webkitTransform || style.mozTransform;
+        let mat = transform.match(/^matrix3d\((.+)\)$/);
+        if (mat) return parseFloat(mat[1].split(', ')[13]);
+        mat = transform.match(/^matrix\((.+)\)$/);
+        mat ? transArr.push(parseFloat(mat[1].split(', ')[4])) : 0;
+        mat ? transArr.push(parseFloat(mat[1].split(', ')[5])) : 0;
+        return transArr;
+    },
+    moveTarget: moveTarget,
     getDomUuid: function () {
         return 'J_uuid_' + Base.uuid() + '';
     },
@@ -54,6 +67,9 @@ module.exports = {
         var attrs = domUtil.getAttributes($(dom));
         // // console.log('直接设置变量');
         var setVarFun = function () { };
+        debugger
+        // J_uuid_7729A088_F46D_42C4_9950_88EBC6D0D95D
+console.log(uuid);
         switch (parseInt(attrs['data-cfg_attr_input'], 10)) {
             case 1:
                 // // console.log('什么都不做');
