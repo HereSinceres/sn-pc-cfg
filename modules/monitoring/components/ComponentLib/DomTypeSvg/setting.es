@@ -147,5 +147,33 @@ module.exports = {
             // SHOW_UNIT_CONFIG
             Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.SHOW_UNIT_CONFIG, [uuid]);
         });
+    },
+    bindOutputVar: function (uuid) {
+        debugger;
+        console.log(1111);
+        var dom = domUtil.getDomByuuid(uuid);
+        function setCallback(dom, callback) {
+            debugger
+            var object = {};
+            // 行转列
+            callback.forEach(function (element) {
+                object[element.attr] = element.value;
+            }, this);
+            for (var key in object) {
+                if (object.hasOwnProperty(key)) {
+                    var element = object[key];
+                    // 可过滤数据
+
+                    if (element) {
+                        dom.style[key] = element;
+                    }
+                }
+
+            }
+        }
+        Base.eventEmitter.addListener(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR, function () {
+
+            baseSetting.switchOperator(uuid, setCallback);
+        });
     }
 };

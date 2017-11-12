@@ -67,9 +67,6 @@ module.exports = {
         var attrs = domUtil.getAttributes($(dom));
         // // console.log('直接设置变量');
         var setVarFun = function () { };
-        debugger
-        // J_uuid_7729A088_F46D_42C4_9950_88EBC6D0D95D
-console.log(uuid);
         switch (parseInt(attrs['data-cfg_attr_input'], 10)) {
             case 1:
                 // // console.log('什么都不做');
