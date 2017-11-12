@@ -34,7 +34,12 @@ module.exports = {
                     name: '宽度',
                     attr: 'strokeWidth',
                     value: ''
-                }]
+                }, {
+                    name: '虚线',
+                    attr: 'strokeDasharray',
+                    value: ''
+                }
+            ]
         };
     },
     watch: {

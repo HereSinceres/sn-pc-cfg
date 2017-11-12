@@ -18,7 +18,7 @@
                     <button type="button" class="close" v-on:click="togglePath(0)">
                         <span>×</span>
                     </button>
-                    <h4 class="modal-title">配置 fill:none;stroke:#29e;stroke-width:2 </h4>
+                    <h4 class="modal-title">私有属性 </h4>
                 </div>
 
                 <div class="modal-body form-horizontal">
@@ -28,6 +28,8 @@
                             <ms-input-color-pick v-if="cal.attr=='stroke'" v-model="cal.value" :placeholder="cal.name">
                             </ms-input-color-pick>
                             <ms-input-font-size v-else-if="cal.attr=='strokeWidth'" v-model="cal.value" :placeholder="cal.name">
+                            </ms-input-font-size>
+                            <ms-input-font-size v-else-if="cal.attr=='strokeDasharray'" v-model="cal.value" :placeholder="cal.name">
                             </ms-input-font-size>
                             <input v-else type="text" class="form-control" v-model="cal.value" :placeholder="cal.name">
                         </div>
@@ -102,6 +104,7 @@
                                         <div class="col-sm-12">
                                             <ms-input-color-pick v-if="cal.attr=='stroke'" v-model="cal.value" :placeholder="cal.name">
                                             </ms-input-color-pick>
+
                                             <ms-input-font-size v-else-if="cal.attr=='fontSize'" v-model="cal.value" :placeholder="cal.name">
                                             </ms-input-font-size>
                                             <input v-else type="text" class="form-control" v-model="cal.value" :placeholder="cal.name">
