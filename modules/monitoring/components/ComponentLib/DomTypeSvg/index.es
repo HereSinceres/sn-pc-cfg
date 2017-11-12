@@ -16,7 +16,7 @@ module.exports = {
     },
     data: function () {
         return {
-         
+
             // 绑定的变量  
             variable: store.variable,
             cfg_var_binded_ouput: null,
@@ -39,7 +39,9 @@ module.exports = {
                     attr: 'strokeDasharray',
                     value: ''
                 }
-            ]
+            ],
+            classNameList: ['', 'flow'],
+            className: ''
         };
     },
     watch: {
@@ -56,6 +58,7 @@ module.exports = {
             var element = array[index];
             element.value = target.style[element.attr];
         }
+        this.className = $dom.attr('class');
         try {
             this.cfg_var_binded_ouput_deal = JSON.parse($dom.attr('data-cfg_var_binded_ouput_deal') || '[]');
         } catch (error) {
@@ -66,6 +69,7 @@ module.exports = {
         ok: function () {
             var self = this;
             var $dom = $($('[data-cfg-uuid=' + this.uuid + ']')[0]);
+            $dom.attr('class', this.className);
             var target = $dom[0];
 
             $dom.attr('data-cfg_var_binded_ouput', this.cfg_var_binded_ouput);
@@ -96,7 +100,7 @@ module.exports = {
                         name: '线条',
                         attr: 'stroke',
                         value: ''
-                    } 
+                    }
                 ]
             });
         },

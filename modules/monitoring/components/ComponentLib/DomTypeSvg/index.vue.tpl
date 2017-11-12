@@ -35,6 +35,17 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-2 control-label">动画</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" v-model="className">
+                                <option v-for="item in classNameList" v-bind:value="item">
+                                    {{ item }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label class="col-sm-2 control-label">路径</label>
                         <div class="col-sm-10">
                             <textarea class="form-control" v-model="svgPath" style="resize: none;height: 220px;"> 
