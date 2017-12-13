@@ -36,7 +36,12 @@ module.exports = {
             proList: [],
             cfgList: [],
             activeProId: null,
-            activeCfgId: null
+            activeCfgId: null,
+            isShowCopyDialog: false,
+            copyProId: null,
+            copyCfgList: [],
+            copyToCfg: null,
+            copyCfg: null
         };
     },
     computed: {
@@ -60,8 +65,13 @@ module.exports = {
     },
     template: __inline('./index.vue.tpl'),
     mounted: function () {
-        this.cfgList = store.cfgList;
-        this.proList = store.proList;
+        this.cfgList = store.cfgList.filter(function (ele) {
+            console.log(2222, ele);
+            return true;
+        });
+        this.proList = store.proList.filter(function (ele) {
+            return ele.PName;
+        });
         this.getCfgList();
     },
     methods: {
@@ -128,6 +138,30 @@ module.exports = {
             api.SetTopCfgManagementById(item.id).then(function () {
                 self.getCfgList();
             })
+        },
+        copy: function (item) {
+            this.copyToCfg = item;
+            this.isShowCopyDialog = true;
+        },
+        copyOk: function () {
+            var self = this;
+            this.copyToCfg.html = this.copyCfg.html;
+            api.UpdateCfgManagement(this.copyToCfg).then(function () {
+                $.notify({
+                    message: '复制成功'
+                });
+                self.isShowCopyDialog = false;
+            });
+        },
+        selectCopyProId: function () {
+            var self = this;
+            api.getCFGListByProId(this.copyProId).then(function (res) {
+                self.copyCfgList = res.Data.slice();
+                self.copyCfg = self.copyCfgList[0];
+                $.notify({
+                    message: '请选择组态配置'
+                });
+            }, function (error) { });
         }
     }
 };

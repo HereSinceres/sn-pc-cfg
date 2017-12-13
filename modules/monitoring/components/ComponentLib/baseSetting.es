@@ -67,6 +67,8 @@ module.exports = {
         var attrs = domUtil.getAttributes($(dom));
         // // console.log('直接设置变量');
         var setVarFun = function () { };
+        debugger
+
         switch (parseInt(attrs['data-cfg_attr_input'], 10)) {
             case 1:
                 // // console.log('什么都不做');
@@ -74,7 +76,9 @@ module.exports = {
             case 2:
                 setVarFun = function () {
                     // + '[' + attrs['data-cfg_var_binded_input'] + ']'
-                    bootbox.prompt(attrs['data-cfg_var_binded_input_tip'], function (result) {
+                    console.log(attrs['data-cfg_var_binded_input']);
+                    var defaultValue = '请输入' + attrs['data-cfg_var_binded_input'];
+                    bootbox.prompt(attrs['data-cfg_var_binded_input_tip'] || defaultValue, function (result) {
                         if (result !== null) {
                             setValByValId(attrs['data-cfg_var_binded_input'], result);
                         }
@@ -103,9 +107,9 @@ module.exports = {
                     case 3:
                         setVarFun = function () {
                             var newVar = store.variable;
-                            var result = ((!!newVar[attrs['data-cfg_var_binded_input']]) ? 0 : 1);
+                            var result = ((!!parseInt(newVar[attrs['data-cfg_var_binded_input']])) ? 0 : 1);
 
-                            setValByValId(attrs['data-cfg_var_binded_input'], 0);
+                            setValByValId(attrs['data-cfg_var_binded_input'], result);
                         };
                         break;
                     case 4:
