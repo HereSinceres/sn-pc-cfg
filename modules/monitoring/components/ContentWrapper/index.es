@@ -26,6 +26,7 @@ module.exports = {
     },
     template: __inline('./index.vue.tpl'),
     mounted: function () {
+
         var self = this;
 
         function callBack(html) {
@@ -37,12 +38,18 @@ module.exports = {
         self.setHtml();
         self.bindEvent();
         Base.eventEmitter.emitEvent(Base.CONST_EVENT_NAME.TRIGGER_REFRESH_MONITOR);
-
+        $('.g-mn5c').scroll(function () { 
+            window.__select_ele__ = [];
+            $('.select-helper').remove();
+        })
     },
+   
     methods: {
         refresh() {
             $container().html($container().html());
             this.bindEvent();
+
+
         },
         setHtml: function () {
             var self = this;
@@ -108,7 +115,6 @@ module.exports = {
         tool_del: function () {
             var self = this;
             function removeDom(dom) {
-                console.log(dom);
                 $(dom).remove();
                 closeMenu();
             }
@@ -127,7 +133,6 @@ module.exports = {
                 for (var index = 0; index < selectItms.length; index++) {
                     var element = selectItms[index];
                     if (element) {
-                        console.log(element);
                         del(element);
                     }
                 }

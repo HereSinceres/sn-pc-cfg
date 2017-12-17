@@ -120,6 +120,7 @@ $(document).on('mousedown', function (event) {
 
     function mouseup() {
       window.__select_ele__ = $('.' + selectedClass);
+      helper.remove();
       event.preventDefault();
       $document.off('mousemove', mousemove);
       $document.off('mouseup', mouseup);
@@ -137,4 +138,4 @@ $(document).dblclick(function () {
 
 $(document).scroll(function () {
   clearMulSelect();
-}) 
+})

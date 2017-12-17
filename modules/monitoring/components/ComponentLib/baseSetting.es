@@ -42,7 +42,6 @@ module.exports = {
         mat ? transArr.push(parseFloat(mat[1].split(', ')[5])) : 0;
         return transArr;
     },
-    moveTarget: moveTarget,
     getDomUuid: function () {
         return 'J_uuid_' + Base.uuid() + '';
     },
@@ -67,7 +66,7 @@ module.exports = {
         var attrs = domUtil.getAttributes($(dom));
         // // console.log('直接设置变量');
         var setVarFun = function () { };
-         
+
 
         switch (parseInt(attrs['data-cfg_attr_input'], 10)) {
             case 1:
@@ -153,8 +152,15 @@ module.exports = {
                     var dx = event.dx;
                     var dy = event.dy;
                     var target = event.target;
-                    moveTarget(target, dx, dy);
                     // console.log(1);
+                    var selectItms = window.__select_ele__.slice();
+                    if (selectItms.length) {
+                        for (var index = 0; index < selectItms.length; index++) {
+                            var target = selectItms[index]; 
+                            moveTarget(target, dx, dy);
+                        };
+
+                    }
                 }
             })
             .resizable({
