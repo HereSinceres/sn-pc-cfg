@@ -15,6 +15,7 @@ module.exports = {
     components: {},
     data: function () {
         return {
+            isMulSelection:false,
             isShowCanvasSetDialog: false,
             isShowVariableSetDialog: false,
             canvas: {
@@ -27,6 +28,7 @@ module.exports = {
             },
             variable: store.variable,
             isDebuggerFireToOnline: 0,
+            isMulSelection:0,
             currentScale: 1
         };
     },
@@ -108,6 +110,11 @@ module.exports = {
         toggleControlInEffect: function () {
             this.isDebuggerFireToOnline = !this.isDebuggerFireToOnline;
             window.__isDebuggerFireToOnline__ = this.isDebuggerFireToOnline;
-        }
+        },
+        toggleMulSelection: function () {
+            this.isMulSelection = !this.isMulSelection;
+            window.__isMulSelection__ = this.isMulSelection;
+        },
+
     }
 };
