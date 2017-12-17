@@ -156,10 +156,11 @@ module.exports = {
                     var selectItms = window.__select_ele__.slice();
                     if (selectItms.length) {
                         for (var index = 0; index < selectItms.length; index++) {
-                            var target = selectItms[index]; 
+                            var target = selectItms[index];
                             moveTarget(target, dx, dy);
                         };
-
+                    } else {
+                        moveTarget(target, dx, dy);
                     }
                 }
             })

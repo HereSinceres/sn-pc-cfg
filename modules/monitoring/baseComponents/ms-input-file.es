@@ -1,7 +1,7 @@
 
 var api = require('modules/monitoring/dataService/api.es');
 var store = require('modules/monitoring/dataService/store.es');
-var imgListJson = require('modules/monitoring/baseComponents/imgListJson.es');
+var imgListJson = require('modules/monitoring/baseComponents/imgListJson.json');
 
 
 module.exports = {

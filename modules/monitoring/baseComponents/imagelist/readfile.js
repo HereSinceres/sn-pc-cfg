@@ -2,7 +2,7 @@
 var fs = require('fs'),
 util = require('util'),
 path = process.cwd('./');
-
+console.log('is runing');
 function explorer(path){
 
 fs.readdir(path, function(err, files){
