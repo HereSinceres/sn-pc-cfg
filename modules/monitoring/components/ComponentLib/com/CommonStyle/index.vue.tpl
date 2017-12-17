@@ -90,9 +90,10 @@
                 </div>
                 <div class="modal-body form-horizontal">
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">小数位[-1 代表不格式化]</label>
-                        <div class="col-sm-8">
+                        <label class="col-sm-2 control-label">格式化</label>
+                        <div class="col-sm-10">
                             <input type="number" min="-1" max="5" class="form-control" v-model='cfg_fix_num'>
+                            <p>小数位[-1 代表不格式化]</p>
                         </div>
                     </div>
                 </div>

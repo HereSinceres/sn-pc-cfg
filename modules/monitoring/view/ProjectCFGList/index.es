@@ -66,7 +66,6 @@ module.exports = {
     template: __inline('./index.vue.tpl'),
     mounted: function () {
         this.cfgList = store.cfgList.filter(function (ele) {
-            console.log(2222, ele);
             return true;
         });
         this.proList = store.proList.filter(function (ele) {
@@ -75,13 +74,19 @@ module.exports = {
         this.getCfgList();
     },
     methods: {
-
         getCfgList: function () {
             this.activeProId = this.$route.query.proId;
             var self = this;
-            getCFGListByProId(this.activeProId, function () {
-                self.cfgList = store.cfgList;
-            });
+            if (this.activeProId) {
+                getCFGListByProId(this.activeProId, function () {
+                    self.cfgList = store.cfgList;
+                });
+            } else {
+                api.getProList().then(function (res) {
+                    store.proList = res.rows;
+                    self.$router.push({ path: '/ProjectCFGList', query: { proId: store.proList[0].ProjectId } });
+                });
+            }
         },
         jumpToProId: function (item) {
             this.$router.push({ path: '/ProjectCFGList', query: { proId: item.ProjectId } });

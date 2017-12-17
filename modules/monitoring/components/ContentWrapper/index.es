@@ -43,8 +43,7 @@ module.exports = {
             $container().html($container().html());
             this.bindEvent();
         },
-        setHtml: function () {
-            console.log(store.currentCfg.html);
+        setHtml: function () { 
             var self = this;
             if (store.currentCfg.html) {
                 var html = decodeURI(store.currentCfg.html);
@@ -54,8 +53,7 @@ module.exports = {
         bindEvent: function () {
             var self = this;
             var array = [];
-            array = $container().find('[data-cfg-uuid]');
-            console.log(array);
+            array = $container().find('[data-cfg-uuid]'); 
             for (var index = 0; index < array.length; index++) {
                 var dom = array[index];
                 var attrs = domUtil.getAttributes($(dom));
@@ -71,8 +69,7 @@ module.exports = {
                             element.bindDragEvent(uuid);
                         }
                         // 初始化charts
-                        if (element.runChart) {
-                            console.log('run charts');
+                        if (element.runChart) { 
                             element.runChart(uuid);
                         }
 

@@ -34,7 +34,7 @@ function bindSvgPoint(uuid) {
             return el;
         }
         var circle = makeSVG('circle', {
-            cx: point.x, cy: point.y, r: 2,
+            cx: point.x, cy: point.y, r: 10,
             stroke: '#8a2da5', 'stroke-width': 2, fill: '#8a2da5',
             'class': 'point-handle',
             'data-index': i
@@ -149,11 +149,9 @@ module.exports = {
         });
     },
     bindOutputVar: function (uuid) {
-        debugger;
-        console.log(1111);
         var dom = domUtil.getDomByuuid(uuid);
         function setCallback(dom, callback) {
-            debugger
+             
             var object = {};
             // 行转列
             callback.forEach(function (element) {

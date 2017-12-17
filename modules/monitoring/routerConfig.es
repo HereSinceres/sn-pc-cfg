@@ -9,18 +9,6 @@ function getCFGListByProId(proId, callback) {
         store.cfgList = res.Data;
         if (store.cfgList.length > 0) {
             callback();
-        } else {
-            var data = {
-                id: '',
-                proId: proId,
-                cfgName: '默认配置',
-                html: '',
-                tag: 0
-            };
-            // 创建一个默认组态界面
-            api.AddCfgManagement(data).then(function () {
-                getCFGListByProId(proId, callback);
-            })
         }
     }, function (error) { });
 }
@@ -37,7 +25,7 @@ function getCfgManagementById(params, callback) {
                     x.vValue = x.OriginalValue;
                     x.vid = x.EVaribaleId;
                     return x;
-                }); 
+                });
                 store.variable = res.Data.sort(function (a, b) {
                     return a.vName.localeCompare(b.vName);
                 });
@@ -55,6 +43,9 @@ function getCfgManagementById(params, callback) {
     })
 }
 var routes = [{
+    path: "*",
+    redirect: "/"
+}, {
     path: '/',
     beforeEnter: (to, from, next) => {
         next('/ProjectCFGList');
@@ -64,25 +55,20 @@ var routes = [{
     path: '/ProjectCFGList',
     component: ProjectCFGList,
     beforeEnter: (to, from, next) => {
+        api.getProList().then(function (res) {
+            store.proList = res.rows;
+            if (to.query.proId) {
+                next();
+                return;
+            }
+            jump(store.proList[0].ProjectId);
+        });
         function jump(proId) {
             if (proId) {
                 next({ path: '/ProjectCFGList', query: { proId: proId } });
             }
-            next();
         }
-        if (store.proList.length > 0) {
-            if (to.query.proId) {
-                jump();
-            }
-            else {
-                jump(store.proList[0].ProjectId);
-            }
-        } else {
-            api.getProList().then(function (res) {
-                store.proList = res.rows;
-                jump(store.proList[0].ProjectId);
-            });
-        }
+
     }
 },
 {
@@ -110,15 +96,18 @@ var routes = [{
     path: '/cfgOnlineByProId/:proId',
     component: CfgOnline,
     beforeEnter: (to, from, next) => {
-        // /cfgOnlineByProId/c4c68125-d970-4909-a87a-58af26b73352
         getCFGListByProId(to.params.proId, function () {
             var home = store.cfgList[0];
-            store.cfgList.forEach(function (element) {
-                if (element.tag == 1) {
-                    home = element;
-                }
-            }, this);
-            next({ name: 'CfgOnline', params: { cfgId: home.id } });
+            if (home) {
+                store.cfgList.forEach(function (element) {
+                    if (element.tag == 1) {
+                        home = element;
+                    }
+                }, this);
+                next({ name: 'CfgOnline', params: { cfgId: home.id } });
+            } else {
+                next({ name: 'ProjectCFGList' })
+            }
         })
     }
 }

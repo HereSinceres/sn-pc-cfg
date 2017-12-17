@@ -67,7 +67,7 @@ module.exports = {
         var attrs = domUtil.getAttributes($(dom));
         // // console.log('直接设置变量');
         var setVarFun = function () { };
-        debugger
+         
 
         switch (parseInt(attrs['data-cfg_attr_input'], 10)) {
             case 1:

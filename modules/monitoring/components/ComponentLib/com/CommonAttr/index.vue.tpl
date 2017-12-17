@@ -78,6 +78,12 @@
                                 <input type="text" v-model='cfg_jump_url' class="form-control">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">现有组态</label>
+                            <div class="col-sm-10">
+                                <input type="text" v-model='cfg_jump_url' class="form-control">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

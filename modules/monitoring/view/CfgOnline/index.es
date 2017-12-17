@@ -13,14 +13,13 @@ module.exports = {
         return {};
     },
     watch: {
-
+        // 如果路由有变化，会再次执行该方法
+        '$route': 'init'
     },
     template: __inline('./index.vue.tpl'),
     mounted: function () {
         var self = this;
-        // 初始化项目
-        self.setHtml();
-        self.bindEvent();
+        this.init();
         $(window).resize(function () {
             // console.log("不建议调整窗口大小!");
             var width = $container().width();
@@ -36,6 +35,12 @@ module.exports = {
         });
     },
     methods: {
+        init: function () {
+            var self = this;
+            // 初始化项目
+            self.setHtml();
+            self.bindEvent();
+        },
         setHtml: function () {
             var self = this;
             if (store.currentCfg.html) {
@@ -46,7 +51,6 @@ module.exports = {
             // 删除无用样式
             $container().find('.point-handle').remove();
         },
-
         bindEvent: function () {
             var self = this;
             $(document).find('[data-cfg-uuid]').each(function () {
