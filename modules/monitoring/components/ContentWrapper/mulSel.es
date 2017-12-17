@@ -3,6 +3,7 @@ var $container = $('body');
 var selectedClass = 'J-selected';
 window.__select_ele__ = [];
 
+var helper = $('<div></div>').addClass('select-helper');
 function getSelectableElements(element) {
   var out = [];
   var childs = element.children();
@@ -26,8 +27,10 @@ $(document).on('mousedown', function (event) {
   if (event.which == 1) {
     var startX = event.pageX;
     var startY = event.pageY;
-    var helper = $('<div></div>').addClass('select-helper');
+
+    helper.remove();
     $document.find('body').append(helper);
+
     $document.on('mousemove', mousemove);
     $document.on('mouseup', mouseup);
 
@@ -116,10 +119,22 @@ $(document).on('mousedown', function (event) {
     }
 
     function mouseup() {
+      window.__select_ele__ = $('.' + selectedClass);
       event.preventDefault();
-      helper.remove();
       $document.off('mousemove', mousemove);
       $document.off('mouseup', mouseup);
+
     }
   }
 })
+function clearMulSelect() {
+  window.__select_ele__ = [];
+  helper.remove();
+}
+$(document).dblclick(function () {
+  clearMulSelect();
+});
+
+$(document).scroll(function () {
+  clearMulSelect();
+}) 

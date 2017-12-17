@@ -4,7 +4,8 @@ var Base = require('modules/monitoring/Base.es');
 var store = require('modules/monitoring/dataService/store.es');
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 var domUtil = require('modules/util/dom/domUtil.es');
-var domUtil = require('modules/util/dom/domUtil.es');
+var mulSel = require('modules/monitoring/components/ContentWrapper/mulSel.es');
+
 var $container = function () {
     return $('.J-wrapper');
 };
@@ -43,7 +44,7 @@ module.exports = {
             $container().html($container().html());
             this.bindEvent();
         },
-        setHtml: function () { 
+        setHtml: function () {
             var self = this;
             if (store.currentCfg.html) {
                 var html = decodeURI(store.currentCfg.html);
@@ -53,7 +54,7 @@ module.exports = {
         bindEvent: function () {
             var self = this;
             var array = [];
-            array = $container().find('[data-cfg-uuid]'); 
+            array = $container().find('[data-cfg-uuid]');
             for (var index = 0; index < array.length; index++) {
                 var dom = array[index];
                 var attrs = domUtil.getAttributes($(dom));
@@ -69,7 +70,7 @@ module.exports = {
                             element.bindDragEvent(uuid);
                         }
                         // 初始化charts
-                        if (element.runChart) { 
+                        if (element.runChart) {
                             element.runChart(uuid);
                         }
 
@@ -92,6 +93,7 @@ module.exports = {
                 target: '.context-menu',
                 before: function (e) {
                     self.rightClickDom = e.target;
+
                     e.preventDefault();
                     return true;
                 }
@@ -106,21 +108,38 @@ module.exports = {
         tool_del: function () {
             var self = this;
             function removeDom(dom) {
+                console.log(dom);
                 $(dom).remove();
                 closeMenu();
             }
-            if (this.rightClickDom) {
-                var $forObject = $(this.rightClickDom).closest('foreignObject');
-                if ($forObject.length === 0) {
-                    // 说明是线条
-                    var $forObject = $(this.rightClickDom).closest('g');
+            function del(dom) {
+                if (dom) {
+                    var $forObject = $(dom).closest('foreignObject') || $(dom);
+                    if ($forObject.length === 0) {
+                        // 说明是线条
+                        var $forObject = $(dom).closest('g');
+                    }
+                    removeDom($forObject);
                 }
-                removeDom($forObject);
-                self.refresh();
             }
+            var selectItms = window.__select_ele__.slice();
+            if (selectItms.length) {
+                for (var index = 0; index < selectItms.length; index++) {
+                    var element = selectItms[index];
+                    if (element) {
+                        console.log(element);
+                        del(element);
+                    }
+                }
+            } else {
+                del(this.rightClickDom);
+            }
+            self.refresh();
         },
         tool_copy: function () {
             var self = this;
+
+            var maxWidth = 10;
             function copyDom(newDom) {
                 var newUuid = baseSetting.getDomUuid();
                 var $clone = $(newDom).clone(true);
@@ -129,8 +148,8 @@ module.exports = {
                 $clone.appendTo($container());
                 var arrayXY = baseSetting.getComputedTranslateXY(trueDom);
                 baseSetting.moveTarget(trueDom,
-                    0,
-                    10 + $(trueDom).height());
+                    maxWidth + 10,
+                    0);
             }
             function copySvg(newDom) {
                 var newUuid = baseSetting.getDomUuid();
@@ -141,22 +160,42 @@ module.exports = {
                 var arrayXY = baseSetting.getComputedTranslateXY(trueDom);
                 baseSetting.moveTarget(trueDom,
                     0,
-                    10 + $(trueDom).height());
+                    10 + $(trueDom).height() + $('.select-helper').height())
             }
-            if (this.rightClickDom) {
-                // 只有foreignObject 才可以复制
-                var $forObject = $(this.rightClickDom).closest('foreignObject');
+            function copy(element) {
+                // 只有foreignObject 才可以复制 
+                var $forObject = $(element).closest('foreignObject') || $(element);
                 if ($forObject.length > 0) {
-
                     copyDom($forObject);
                 }
-                var $forObject = $(this.rightClickDom).closest('g');
+                var $forObject = $(element).closest('g') || $(element);
                 if ($forObject.length > 0) {
                     // 说明是线条
                     copySvg($forObject);
                 }
-                self.refresh();
             }
+            var selectItms = window.__select_ele__.slice();
+            if (selectItms.length) {
+                maxWidth = 0;
+                for (var index = 0; index < selectItms.length; index++) {
+                    var element = selectItms[index];
+                    if (element) {
+                        if ($(element).width() > maxWidth) {
+                            maxWidth = $(element).width();
+                        }
+                    }
+                };
+                maxWidth = $('.select-helper').width() > maxWidth ? $('.select-helper').width() : maxWidth;
+                for (var index = 0; index < selectItms.length; index++) {
+                    var element = selectItms[index];
+                    if (element) {
+                        copy(element);
+                    }
+                }
+            } else {
+                copy(this.rightClickDom);
+            }
+            self.refresh();
         }
     }
 };

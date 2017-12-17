@@ -15,7 +15,7 @@ module.exports = {
     components: {},
     data: function () {
         return {
-            isMulSelection:false,
+            isMulSelection: false,
             isShowCanvasSetDialog: false,
             isShowVariableSetDialog: false,
             canvas: {
@@ -28,7 +28,7 @@ module.exports = {
             },
             variable: store.variable,
             isDebuggerFireToOnline: 0,
-            isMulSelection:0,
+            isMulSelection: 0,
             currentScale: 1
         };
     },
@@ -115,6 +115,41 @@ module.exports = {
             this.isMulSelection = !this.isMulSelection;
             window.__isMulSelection__ = this.isMulSelection;
         },
+        alginClick: function (alginType) {
+            var selectItms = window.__select_ele__.slice();
+            if (alginType === 'left') {
+                if (selectItms.length) {
+                    var x = selectItms[0].getAttribute('data-x');
+                    for (var index = 0; index < selectItms.length; index++) {
+                        var target = selectItms[index];
+                        x = (x < parseFloat(target.getAttribute('data-x')) ? x : parseFloat(target.getAttribute('data-x')));
+                    };
+                    for (var index = 0; index < selectItms.length; index++) {
+                        var target = selectItms[index];
+                        target.setAttribute('data-x', x);
+                        var y = (parseFloat(target.getAttribute('data-y')) || 0);
+                        target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+                    };
+                }
+            }
+            if (alginType === 'right') {
+                var maxXAddW = 0;
+                for (var index = 0; index < selectItms.length; index++) {
+                    var target = selectItms[index];
+                    var width = $(target).width();
+                    var trueX = parseInt(target.getAttribute('data-x'));
+                    maxXAddW = (maxXAddW < (width + trueX) ? (width + trueX) : maxXAddW);
+                };
+                for (var index = 0; index < selectItms.length; index++) {
+                    var target = selectItms[index];
+                    var width = $(target).width();
+                    x = maxXAddW - width;
+                    target.setAttribute('data-x', x);
+                    var y = (parseFloat(target.getAttribute('data-y')) || 0);
+                    target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+                };
 
+            }
+        }
     }
 };

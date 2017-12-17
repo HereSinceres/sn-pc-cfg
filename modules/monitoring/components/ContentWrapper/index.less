@@ -18,16 +18,18 @@
             border-color: blue !important;
         }
     }
-    .select-helper {
-        pointer-events: none;
-        -webkit-transition: opacity 0.4s;
-        transition: opacity 0.4s;
-        position: absolute;
-        background-color: blue;
-        border: 1px solid #ccc;
-        z-index: 999;
-    }
-    .point-handle{
+    .point-handle {
         cursor: move;
     }
+}
+
+.select-helper {
+    pointer-events: none;
+    -webkit-transition: opacity 0.4s;
+    transition: opacity 0.4s;
+    position: absolute;
+    background-color: blue;
+    border: 1px solid #ccc;
+    z-index: 9999;
+    opacity: 0.3;
 }
