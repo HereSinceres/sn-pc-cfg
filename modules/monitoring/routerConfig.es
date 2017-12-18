@@ -86,9 +86,7 @@ var routes = [{
     path: '/cfgOnline/:cfgId',
     component: CfgOnline,
     beforeEnter: (to, from, next) => {
-        getCfgManagementById(to.params, function () {
-            next();
-        })
+        next();
     }
 },
 {

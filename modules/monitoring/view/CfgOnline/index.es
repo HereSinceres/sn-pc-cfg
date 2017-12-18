@@ -7,6 +7,7 @@ var domUtil = require('modules/util/dom/domUtil.es');
 var $container = function () {
     return $('.J-wrapper');
 };
+ 
 module.exports = {
     components: {},
     data: function () {
@@ -36,10 +37,12 @@ module.exports = {
     },
     methods: {
         init: function () {
-            var self = this;
-            // 初始化项目
-            self.setHtml();
-            self.bindEvent();
+            var self = this; 
+            api.getCfgManagementById(this.$route.params.cfgId).then(function (res) {
+                store.currentCfg = res.Data;
+                self.setHtml();
+                self.bindEvent();
+            });
         },
         setHtml: function () {
             var self = this;
