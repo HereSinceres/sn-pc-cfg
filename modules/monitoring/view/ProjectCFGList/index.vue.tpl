@@ -8,7 +8,7 @@
                 <i class="brand-icon fa fa-windows" aria-hidden="true"></i>{{activeProName}}
             </span>
             <ul class="dropdown-menu" aria-labelledby="cfg-project-list-menu">
-                <li v-for="item in MessageList" v-on:click=" jumpToProId(item)" v-bind:class="{'active':activeProId==item.ProjectId}">
+                <li v-for="item in  proList" v-on:click=" jumpToProId(item)" v-bind:class="{'active':activeProId==item.ProjectId}">
                     <a>
                         {{item.PName}}
                     </a>
@@ -43,7 +43,7 @@
         <div class="dropdown headDropdown">
             <img :src="userInfo.sysUserAvatar" alt="" class="dropdown-toggle" id="cfg-project-list-menu" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">
             <ul class="dropdown-menu">
-                <li v-for="item in proList" v-on:click=" jumpToProId(item)" v-bind:class="{'active':activeProId==item.ProjectId}">
+                <li v-for="item in MessageList" v-on:click=" jumpToProId(item)" v-bind:class="{'active':activeProId==item.ProjectId}">
                     <a>
                         {{item.PName}}
                     </a>

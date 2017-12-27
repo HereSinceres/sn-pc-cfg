@@ -76,12 +76,12 @@ module.exports = {
     },
     GetMessageCount: function(data) {
         var url = '/UserAdmin/Message/GetMessageCount';
-        return $.post(url, data, dataType:'json');
+        return $.ajax({url:url,data:data,dataType:'json',type:"POST",contentType: 'application/json'});
 
     },
     MessageList: function(data) {
         var url = '/UserAdmin/Message/MessageList';
-        return $.post(url, data, dataType:'json');
+        return $.ajax({url:url,data:data,dataType:'json',type:"POST",contentType: 'application/json'});
     },
     SetMessageReadedById: function(data) {
         var url = '/useradmin/Message/SetMessageReadedById';
