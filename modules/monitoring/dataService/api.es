@@ -66,6 +66,27 @@ module.exports = {
             pageNumber: 1
         });
     },
+    GetUser: function(data) {
+        var url = '/UserAdmin/UserAuthentication/GetUser';
+        return $.post(url, data);
+    },
+    GetEnterpriseInfo: function(data) {
+        var url = '/UserAdmin/UserAuthentication/GetEnterpriseInfoById';
+        return $.post(url, data);
+    },
+    GetMessageCount: function(data) {
+        var url = '/UserAdmin/Message/GetMessageCount';
+        return $.post(url, data, dataType:'json');
+
+    },
+    MessageList: function(data) {
+        var url = '/UserAdmin/Message/MessageList';
+        return $.post(url, data, dataType:'json');
+    },
+    SetMessageReadedById: function(data) {
+        var url = '/useradmin/Message/SetMessageReadedById';
+        return $.post(url, data);
+    },
     getCFGListByProId: function (proId) {
         var url = '/Useradmin/project/GetCfgManagementByProjectId';
         return $.post(url, {

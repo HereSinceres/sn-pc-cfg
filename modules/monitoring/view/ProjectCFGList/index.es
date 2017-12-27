@@ -5,7 +5,6 @@ var Base = require('modules/monitoring/Base.es');
 var baseSetting = require('modules/monitoring/components/ComponentLib/baseSetting.es');
 var api = require('modules/monitoring/dataService/api.es');
 var store = require('modules/monitoring/dataService/store.es');
-
 function getCFGListByProId(proId, callback) {
     api.getCFGListByProId(proId).then(function (res) {
         store.cfgList = res.Data;
@@ -41,7 +40,11 @@ module.exports = {
             copyProId: null,
             copyCfgList: [],
             copyToCfg: null,
-            copyCfg: null
+            copyCfg: null,
+            userInfo:{},
+            avator:'',
+            badgeNumber:0,
+            MessageList:[],
         };
     },
     computed: {
@@ -72,8 +75,90 @@ module.exports = {
             return ele.PName;
         });
         this.getCfgList();
+        this.headInfo();
+        this.GetMessageList();
+        this.GetMessageCount();
     },
     methods: {
+        headInfo:function(){
+            var info = store.getUserInfo();
+            var self = this;
+            if(info!=null){
+                if(info.type==1){
+                    api.GetUser().then(function (res) {
+                      self.userInfo.sysName = res.Data.Tel || '';
+                      self.userInfo.sysUserName = res.Data.UserName;
+                      self.userInfo.sysUserAvatar = res.Data.HeadPhoto || avator;
+                      self.userInfo.sysUserType = res.Data.UserType;
+                      self.userInfo.sysUserState = res.Data.AuthenticationState;
+                    });
+                 
+                }else{
+                    api.GetEnterpriseInfo().then(function (res) {
+                        self.userInfo.sysName = res.Data.UserName || '';
+                        self.userInfo.sysUserName = res.Data.EnterpriseName || '';
+                        self.userInfo.sysUserAvatar = res.Data.HeadPhoto || avator;
+                        self.userInfo.sysUserType = res.Data.UserType;
+                        self.userInfo.sysUserState = res.Data.AuthenticationState
+                    });
+                 
+                  
+                }
+            }
+            
+        },
+        help(){
+             window.open('http://help.cloudhvacr.com');
+        },
+        logout: function () {
+            var self = this;
+            
+            bootbox.confirm("确认退出吗?", function (result) {
+                if (result) {
+                    window.location.href = 'http://pctest.cloudhvacr.com';
+                }
+            });
+        },
+        userInformation(){
+            window.location.href = 'http://pctest.cloudhvacr.com/#/userData';
+        },
+        GetMessageCount(){
+            var self = this;
+            api.GetMessageCount({messageTypes:[3]}).then(function (res) {
+                if(res.success){
+                    self.badgeNumber = res.Data;
+                  }
+            })
+        },
+        GetMessageList(){
+            var self = this;
+            api.MessageList({
+                messageTypes:[2,3,4],
+                messageState:0
+            }).then(function (res) {
+                if(res.success){
+                    res.Data.map((item,index)=>{
+                    if(index<4){
+                            item.CreatTime =self.ChangeDateFormat(item.CreatTime);
+                            self.MessageList.push(item);
+                        }
+                    })
+                  }
+            })
+        },
+        ChangeDateFormat(cellval) {
+
+            var date = new Date(parseInt(cellval.replace("/Date(", "").replace(")/", ""), 10));
+
+            var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+
+            var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+            var hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+            var Minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+            var second =  date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+            return date.getFullYear() + "-" + month + "-" + currentDate+' '+hour +':'+Minutes + ':'+second;
+
+        },
         getCfgList: function () {
             this.activeProId = this.$route.query.proId;
             var self = this;
