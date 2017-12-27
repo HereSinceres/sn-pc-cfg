@@ -66,24 +66,36 @@ module.exports = {
             pageNumber: 1
         });
     },
-    GetUser: function(data) {
+    GetUser: function (data) {
         var url = '/UserAdmin/UserAuthentication/GetUser';
         return $.post(url, data);
     },
-    GetEnterpriseInfo: function(data) {
+    GetEnterpriseInfo: function (data) {
         var url = '/UserAdmin/UserAuthentication/GetEnterpriseInfoById';
         return $.post(url, data);
     },
-    GetMessageCount: function(data) {
+    GetMessageCount: function (data) {
         var url = '/UserAdmin/Message/GetMessageCount';
-        return $.ajax({url:url,data:data,dataType:'json',type:"POST",contentType: 'application/json'});
+        return $.ajax({
+            url: url,
+            data: JSON.stringify(data), 
+            type: "POST",
+            contentType: 'application/json'
+        });
 
     },
-    MessageList: function(data) {
+    MessageList: function (data) {
+        console.log(JSON.stringify(data));
         var url = '/UserAdmin/Message/MessageList';
-        return $.ajax({url:url,data:data,dataType:'json',type:"POST",contentType: 'application/json'});
+        return $.ajax({
+            url: url,
+            data: JSON.stringify(data), 
+            type: "POST",
+            contentType: 'application/json'
+        });
+
     },
-    SetMessageReadedById: function(data) {
+    SetMessageReadedById: function (data) {
         var url = '/useradmin/Message/SetMessageReadedById';
         return $.post(url, data);
     },
