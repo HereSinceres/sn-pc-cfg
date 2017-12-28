@@ -18,12 +18,7 @@
     "email": "yanhaijing@yeah.net",
     "url": "http://yanhaijing.com"
   },
-  "license": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/yanhaijing/fis3-base/blob/master/MIT-LICENSE.txt"
-    }
-  ],
+  "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/yanhaijing/fis3-base/issues"
   },

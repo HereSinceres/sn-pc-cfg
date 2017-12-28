@@ -40,13 +40,22 @@
                 </dl>
             
         </div>
-        <div class="dropdown headDropdown">
-            <img :src="userInfo.sysUserAvatar" alt="" class="dropdown-toggle" id="cfg-project-list-menu" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">
+        <div class="dropdown MessageDropdown">
+            <div class="dropdown-toggle messageCount" id="cfg-project-list-menu" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">
+                <img src="../../picLib/message.png" alt="">
+                <span v-if="badgeNumber>0">{{badgeNumber}}</span>
+            </div>
+            
             <ul class="dropdown-menu">
-                <li v-for="item in MessageList" v-on:click=" jumpToProId(item)" v-bind:class="{'active':activeProId==item.ProjectId}">
+                <li><a>站内消息通知</a></li>
+                <li v-for="item in MessageList" v-on:click="jumpToMessageDetail(item)">
                     <a>
-                        {{item.PName}}
+                       <span>{{item.CreatTime}}</span> 
+                       <span>{{item.MessageTitle}}</span> 
                     </a>
+                </li>
+                <li>
+                    <a><button @click="MessageMore">查看更多</button></a>
                 </li>
             </ul>
         </div>

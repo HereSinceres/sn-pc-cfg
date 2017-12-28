@@ -110,6 +110,17 @@ module.exports = {
         help(){
              window.open('http://help.cloudhvacr.com');
         },
+        MessageMore(){
+             window.location.href = 'http://pctest.cloudhvacr.com/#/MessageCenter';
+        },
+        jumpToMessageDetail(item){
+            api.SetMessageReadedById({messageTextIds:item.MessageTextId}).then(function (res) {
+                if(res.success){
+                    window.location.href = 'http://pctest.cloudhvacr.com/#/detailedInformation?Id='+item.MessageTextId;
+                  }
+            })
+             
+        },
         logout: function () {
             var self = this;
             

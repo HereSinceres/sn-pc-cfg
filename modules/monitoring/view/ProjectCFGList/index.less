@@ -17,14 +17,13 @@
         }
         .dropdown.headDropdown{
             float:right;
-            width:64px;
+            width:68px;
             img{
                 width: 40px;
                 height: 40px;
                 border-radius: 50%;
-                margin-top: 10px;
                 float: left;
-                margin: 10px 14px;
+                margin: 10px  14px;
             }
            .dropdown-menu{
                 left:-214px;
@@ -144,6 +143,88 @@
                         }
                         &:hover{
                             color:#4888FF;
+                        }
+                    }
+                }
+            }
+        }
+        .dropdown.MessageDropdown{
+            float:right;
+            width:64px;
+            img{
+                width: 24px;
+                height: 17px;
+                float: left;
+                margin: 23px;
+                cursor:pointer;
+            }
+            .messageCount{
+                position:relative;
+                margin-right: 10px;
+                span{
+                    position:absolute;
+                    top:10px;
+                    left:38px;
+                    display:block;
+                    padding:3px 5px;
+                    background:#f00;
+                    height:20px;
+                    line-height:1;
+                    border-radius:50%;
+                    color:#fff;
+                }
+            }
+            .dropdown-menu{
+                left:-190px;   
+                width: 238px;
+                padding:0; 
+                li{
+                    line-height: 16px;
+                    overflow: hidden;
+                    margin-top: 0;
+                    border-top: 1px solid #d1dbe5;
+                    font-size:12px;
+                    &:nth-child(1){
+                        font-size:16px;
+                        color:#000;
+                        a{
+                             text-align:left;
+                        }
+                       
+                    }
+                    a{
+                        padding: 5px 10px;
+                        text-align:center;
+                        span{
+                            display:block;
+                            width: 100%;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-align:left;
+                            &:nth-child(2){
+                                text-align:right;
+                            }
+                        }
+                        
+                        button{
+                            font-size: 12px;
+                            border-radius: 4px;
+                            margin:0;
+                            background:none;
+                            border:0;
+                            outline:none;
+                            padding: 7px 9px;
+                            line-height: 1;
+                            white-space: nowrap;
+                            cursor: pointer;
+                            background: #fff;
+                            border: 1px solid #bfcbd9;
+                            color: #1f2d3d;
+                            &:hover{
+                                border: 1px solid #20A0FF;
+                                color: #20A0FF;
+                            }
                         }
                     }
                 }
