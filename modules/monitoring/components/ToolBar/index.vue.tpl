@@ -12,7 +12,7 @@
     <span title="当前缩放" class="tool-btn pull-right  " v-on:click='reset'> {{this.currentScale}}</span>
     <span title="缩小" class="tool-btn pull-right fa fa-compress" v-on:click='compress'></span>
 
-
+    <span title="存为图片" class="tool-btn pull-right fa fa-download" v-on:click='downlode'></span>
 
 
 

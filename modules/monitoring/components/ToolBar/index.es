@@ -42,7 +42,30 @@ module.exports = {
         window.__isDebuggerFireToOnline__ = this.isDebuggerFireToOnline;
     },
     methods: {
+        downlode:function(){
+           //var svgXml = $('.svg-wrap').html();
+            var svgXml = document.getElementById("J-wrapper-container").innerHTML;
+            console.log(svgXml);
+            var image = new Image();
+            image.src = 'data:image/svg+xml;base64,' + window.btoa(unescape(encodeURIComponent(svgXml))); //给图片对象写入base64编码的svg流
+            //image.src = 'data:image/svg+xml;' + svgXml;
+            //image.style.height="200px";
+            //image.style.width="200px";
+            //document.getElementsByTagName('body')[0].appendChild(image);
+            //console.log(image.src)
+            var canvas = document.createElement('canvas');  //准备空画布
+            canvas.width = $('#J-wrapper-container svg').width();
+            canvas.height = $('#J-wrapper-container svg').height();
+            console.log(canvas.width,canvas.height);
+            var context = canvas.getContext('2d');  //取得画布的2d绘图上下文
+            context.drawImage(image, 0, 0);
 
+            var a = document.createElement('a');
+            a.href = canvas.toDataURL('image/png');  //将画布内的信息导出为png图片数据
+            a.download = "MapByMathArtSys";  //设定下载名称
+            a.click(); //点击触发下载
+            
+        },
         compress: function () {
             this.currentScale = this.currentScale - 0.02;
             setScale(this.currentScale);

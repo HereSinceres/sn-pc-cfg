@@ -84,9 +84,9 @@ module.exports = {
         });
 
     },
-    MessageList: function (data) {
+    MessageListByPage: function (data) {
         console.log(JSON.stringify(data));
-        var url = '/UserAdmin/Message/MessageList';
+        var url = '/useradmin/Message/MessageListByPage';
         return $.ajax({
             url: url,
             data: JSON.stringify(data), 

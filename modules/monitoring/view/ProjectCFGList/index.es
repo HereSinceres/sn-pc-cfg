@@ -143,16 +143,16 @@ module.exports = {
         },
         GetMessageList(){
             var self = this;
-            api.MessageList({
+            api.MessageListByPage({
                 messageTypes:[2,3,4],
-                messageState:0
+                messageState:0,
+                pageNumber:1,
+                pageSize:4,
             }).then(function (res) {
                 if(res.success){
                     res.Data.map((item,index)=>{
-                    if(index<4){
-                            item.CreatTime =self.ChangeDateFormat(item.CreatTime);
-                            self.MessageList.push(item);
-                        }
+                        item.CreatTime =self.ChangeDateFormat(item.CreatTime);
+                        self.MessageList.push(item);
                     })
                   }
             })
