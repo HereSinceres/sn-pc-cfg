@@ -111,12 +111,12 @@ module.exports = {
              window.open('http://help.cloudhvacr.com');
         },
         MessageMore(){
-             window.location.href = 'http://pctest.cloudhvacr.com/#/MessageCenter';
+             window.location.href = 'https://i.cloudhvacr.com/#/MessageCenter';
         },
         jumpToMessageDetail(item){
             api.SetMessageReadedById({messageTextIds:item.MessageTextId}).then(function (res) {
                 if(res.success){
-                    window.location.href = 'http://pctest.cloudhvacr.com/#/detailedInformation?Id='+item.MessageTextId;
+                    window.location.href = 'https://i.cloudhvacr.com/#/detailedInformation?Id='+item.MessageTextId;
                   }
             })
              
@@ -126,12 +126,12 @@ module.exports = {
             
             bootbox.confirm("确认退出吗?", function (result) {
                 if (result) {
-                    window.location.href = 'http://pctest.cloudhvacr.com';
+                    window.location.href = 'https://i.cloudhvacr.com';
                 }
             });
         },
         userInformation(){
-            window.location.href = 'http://pctest.cloudhvacr.com/#/userData';
+            window.location.href = 'https://i.cloudhvacr.com/#/userData';
         },
         GetMessageCount(){
             var self = this;
