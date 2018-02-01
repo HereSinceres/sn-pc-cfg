@@ -114,7 +114,7 @@ module.exports = {
                     case 4:
                         setVarFun = function () {
                             var result = attrs['data-cfg_var_binded_input_value'];
-                            setValByValId(attrs['data-cfg_var_binded_input'], 0);
+                            setValByValId(attrs['data-cfg_var_binded_input'],result );
                         };
                         break;
                     default:
