@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/yanhaijing/fis3-base/issues"
   },
-  "homepage": "https://github.com/yanhaijing/fis3-base"
+  "homepage": "https://github.com/yanhaijing/fis3-base",
+  "dependencies": {
+    "fis3-preprocessor-js-require-file": "^0.1.3"
+  }
 }
