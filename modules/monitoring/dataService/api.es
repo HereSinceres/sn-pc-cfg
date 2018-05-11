@@ -85,7 +85,6 @@ module.exports = {
 
     },
     MessageListByPage: function (data) {
-        console.log(JSON.stringify(data));
         var url = '/useradmin/Message/MessageListByPage';
         return $.ajax({
             url: url,

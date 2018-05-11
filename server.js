@@ -26,7 +26,6 @@ var app = express();
 
 // logger
 app.use(require('morgan')('short'));
-console.log(args)
 // add proxy support
 var apiAddress = 'https://i.cloudhvacr.com';
 app.use('/UserAdmin', proxy({

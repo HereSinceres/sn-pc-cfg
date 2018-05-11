@@ -24,7 +24,7 @@ module.exports = {
         if (userinfo) {
             return JSON.parse(userinfo);
         }
-        return JSON.parse(localStorage.getItem('Au_USERINFO'));
+        return null;
     },
     // 需要格式化数据的时候才加第二个参数，例如 文本直接显示数据
     getValueByVar: function (tempVar, format) {
