@@ -9,6 +9,12 @@
         background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
         background-attachment: scroll;
         overflow: hidden;
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+        * {
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+        }
     }
     .u-drag {
         position: absolute;
